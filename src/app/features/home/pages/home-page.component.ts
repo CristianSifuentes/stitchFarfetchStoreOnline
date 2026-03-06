@@ -45,7 +45,7 @@ import { CartService } from '../../../core/services/cart.service';
             type="email"
             aria-label="Email address"
             [value]="email()"
-            (input)="email.set(($event.target as HTMLInputElement).value)"
+            (input)="onEmailInput($event)"
             placeholder="Enter your email address"
           />
           <button class="rounded bg-black px-6 py-3 text-white disabled:opacity-50" [disabled]="!isEmailValid()">Subscribe</button>
@@ -66,5 +66,9 @@ export class HomePageComponent {
 
   protected addToBag(id: string): void {
     this.cart.add(id);
+  }
+
+  protected onEmailInput(event: Event): void {
+    this.email.set((event.target as HTMLInputElement | null)?.value ?? '');
   }
 }
