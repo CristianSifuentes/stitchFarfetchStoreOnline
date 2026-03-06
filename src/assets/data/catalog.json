@@ -1,0 +1,29 @@
+[
+  {
+    "id": "wb-1",
+    "title": "Single-Breasted Wool Blazer",
+    "brand": "Thom Browne",
+    "price": 2450,
+    "image": "https://images.unsplash.com/photo-1593030761757-71fae45fa0e7?auto=format&fit=crop&w=900&q=80",
+    "category": "womenswear",
+    "description": "Precision tailoring in premium wool with a modern silhouette."
+  },
+  {
+    "id": "ms-1",
+    "title": "Geobasket High-Top Sneakers",
+    "brand": "Rick Owens",
+    "price": 1120,
+    "image": "https://images.unsplash.com/photo-1614252369475-531eba835eb1?auto=format&fit=crop&w=900&q=80",
+    "category": "menswear",
+    "description": "Architectural high-top with luxury calfskin construction."
+  },
+  {
+    "id": "kj-1",
+    "title": "Tailored Kids Trench",
+    "brand": "Burberry Kids",
+    "price": 680,
+    "image": "https://images.unsplash.com/photo-1519238359922-989348752efb?auto=format&fit=crop&w=900&q=80",
+    "category": "kids",
+    "description": "Heritage-inspired trench crafted for next-generation style."
+  }
+]
