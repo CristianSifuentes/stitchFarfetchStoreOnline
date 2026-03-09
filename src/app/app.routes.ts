@@ -11,6 +11,10 @@ export const routes: Routes = [
         loadComponent: () => import('./features/home/pages/home-page.component').then((m) => m.HomePageComponent)
       },
       {
+        path: 'womenswear',
+        loadComponent: () => import('./features/womens/pages/womens-page.component').then((m) => m.WomensPageComponent)
+      },
+      {
         path: 'menswear',
         loadComponent: () => import('./features/mens/pages/mens-page.component').then((m) => m.MensPageComponent)
       },

@@ -12,7 +12,7 @@ import { CartService } from '../../core/services/cart.service';
         <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <a routerLink="/" class="text-xl font-extrabold tracking-tight">FARFETCH</a>
           <nav class="flex items-center gap-6 text-xs uppercase tracking-[0.16em]">
-            <a routerLink="/" routerLinkActive="font-bold">Womenswear</a>
+            <a routerLink="/womenswear" routerLinkActive="font-bold">Womenswear</a>
             <a routerLink="/menswear" routerLinkActive="font-bold">Menswear</a>
             <a routerLink="/kids" routerLinkActive="font-bold">Kidswear</a>
           </nav>
