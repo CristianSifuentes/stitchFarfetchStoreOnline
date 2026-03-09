@@ -18,12 +18,183 @@
     "description": "Architectural high-top with luxury calfskin construction."
   },
   {
+    "id": "ms-2",
+    "title": "Wool Double-Breasted Overcoat",
+    "brand": "Saint Laurent",
+    "price": 2890,
+    "image": "https://images.unsplash.com/photo-1516257984-b1b4d707412e?auto=format&fit=crop&w=900&q=80",
+    "category": "menswear",
+    "description": "Longline wool overcoat with peak lapels, clean shoulder structure, and tonal horn buttons."
+  },
+  {
+    "id": "ms-3",
+    "title": "Logo Cotton Hoodie",
+    "brand": "Balenciaga",
+    "price": 890,
+    "image": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=900&q=80",
+    "category": "menswear",
+    "description": "Heavyweight brushed-cotton hoodie featuring oversized fit and subtle logo treatment."
+  },
+  {
+    "id": "ms-4",
+    "title": "Slim Tailored Wool Trousers",
+    "brand": "Prada",
+    "price": 760,
+    "image": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=900&q=80",
+    "category": "menswear",
+    "description": "Streamlined wool trousers with pressed crease and refined slim-leg profile."
+  },
+  {
+    "id": "ms-5",
+    "title": "Leather Chelsea Boots",
+    "brand": "Alexander McQueen",
+    "price": 980,
+    "image": "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?auto=format&fit=crop&w=900&q=80",
+    "category": "menswear",
+    "description": "Polished leather boots with elastic side panels, stacked sole, and tonal pull tabs."
+  },
+  {
+    "id": "ms-6",
+    "title": "Compass Patch Field Jacket",
+    "brand": "Stone Island",
+    "price": 1040,
+    "image": "https://images.unsplash.com/photo-1548883354-94bcfe321cbb?auto=format&fit=crop&w=900&q=80",
+    "category": "menswear",
+    "description": "Garment-dyed technical field jacket with signature arm patch and weather-ready finish."
+  },
+  {
+    "id": "ms-7",
+    "title": "Monogram Messenger Bag",
+    "brand": "Louis Vuitton",
+    "price": 2400,
+    "image": "https://images.unsplash.com/photo-1491553895911-0055eca6402d?auto=format&fit=crop&w=900&q=80",
+    "category": "menswear",
+    "description": "Structured crossbody with coated-canvas monogram, zipper closure, and adjustable strap."
+  },
+  {
+    "id": "ms-8",
+    "title": "Silk Blend Camp-Collar Shirt",
+    "brand": "Tom Ford",
+    "price": 690,
+    "image": "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=900&q=80",
+    "category": "menswear",
+    "description": "Fluid silk-cotton shirt with relaxed camp collar and tailored drape."
+  },
+  {
+    "id": "ms-9",
+    "title": "Distressed Denim Jacket",
+    "brand": "AMIRI",
+    "price": 1350,
+    "image": "https://images.unsplash.com/photo-1516826957135-700dedea698c?auto=format&fit=crop&w=900&q=80",
+    "category": "menswear",
+    "description": "Washed denim jacket with artisan distressing and custom metal hardware details."
+  },
+  {
+    "id": "ms-10",
+    "title": "Tech Runner Sneakers",
+    "brand": "Common Projects",
+    "price": 540,
+    "image": "https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=900&q=80",
+    "category": "menswear",
+    "description": "Modern low-top runner with premium leather panels and cushioned performance sole."
+  },
+  {
+    "id": "ms-11",
+    "title": "Cashmere Crewneck Sweater",
+    "brand": "Brunello Cucinelli",
+    "price": 1290,
+    "image": "https://images.unsplash.com/photo-1523398002811-999ca8dec234?auto=format&fit=crop&w=900&q=80",
+    "category": "menswear",
+    "description": "Ultrasoft cashmere knit with ribbed trims and refined regular fit."
+  },
+  {
     "id": "kj-1",
-    "title": "Tailored Kids Trench",
+    "title": "Heritage Belted Trench Coat",
     "brand": "Burberry Kids",
     "price": 680,
     "image": "https://images.unsplash.com/photo-1519238359922-989348752efb?auto=format&fit=crop&w=900&q=80",
     "category": "kids",
-    "description": "Heritage-inspired trench crafted for next-generation style."
+    "description": "A classic water-resistant trench with signature check lining and polished hardware."
+  },
+  {
+    "id": "kj-2",
+    "title": "Logo Puffer Vest",
+    "brand": "Moncler Enfant",
+    "price": 540,
+    "image": "https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&w=900&q=80",
+    "category": "kids",
+    "description": "Lightweight down-filled vest designed for layering through changing temperatures."
+  },
+  {
+    "id": "kj-3",
+    "title": "Mini GG Canvas Backpack",
+    "brand": "Gucci Kids",
+    "price": 690,
+    "image": "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=900&q=80",
+    "category": "kids",
+    "description": "Structured canvas backpack with iconic monogram finish and adjustable shoulder straps."
+  },
+  {
+    "id": "kj-4",
+    "title": "Cashmere Knit Two-Piece Set",
+    "brand": "Bonpoint",
+    "price": 420,
+    "image": "https://images.unsplash.com/photo-1519340241574-2cec6aef0c01?auto=format&fit=crop&w=900&q=80",
+    "category": "kids",
+    "description": "Soft cashmere sweater and jogger set crafted for elevated comfort and daily wear."
+  },
+  {
+    "id": "kj-5",
+    "title": "Star Print Fleece Hoodie",
+    "brand": "Stella McCartney Kids",
+    "price": 210,
+    "image": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80",
+    "category": "kids",
+    "description": "Organic cotton hoodie with playful all-over star motif and brushed fleece interior."
+  },
+  {
+    "id": "kj-6",
+    "title": "Floral Poplin Celebration Dress",
+    "brand": "Dolce & Gabbana Kids",
+    "price": 590,
+    "image": "https://images.unsplash.com/photo-1514090458221-65bb69cf63e6?auto=format&fit=crop&w=900&q=80",
+    "category": "kids",
+    "description": "A-line cotton poplin dress finished with bold floral print and tonal waist ribbon."
+  },
+  {
+    "id": "kj-7",
+    "title": "FF Jacquard Slip-On Sneakers",
+    "brand": "Fendi Kids",
+    "price": 480,
+    "image": "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=900&q=80",
+    "category": "kids",
+    "description": "Monogram jacquard sneakers with cushioned sole and flexible slip-on construction."
+  },
+  {
+    "id": "kj-8",
+    "title": "Quilted Technical Jacket",
+    "brand": "Il Gufo",
+    "price": 360,
+    "image": "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=900&q=80",
+    "category": "kids",
+    "description": "Insulated jacket in matte technical fabric with hidden zip closure and storm cuffs."
+  },
+  {
+    "id": "kj-9",
+    "title": "Super-Star Low-Top Sneakers",
+    "brand": "Golden Goose Kids",
+    "price": 325,
+    "image": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=80",
+    "category": "kids",
+    "description": "Hand-finished sneakers featuring signature star applique and worn-in artisan texture."
+  },
+  {
+    "id": "kj-10",
+    "title": "Pleated Cotton Day Dress",
+    "brand": "Chloe Kids",
+    "price": 295,
+    "image": "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?auto=format&fit=crop&w=900&q=80",
+    "category": "kids",
+    "description": "Breathable pleated cotton dress with ruffled shoulder detail and lightweight lining."
   }
 ]
