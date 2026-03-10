@@ -2,6 +2,7 @@ import { CurrencyPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CartService } from '../../../core/services/cart.service';
+import { CatalogItem } from '../../../core/models/catalog-item.model';
 
 type WomensCategory = 'all' | 'dresses' | 'bags' | 'shoes' | 'accessories' | 'jewelry' | 'knitwear';
 type WomensProductCategory = Exclude<WomensCategory, 'all'>;
@@ -266,6 +267,13 @@ const NEW_SEASON_ARRIVALS: ReadonlyArray<WomensArrivalItem> = [
             <h3 class="text-[10px] font-bold uppercase tracking-[0.2em]">{{ item.brand }}</h3>
             <p class="mt-1 line-clamp-1 text-xs text-zinc-600">{{ item.title }}</p>
             <p class="mt-2 text-sm font-medium">{{ item.price | currency }}</p>
+            <a
+              class="mt-2 inline-block text-[10px] font-semibold uppercase tracking-[0.15em] text-zinc-700 underline underline-offset-4"
+              [routerLink]="['/product', item.id]"
+              [state]="{ productPreview: toProductDetail(item) }"
+            >
+              View details
+            </a>
           </article>
         }
       </div>
@@ -327,6 +335,13 @@ const NEW_SEASON_ARRIVALS: ReadonlyArray<WomensArrivalItem> = [
           <h3 class="text-[10px] font-semibold uppercase tracking-[0.2em] text-zinc-700">{{ item.brand }}</h3>
           <p class="mt-1 line-clamp-1 text-xs text-zinc-600">{{ item.title }}</p>
           <p class="mt-1 text-sm font-medium">{{ item.price | currency }}</p>
+          <a
+            class="mt-2 inline-block text-[10px] font-semibold uppercase tracking-[0.15em] text-zinc-700 underline underline-offset-4"
+            [routerLink]="['/product', item.id]"
+            [state]="{ productPreview: toProductDetail(item) }"
+          >
+            View details
+          </a>
           <button
             type="button"
             class="mt-2 text-[10px] font-semibold uppercase tracking-[0.15em] text-zinc-700 underline underline-offset-4"
@@ -475,5 +490,17 @@ export class WomensPageComponent {
 
   protected addToBag(id: string): void {
     this.cart.add(id);
+  }
+
+  protected toProductDetail(item: WomensProduct): CatalogItem {
+    return {
+      id: item.id,
+      brand: item.brand,
+      title: item.title,
+      price: item.price,
+      image: item.image,
+      description: `${item.brand} signature piece crafted for the latest womenswear collection.`,
+      category: 'womenswear'
+    };
   }
 }

@@ -15,9 +15,12 @@ import { CatalogItem } from '../../../core/models/catalog-item.model';
         <h3 class="text-sm font-semibold">{{ item().title }}</h3>
         <p class="text-sm">{{ item().price | currency }}</p>
       </a>
+      <a [routerLink]="['/product', item().id]" class="mt-2 inline-block text-xs underline" [attr.aria-label]="'View details for ' + item().title">
+        View details
+      </a>
       <button
         type="button"
-        class="mt-2 text-xs underline"
+        class="mt-2 ml-3 text-xs underline"
         (click)="addToBag.emit(item().id)"
         [attr.aria-label]="'Add ' + item().title + ' to bag'"
       >

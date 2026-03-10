@@ -94,10 +94,6 @@ npm run serve:ssr
 npm run test
 ```
 
-## Disclaimer
-
-This project is an educational architecture demonstration inspired by Farfetch’s marketplace domain and UI patterns.
-
 ## info
 
 npm install succeeded.
@@ -154,3 +150,11 @@ In short: Angular 21 apps should be zoneless, signal-first, standalone, and SSR-
 - https://medium.com/@sanikapatil0213/folder-structures-that-scale-angular-architecture-for-big-teams-decb717e1f94
 - https://medium.com/@flaviusson/angular-20-to-21-transition-guide-breaking-changes-best-practices-and-migration-paths-2026-9a66338ac33e
 - https://khizaruddins.medium.com/modern-angular-enterprise-architecture-2026-beff3d0b928f
+
+
+## Disclaimer
+
+This project is an educational architecture demonstration inspired by Farfetch’s marketplace domain and UI patterns.
+
+You can see the original web site:
+https://www.farfetch.com/
