@@ -104,49 +104,53 @@ npm install succeeded.
 npm run build succeeded.
 npx ng build --configuration development succeeded (same build target used by ng serve development).
 
-https://dev.to/kafeel-ahmad/deploying-angular-in-2026-an-architects-guide-to-build-once-run-everywhere-34eh
-https://dev.to/cristiansifuentes/13-angular-concepts-you-must-master-before-your-next-interview-2026-edition-5b74
-https://medium.com/@sanikapatil0213/folder-structures-that-scale-angular-architecture-for-big-teams-decb717e1f94
-https://medium.com/@flaviusson/angular-20-to-21-transition-guide-breaking-changes-best-practices-and-migration-paths-2026-9a66338ac33e
-https://khizaruddins.medium.com/modern-angular-enterprise-architecture-2026-beff3d0b928f
+## Advanced Angular
 
-Una aplicación moderna de Angular 21 (lanzado a finales de 2025/2026) debe construirse bajo el paradigma de "señales primero" (signal-first), siendo más rápida, ligera y fácil de mantener al eliminar dependencias antiguas como Zone.js. 
-Aquí tienes los conceptos, tecnologías y temas imprescindibles para Angular 21:
-1. Paradigmas y Conceptos Fundamentales
-Signals (Reactividad Fina): Es la base. Se debe usar signal(), computed() y effect() para manejar el estado local y la UI, reemplazando a BehaviorSubject en la mayoría de los casos de componentes.
-Zoneless Change Detection (Sin Zone.js): Angular 21 activa por defecto la detección de cambios sin Zone.js, lo que mejora drásticamente el rendimiento. La app debe diseñarse para no depender de la detección de cambios global.
-Standalone Components (Componentes Independientes): Los módulos (NgModule) ya no son necesarios. Todo debe construirse con componentes, directivas y pipes standalone: true.
-OnPush Change Detection Strategy: Obligatorio en todos los componentes para maximizar el rendimiento en arquitecturas zoneless. 
-Medium
-Medium
- +6
-2. Tecnologías y APIs "Must-Have"
-Signal Forms: Las "Signal Forms" reemplazan el enfoque antiguo basado en RxJS para formularios, ofreciendo una API más ligera y reactiva.
-Signal-based Inputs/Outputs: Usar input() y output() en lugar de decoradores @Input() y @Output() para mejorar la tipificación y reactividad.
-Nueva sintaxis de control de flujo: Uso obligatorio de @if, @for (con track) y @switch en los templates, sustituyendo a *ngIf y *ngFor.
-Deferrable Views (@defer): Uso de @defer para lazy loading de componentes en la vista, crucial para mejorar los tiempos de carga inicial.
-Angular Signals/Resources (Data Fetching): Uso de la nueva API para manejar peticiones HTTP y estados de carga/error de forma declarativa.
-SSR y Hidratación (Hydration): La aplicación debe estar optimizada para Server-Side Rendering (SSR) e hidratación para SEO y rendimiento, usando la sintaxis de señales para evitar errores de hidratación.
-Vitest: Reemplazo de Karma/Jasmine por Vitest como el ejecutor de pruebas por defecto, más rápido y moderno.
-Tailwind CSS: Integrado por defecto en la creación de nuevos proyectos para estilos rápidos. 
-Angular Blog
-Angular Blog
- +8
-3. Temas de Arquitectura y Buenas Prácticas
-HttpClient por defecto: HttpClient se inyecta automáticamente, simplificando la configuración.
-Accesibilidad (ARIA): Uso de las nuevas directivas Angular Aria para crear componentes accesibles (headless).
-AI-Powered CLI (MCP Server): Uso de la nueva CLI con soporte para asistentes de IA para generación de código y refactorización.
-Arquitectura basada en características: Estructurar la app por módulos funcionales y no por capas técnicas.
-Seguridad: Implementación de Content Security Policy (CSP) y prevención de XSS, ya que Angular 21 trae mejores herramientas de sanidad. 
-Angular Blog
-Angular Blog
- +4
-Resumen de la "Nueva Era" (2026)
-Enfoque Antiguo 	Enfoque Angular 21 (Recomendado)
-NgModule	Standalone Components
-Zone.js	Zoneless (Signals)
-*ngIf, *ngFor	@if, @for
-@Input(), @Output()	input(), output()
-Reactive Forms (RxJS)	Signal Forms
-Karma/Jasmine	Vitest
-En conclusión: Una app en Angular 21 debe ser zoneless, signal-first, standalone y SSR-friendly. 
+A modern Angular 21 application (late 2025/2026 era) should be built with a signal-first approach to stay fast, lightweight, and maintainable while removing legacy dependencies like Zone.js.
+
+### 1. Core Paradigms
+
+- Signals (fine-grained reactivity): use `signal()`, `computed()`, and `effect()` for local state and UI updates; replace `BehaviorSubject` in most component-level cases.
+- Zoneless change detection: design the app for explicit reactive updates without global Zone.js patching.
+- Standalone components: build with `standalone: true` components, directives, and pipes instead of `NgModule`.
+- OnPush strategy by default: apply `ChangeDetectionStrategy.OnPush` across components for predictable high performance in zoneless apps.
+
+### 2. Must-Have APIs and Tooling
+
+- Signal Forms: move from RxJS-heavy forms to a lighter signal-based forms model.
+- Signal-based inputs/outputs: prefer `input()` and `output()` over `@Input()` and `@Output()`.
+- New control flow syntax: use `@if`, `@for` (with `track`), and `@switch` instead of `*ngIf` and `*ngFor`.
+- Deferrable views: use `@defer` for lazy-loading UI blocks and improving initial load times.
+- Signals/resources for data fetching: model loading, success, and error states declaratively.
+- SSR and hydration: optimize for SEO and runtime performance with hydration-safe, signal-based templates.
+- Vitest: replace Karma/Jasmine with a faster and modern test runner.
+- Tailwind CSS: keep utility-first styling as the default rapid UI workflow.
+
+### 3. Architecture and Best Practices
+
+- HttpClient by default: streamlined HTTP setup with modern provider patterns.
+- Accessibility (ARIA): use Angular ARIA directives and accessible headless component patterns.
+- AI-powered CLI and MCP workflows: leverage CLI support for AI-assisted generation and refactoring.
+- Feature-based architecture: organize by business features instead of technical layers.
+- Security baseline: enforce Content Security Policy (CSP) and proactive XSS prevention.
+
+### 2026 Migration Snapshot
+
+| Legacy Approach | Angular 21 Recommended |
+| --- | --- |
+| `NgModule` | Standalone components |
+| Zone.js | Zoneless + signals |
+| `*ngIf`, `*ngFor` | `@if`, `@for` |
+| `@Input()`, `@Output()` | `input()`, `output()` |
+| Reactive Forms (RxJS-first) | Signal Forms |
+| Karma/Jasmine | Vitest |
+
+In short: Angular 21 apps should be zoneless, signal-first, standalone, and SSR-friendly.
+
+## Relevant Links
+
+- https://dev.to/kafeel-ahmad/deploying-angular-in-2026-an-architects-guide-to-build-once-run-everywhere-34eh
+- https://dev.to/cristiansifuentes/13-angular-concepts-you-must-master-before-your-next-interview-2026-edition-5b74
+- https://medium.com/@sanikapatil0213/folder-structures-that-scale-angular-architecture-for-big-teams-decb717e1f94
+- https://medium.com/@flaviusson/angular-20-to-21-transition-guide-breaking-changes-best-practices-and-migration-paths-2026-9a66338ac33e
+- https://khizaruddins.medium.com/modern-angular-enterprise-architecture-2026-beff3d0b928f
