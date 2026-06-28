@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#000000",
+                        "background-light": "#f7f7f7",
+                        "background-dark": "#191919",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<title>FARFETCH | Menswear Luxury Fashion</title>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-background-dark/95 backdrop-blur-md">
+<div class="max-w-[1440px] mx-auto px-4 md:px-10 py-4">
+<div class="flex items-center justify-between gap-8">
+<!-- Logo and Search -->
+<div class="flex items-center gap-12 flex-1">
+<div class="flex items-center gap-2 shrink-0">
+<div class="size-6 bg-primary flex items-center justify-center">
+<svg class="text-white size-4" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 4H6V17.3333V30.6667H24V44H42V30.6667V17.3333H24V4Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h1 class="text-2xl font-black tracking-tighter uppercase">Farfetch</h1>
+</div>
+<div class="hidden lg:flex flex-1 max-w-md">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+<input class="w-full bg-slate-100 dark:bg-slate-800 border-none rounded-sm pl-10 pr-4 py-2 text-sm focus:ring-1 focus:ring-primary transition-all" placeholder="Search for brands or items..." type="text"/>
+</div>
+</div>
+</div>
+<!-- Main Nav Links -->
+<nav class="hidden md:flex items-center gap-8 text-[11px] font-bold tracking-[0.1em] uppercase">
+<a class="text-slate-500 hover:text-primary transition-colors" href="#">Womenswear</a>
+<a class="text-primary border-b-2 border-primary pb-1" href="#">Menswear</a>
+<a class="text-slate-500 hover:text-primary transition-colors" href="#">Kidswear</a>
+</nav>
+<!-- Actions -->
+<div class="flex items-center gap-4 md:gap-6">
+<button class="hover:text-primary transition-colors"><span class="material-symbols-outlined">person</span></button>
+<button class="hover:text-primary transition-colors relative">
+<span class="material-symbols-outlined">favorite</span>
+<span class="absolute -top-1 -right-1 size-3 bg-primary text-[8px] text-white rounded-full flex items-center justify-center">3</span>
+</button>
+<button class="hover:text-primary transition-colors"><span class="material-symbols-outlined">shopping_bag</span></button>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-[1440px] mx-auto">
+<!-- Hero Section -->
+<section class="relative w-full aspect-[21/9] min-h-[500px] flex items-center overflow-hidden">
+<img alt="The Modern Gentleman Hero" class="absolute inset-0 w-full h-full object-cover object-center" data-alt="Editorial shot of man in sharp designer suit" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaX6fFGoThC2Tc3swLoCNhAZD2RlT4EoFlB9NqIrf39m-h7x4U0mhNDptx7S1N5Gh_5uVqfrpMWo7kEZ_GS9xFkxTrGS-PGfTy_d6ITs3mT3FfD5uxVDzY3ijhxJb9RgzZvvsdOGmTGHx8peWY6cNZowdR9isu-se0CRtcydaYUwWry2AUgaPqJlGiZy7E9uhOXw2mO-fkdcjX5JpX65u_wPPnhPk64F0CujS1RxFl67vohFAYf2USymGGOJr3tIgLLdklLB4J_ThX"/>
+<div class="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent"></div>
+<div class="relative z-10 px-6 md:px-20 max-w-2xl text-white">
+<p class="uppercase tracking-[0.3em] text-xs font-semibold mb-4 opacity-90">Exclusive Collection</p>
+<h2 class="text-5xl md:text-7xl font-bold leading-[1.1] tracking-tight mb-6">The Modern <br/>Gentleman</h2>
+<p class="text-lg md:text-xl font-light mb-8 max-w-lg opacity-90">Discover the season's most coveted styles from world-class designers, curated for the discerning eye.</p>
+<div class="flex gap-4">
+<button class="bg-white text-black px-10 py-4 text-xs font-bold uppercase tracking-widest hover:bg-slate-200 transition-all rounded-sm">Shop New In</button>
+<button class="bg-transparent border border-white text-white px-10 py-4 text-xs font-bold uppercase tracking-widest hover:bg-white/10 transition-all rounded-sm">Explore Brands</button>
+</div>
+</div>
+</section>
+<!-- Categories Grid -->
+<section class="py-16 px-4 md:px-10 bg-white dark:bg-background-dark">
+<div class="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-8">
+<a class="group text-center" href="#">
+<div class="aspect-square rounded-full overflow-hidden mb-4 bg-slate-100">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Close up of high-end menswear fabrics" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCksBsfEleJA8Q0jBI33n-_Bah05Y2WgN_LIMojXdVFiIazgXgFYBnorH3xT96r90MKl6FxunAMDkyTB--kSBMTnB6IxobNQ3VZ7W9y9gPcWcfRXcLruVjKITjyDS-Mr1pbrLixiwESzX_Ge7s4qwSyj9yFwVMMNIMilebMxO1Ot7S-XjpNjSq7MapK4PZ9Ok_qb4IfaQRVF5THAFK3C5hF0UZ5AyUaqSHYf7EO-R4q3TGHT_gA5wI56Lbu5Xg_JG7HYPNnH7DBUvwt"/>
+</div>
+<span class="text-xs font-bold uppercase tracking-widest">New In</span>
+</a>
+<a class="group text-center" href="#">
+<div class="aspect-square rounded-full overflow-hidden mb-4 bg-slate-100">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Classic tailored men's blazer hanging" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDF0xn4BFG__nIPTh3Sp5lLHCITDuLAo7dcD5mDd0mZHkSK1glVRM-eGx17Ls-xwV-OMa_YmA4GvLtpz7d3k3Mpo62k5zly3d4d8uPtFEgCiggb-5pPwQW_B3GIFCTkTemFkQX1nLcZ3cKNqreFtJhkswPNmU0QaUCD_hk46YhE0HHE4uVc6nCRr18bYqXiYRsnYnlJjxXFCkZt8rZ_sN_KD74xo-1AemBLh2HU0zg7r0kqYJLq0R0zmkmpW2Ow9XOpSQll1I3NqlS3"/>
+</div>
+<span class="text-xs font-bold uppercase tracking-widest">Clothing</span>
+</a>
+<a class="group text-center" href="#">
+<div class="aspect-square rounded-full overflow-hidden mb-4 bg-slate-100">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Luxury designer sneakers on white background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwygDW4B6xDojyAJ75_-9zu7shiEgiOyuh4IJF-CuQ47IhtHC9sYlszjEle4nNC4mLMBaJd6ScLualmWqFHPrlTiddhf648nkC5tReJmlc_bEFDGPyZzhOvWbd4SVFQCr0w6zgvQ4LwVmVBMoMnDZADduhYjuZW0V8VyCP20KBgx2u5IteQdu_O2akf-UB3aiJJnnYu8sz-tCDyI3sSfGTSOUoMlqIiNjyhxy500OZXQjLwv_b4988YVcCS6QyGuoXu-OJ1Vcsps0C"/>
+</div>
+<span class="text-xs font-bold uppercase tracking-widest">Shoes</span>
+</a>
+<a class="group text-center" href="#">
+<div class="aspect-square rounded-full overflow-hidden mb-4 bg-slate-100">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="High-end leather men's wallet and watch" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcRTLF_lGTlsHYF2fhoWCvW62koWW1mHVNxVt0DxkNM7Ca67g18jhYY9sw4-puzuOsSKapDIejZKlV00CGC2NbMWG6VCPHB4Zyfx3fgJJ_v7Mh7rkVfVb-1WClYIQJ_9qgO7J_NH_v5UU07-8Vbx3DgFV4wFs_UFz9JystOepUqOBOwiCPSuX4hEM1N-dqCOiqfcUGr_VcLHcvb_KTakK-l3eOlDkT1mHhYzaJsic5_ccGel6zUSkaDSNVg9z-rAw3NvhMrW4tqQCn"/>
+</div>
+<span class="text-xs font-bold uppercase tracking-widest">Accessories</span>
+</a>
+<a class="group text-center" href="#">
+<div class="aspect-square rounded-full overflow-hidden mb-4 bg-slate-100">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Abstract view of luxury fashion store interior" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzB5Z-aeehlaHxgYTZcQsqp9MHSr9GOt3t9SqTFDIjb_-Y0YalYhe_8iSAqzhJxFZl8iGj4Yp78dmVBZQ-6M8N79IquOhmKm3WDa_Wuizsh5TnLmohPsUCcTnapJL6r6BFUiKkjbLPmXyRrFN46jSNTknVV9dQ894aqXOhg4gHzTEsGBLFI29e2CdzifbfcmA_VN-6po9Pc44eHLeeX3ClDRsHr62_fRHQ9gR84aEDAzYDnm9uX-Hj_ojaYExV_77PYwXbS5KuTJTT"/>
+</div>
+<span class="text-xs font-bold uppercase tracking-widest">Brands</span>
+</a>
+</div>
+</section>
+<!-- Designer Spotlight -->
+<section class="py-20 px-4 md:px-10">
+<div class="flex items-end justify-between mb-10 border-b border-slate-200 dark:border-slate-800 pb-4">
+<h3 class="text-3xl font-bold">Designer Spotlight</h3>
+<a class="text-xs font-bold underline underline-offset-8 uppercase tracking-widest hover:text-slate-500" href="#">View All Brands</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="relative group cursor-pointer overflow-hidden aspect-[4/5]">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Man in high-fashion avant-garde outerwear" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDTEjyeOGzv74ZFThWkIriamDWvahDbBcjrlfK-Qy_ayG6esqOy4QxTeDRWXzV8dGUEAC69kjYkb0ceaoYp0N-x-TN69D-v_yqAdikJ4LdwHlg6yLypGpMbit8WFt4MSuwptfzQi7Kel4xI_EmZjeDzwhJybZJVCChwCzKOuZkPPy18CSIlbAlvAN5NUutg-TFxvNqsSleECGU1llGkIsTO_2MLq0YjSSx338unxF1E83d03LC2XqS52rJ9lTX90oFTHj4U_w8V4dW"/>
+<div class="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/80 to-transparent text-white">
+<p class="text-[10px] tracking-[0.2em] uppercase mb-1 font-bold">New Season</p>
+<h4 class="text-2xl font-bold">Gucci</h4>
+</div>
+</div>
+<div class="relative group cursor-pointer overflow-hidden aspect-[4/5]">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Minimalist men's fashion editorial shot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoOrZZnBSvQIJGwOLXK55xjTpurutkmde6-F4UrClOAvGkJbTAJtz-ZJ-ru7Ze4JELbTAa45wOULTPUIf97tHiODKHm7Mc6ERk9V1DTT2szF_4bFmEjAvTt_wd9GVlbi7QoE8PY1APhtenkTcSFgyTLyVsC_x2cyLaORQrGRyLSxWQ9wVl8g_yfNZ0wRL2LOHQ4rptn7F9I7sibJ0en60a48FfxCS3f1BhtLUD57nz6gemEK738ohJjeQwN0H1Qkx6yTnpocusnWp-"/>
+<div class="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/80 to-transparent text-white">
+<p class="text-[10px] tracking-[0.2em] uppercase mb-1 font-bold">Minimalist Aesthetic</p>
+<h4 class="text-2xl font-bold">Prada</h4>
+</div>
+</div>
+<div class="relative group cursor-pointer overflow-hidden aspect-[4/5]">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Streetwear luxury fashion man in hoodie" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtYoTDK0YAVPRSG78DJ-7XpLLKWcOwWs5kHq_hs1GGvZlU_ou6Yc1TBx5OMDmw9wta--7hUlyELrA9LBpoTgwsbObWfs0P9ZHQcljejddz2Ccw6BKtKn68q1fhEwHwF-k0Ll4i0RfFJdVTZGblC1mUvWbTtR1dfquEjLwSQufYYMkhWIj2KAC5VWQuf9yuaUG6P4iOkyZgnpTNdcjei2XsnhZZztmXWij5Bnhyy-yUfElPOStyBZk5GtgRF2f0d_kjT3UcMYa7Gc0U"/>
+<div class="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/80 to-transparent text-white">
+<p class="text-[10px] tracking-[0.2em] uppercase mb-1 font-bold">The Streetwear Icon</p>
+<h4 class="text-2xl font-bold">Balenciaga</h4>
+</div>
+</div>
+</div>
+</section>
+<!-- Menswear Spotlight Product Grid -->
+<section class="py-20 px-4 md:px-10 bg-white dark:bg-background-dark/50">
+<h3 class="text-3xl font-bold mb-12">The Menswear Edit</h3>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
+<!-- Product 1 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-[3/4] mb-4 overflow-hidden bg-slate-50 dark:bg-slate-900">
+<img class="w-full h-full object-cover" data-alt="Single breasted wool blazer in navy" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAc48OnVthS2ecf5MnHFyF7LYntvueYSG5GGxocGNWEVSwf6e34LHpyQaF1xP8rqUhKfja49IYfPr-y207vzu63aF4fZYn9NyUlX7mJ05EG7d-A4iiozf5eqjj8OolVppV1ZVG16gdI9gQw25fPfNQLNsXfewNBhRxJzzNv39tBj2GeOG_q1nb6Q1PJKnc1VljUdxxCSutmQ0rgUuWzywXOXpKdaQZlNwjhfGw2jaLxBM52MpIuj9ylVXEouVnU1zBehoWrCDhZXyP-"/>
+<button class="absolute top-4 right-4 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined font-light">favorite</span>
+</button>
+</div>
+<p class="text-xs font-bold uppercase mb-1 tracking-wider">Thom Browne</p>
+<h5 class="text-sm font-light mb-2 opacity-80">Single-Breasted Wool Blazer</h5>
+<p class="text-sm font-bold">$2,450</p>
+</div>
+<!-- Product 2 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-[3/4] mb-4 overflow-hidden bg-slate-50 dark:bg-slate-900">
+<img class="w-full h-full object-cover" data-alt="High-top designer leather sneakers" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCuYfuUQi3aLaBIh1r14ladKz-gIrugdbqPLTW5YlvLnwpUgAxCFW_TBTLjNdfXGqv1LUpolOGyu00_JipT8mr9358xXG3WvGrZ8Kdd3dCNJj_7-KxsgSjwtszc5nG1BX9-OzGgaA1XIltKYubiZvFqmfpFhhWnR1cPn7OersnCTGnyiee1SMWhfbnlL4Ryhsv-keyQRUh8ebXxbmggZPO-omS02eYUK3NcvoQEIFEBas-3GF9a2IsOn1u_jWDBdJ2Bo01sjiu4A42G"/>
+<button class="absolute top-4 right-4 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined font-light">favorite</span>
+</button>
+</div>
+<p class="text-xs font-bold uppercase mb-1 tracking-wider">Rick Owens</p>
+<h5 class="text-sm font-light mb-2 opacity-80">Geobasket High-Top Sneakers</h5>
+<p class="text-sm font-bold">$1,120</p>
+</div>
+<!-- Product 3 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-[3/4] mb-4 overflow-hidden bg-slate-50 dark:bg-slate-900">
+<img class="w-full h-full object-cover" data-alt="Luxury automatic wristwatch on leather strap" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQpXS27NJeA9ilc1Tml8IVLXXNf-GjZbS8NaFDhA5BNc7tpPHOvHhjiHbncsGemXrgaEMeF01wcTT1oKMBcES0W7dPP9l5p5Ip4GGmUejbskm77YB7ugJOfKksBzH6KoHLhjQR1uoyTAbw-_tKSvUXTtzE0jKykxZAKxlVful5r_s8odKTWC7xgYPn7p1fycX_Uf_gXDUPBrfgRu-jkaciH_eOi5gVbZGmMWRu1IzEQEkzV2Jisfuz_gU1pwq9HiP3qqx7pomCPdnD"/>
+<button class="absolute top-4 right-4 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined font-light">favorite</span>
+</button>
+</div>
+<p class="text-xs font-bold uppercase mb-1 tracking-wider">IWC Schaffhausen</p>
+<h5 class="text-sm font-light mb-2 opacity-80">Portofino Automatic 40mm</h5>
+<p class="text-sm font-bold">$5,200</p>
+</div>
+<!-- Product 4 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-[3/4] mb-4 overflow-hidden bg-slate-50 dark:bg-slate-900">
+<img class="w-full h-full object-cover" data-alt="Black luxury leather chelsea boots" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqDanjfQNd8B9QsdtlXF9i8m-Xk2UFbpLwo35c5Fzji6fzsa0CZFq3iq59-9My6KXLMpeTsF58KYZf-p1egj6Rxx6HDBuUl99LvHda3KUWL46ziawwc_9jwGuMAZpB5IrQ2K4sY2eo5j6wFyYZtFkJxqiXEEaq-cKv8d5llYA1KpZG17ncouwmPDNrd8L4zHLEoeO5SNxruEQDRaCn-PYZNUsfnxHEbRAiNPBC5KxAvc4IsbD29pHmOZ8UxHaXS88FqTYTcpwZ1-0-"/>
+<button class="absolute top-4 right-4 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined font-light">favorite</span>
+</button>
+</div>
+<p class="text-xs font-bold uppercase mb-1 tracking-wider">Saint Laurent</p>
+<h5 class="text-sm font-light mb-2 opacity-80">Wyatt Leather Chelsea Boots</h5>
+<p class="text-sm font-bold">$995</p>
+</div>
+</div>
+</section>
+<!-- Editorial Section -->
+<section class="py-24 px-4 md:px-10">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-1">
+<div class="relative group h-[700px] overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-[2000ms] group-hover:scale-105" data-alt="Man in sophisticated business attire walking" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAD7r4OV-QUT2lvJ1g0nlzwe07tTgwSAhjO900j1nlB9r75604UfGVy5nqfc7oOkPsF_YxOKjgPTeEIzff-o514HvoWcERs85bt7w5l3S6j7e9BYa204DKOacS91cSKNqjFs3KuFaka_p5Z6g3PYJYw1WPiNBQqPstfZdbu_FClEvOwFKYcCbrD5ulMnBCPZWuWPjqMfsZcxMJSe-Tv0yLfap_Xfm4G8muw6kTynweVbw9hEKWrUkrUa-yuTRCv6QTpyqAHicgDv7OW"/>
+<div class="absolute inset-0 bg-black/30 flex flex-col justify-end p-12 text-white">
+<h4 class="text-4xl font-bold mb-4 tracking-tight leading-none uppercase">The Sartorialist</h4>
+<p class="mb-8 opacity-90 max-w-sm">Exploring the renaissance of modern tailoring and how the suit is evolving for the new decade.</p>
+<a class="text-xs font-bold uppercase tracking-widest border-b border-white self-start pb-1" href="#">Read the Story</a>
+</div>
+</div>
+<div class="relative group h-[700px] overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-[2000ms] group-hover:scale-105" data-alt="Close up of high-end accessories and leather bags" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvsS8XHmE2CEutobdU7K_4UMyPaY1tPNKXU8Xk2oWFb-40ZKCQ992PtGoe_yvobnuxkZ6mEUsie94qxXxvWF36Gbc3k2mn5C1tuVfNNk-wCao3TgEXKr2sfgFBDymwPqkJ8VOyQ2flM2SNfga0l0AMt9ZiagjRRq-cmX3-lermlbpAF96CFa5LHB_FtnBq7y9Tq746tmGiA8NBx3tug1FNtRTOAiuqLwFPeIcuSrGNh_z2Apo3WQYD7m3KutP89D_ylxJM5iOf_hdO"/>
+<div class="absolute inset-0 bg-black/30 flex flex-col justify-end p-12 text-white">
+<h4 class="text-4xl font-bold mb-4 tracking-tight leading-none uppercase">Luxe Leisure</h4>
+<p class="mb-8 opacity-90 max-w-sm">Elevated comfort: how premium materials are redefining your weekend wardrobe essentials.</p>
+<a class="text-xs font-bold uppercase tracking-widest border-b border-white self-start pb-1" href="#">Shop The Edit</a>
+</div>
+</div>
+</div>
+</section>
+<!-- Newsletter -->
+<section class="py-20 px-4 md:px-10 bg-slate-100 dark:bg-slate-900/50">
+<div class="max-w-2xl mx-auto text-center">
+<h3 class="text-2xl font-bold mb-4">Stay in the Loop</h3>
+<p class="text-slate-600 dark:text-slate-400 mb-8">Sign up for exclusive early access to sales, new arrivals and menswear styling tips.</p>
+<form class="flex flex-col sm:flex-row gap-4">
+<input class="flex-1 px-6 py-4 bg-white dark:bg-slate-800 border-none rounded-sm focus:ring-1 focus:ring-primary outline-none" placeholder="Enter your email address" type="email"/>
+<button class="bg-primary text-white px-10 py-4 font-bold uppercase tracking-widest rounded-sm hover:opacity-90 transition-opacity">Subscribe</button>
+</form>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-white dark:bg-background-dark border-t border-slate-200 dark:border-slate-800 pt-20 pb-10">
+<div class="max-w-[1440px] mx-auto px-4 md:px-10">
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-12 mb-20">
+<div class="col-span-2 lg:col-span-1">
+<div class="flex items-center gap-2 mb-8">
+<div class="size-5 bg-primary flex items-center justify-center">
+<svg class="text-white size-3" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 4H6V17.3333V30.6667H24V44H42V30.6667V17.3333H24V4Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h1 class="text-xl font-black tracking-tighter uppercase">Farfetch</h1>
+</div>
+<p class="text-xs text-slate-500 leading-relaxed max-w-[200px]">The global platform for luxury fashion. Shop the world's best designers.</p>
+</div>
+<div>
+<h6 class="text-[10px] font-bold uppercase tracking-[0.2em] mb-6">Customer Service</h6>
+<ul class="space-y-3 text-sm text-slate-600 dark:text-slate-400">
+<li><a class="hover:text-primary" href="#">Contact Us</a></li>
+<li><a class="hover:text-primary" href="#">Orders &amp; Delivery</a></li>
+<li><a class="hover:text-primary" href="#">Returns &amp; Refunds</a></li>
+<li><a class="hover:text-primary" href="#">FAQs</a></li>
+</ul>
+</div>
+<div>
+<h6 class="text-[10px] font-bold uppercase tracking-[0.2em] mb-6">About Farfetch</h6>
+<ul class="space-y-3 text-sm text-slate-600 dark:text-slate-400">
+<li><a class="hover:text-primary" href="#">Our Story</a></li>
+<li><a class="hover:text-primary" href="#">Investor Relations</a></li>
+<li><a class="hover:text-primary" href="#">Careers</a></li>
+<li><a class="hover:text-primary" href="#">Sustainability</a></li>
+</ul>
+</div>
+<div>
+<h6 class="text-[10px] font-bold uppercase tracking-[0.2em] mb-6">Shopping with Us</h6>
+<ul class="space-y-3 text-sm text-slate-600 dark:text-slate-400">
+<li><a class="hover:text-primary" href="#">Mobile App</a></li>
+<li><a class="hover:text-primary" href="#">Student Discount</a></li>
+<li><a class="hover:text-primary" href="#">Style Guide</a></li>
+</ul>
+</div>
+<div class="col-span-2 lg:col-span-1">
+<h6 class="text-[10px] font-bold uppercase tracking-[0.2em] mb-6">Connect</h6>
+<div class="flex gap-4">
+<a class="size-10 border border-slate-200 dark:border-slate-800 rounded-sm flex items-center justify-center hover:bg-slate-50 dark:hover:bg-slate-800" href="#"><span class="material-symbols-outlined text-lg">public</span></a>
+<a class="size-10 border border-slate-200 dark:border-slate-800 rounded-sm flex items-center justify-center hover:bg-slate-50 dark:hover:bg-slate-800" href="#"><span class="material-symbols-outlined text-lg">share</span></a>
+<a class="size-10 border border-slate-200 dark:border-slate-800 rounded-sm flex items-center justify-center hover:bg-slate-50 dark:hover:bg-slate-800" href="#"><span class="material-symbols-outlined text-lg">camera</span></a>
+</div>
+</div>
+</div>
+<div class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-slate-200 dark:border-slate-800 text-[10px] text-slate-400 uppercase tracking-widest font-medium">
+<p>© 2024 Farfetch UK Limited. All Rights Reserved.</p>
+<div class="flex gap-6 mt-4 md:mt-0">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms of Use</a>
+<a href="#">Cookies</a>
+</div>
+</div>
+</div>
+</footer>
+</body></html>
