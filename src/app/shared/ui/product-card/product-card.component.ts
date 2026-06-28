@@ -8,24 +8,33 @@ import { CatalogItem } from '../../../core/models/catalog-item.model';
   standalone: true,
   imports: [RouterLink, CurrencyPipe],
   template: `
-    <article class="group cursor-pointer" [attr.aria-label]="item().title">
-      <a [routerLink]="['/product', item().id]" class="block rounded bg-white p-3 shadow-sm">
-        <img [src]="item().image" [alt]="item().title" class="aspect-[3/4] w-full rounded object-cover" loading="lazy" />
-        <p class="mt-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-zinc-500">{{ item().brand }}</p>
-        <h3 class="text-sm font-semibold">{{ item().title }}</h3>
-        <p class="text-sm">{{ item().price | currency }}</p>
+    <article class="group" [attr.aria-label]="item().title">
+
+      <a [routerLink]="['/product', item().id]" class="block">
+        <div class="aspect-[3/4] overflow-hidden bg-zinc-100 relative">
+          <img
+            [src]="item().image"
+            [alt]="item().title"
+            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            loading="lazy"
+          />
+        </div>
+        <div class="space-y-1.5 pt-4">
+          <p class="text-[10px] font-semibold uppercase tracking-widest text-zinc-400">{{ item().brand }}</p>
+          <h3 class="text-sm font-semibold leading-snug">{{ item().title }}</h3>
+          <p class="text-sm font-medium">{{ item().price | currency }}</p>
+        </div>
       </a>
-      <a [routerLink]="['/product', item().id]" class="mt-2 inline-block text-xs underline" [attr.aria-label]="'View details for ' + item().title">
-        View details
-      </a>
+
       <button
         type="button"
-        class="mt-2 ml-3 text-xs underline"
+        class="mt-4 w-full border border-black py-2.5 text-[10px] font-bold uppercase tracking-widest hover:bg-black hover:text-white transition-colors duration-200"
         (click)="addToBag.emit(item().id)"
         [attr.aria-label]="'Add ' + item().title + ' to bag'"
       >
-        Add to bag
+        Add to Bag
       </button>
+
     </article>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush

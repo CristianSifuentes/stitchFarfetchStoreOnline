@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#000000",
+                        "background-light": "#f7f7f7",
+                        "background-dark": "#191919",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<title>Farfetch | Luxury Menswear</title>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Top Navigation -->
+<header class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-background-dark px-6 lg:px-20 py-4 sticky top-0 z-50">
+<div class="flex items-center gap-10">
+<div class="flex items-center gap-2">
+<div class="size-6 text-primary dark:text-white">
+<svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M24 4H6V17.3333V30.6667H24V44H42V30.6667V17.3333H24V4Z" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h1 class="text-xl font-extrabold tracking-tighter uppercase">Farfetch</h1>
+</div>
+<nav class="hidden md:flex items-center gap-8 uppercase text-xs font-bold tracking-widest">
+<a class="hover:underline underline-offset-4" href="#">Women</a>
+<a class="hover:underline underline-offset-4 border-b-2 border-primary" href="#">Men</a>
+<a class="hover:underline underline-offset-4" href="#">Kids</a>
+<a class="hover:underline underline-offset-4 text-red-600" href="#">Sale</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden sm:flex items-center bg-slate-100 dark:bg-slate-800 rounded px-3 py-2 w-64">
+<span class="material-symbols-outlined text-slate-400 text-lg">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-full placeholder-slate-400" placeholder="Search brands, items..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<button class="hover:opacity-70"><span class="material-symbols-outlined">person</span></button>
+<button class="hover:opacity-70"><span class="material-symbols-outlined">favorite</span></button>
+<button class="hover:opacity-70 flex items-center gap-1">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="text-xs font-bold">0</span>
+</button>
+</div>
+</div>
+</header>
+<main class="flex-1 max-w-[1400px] mx-auto w-full px-4 lg:px-10 py-8">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-2 text-[10px] uppercase tracking-widest text-slate-500 mb-8">
+<a class="hover:text-primary" href="#">Home</a>
+<span>/</span>
+<a class="hover:text-primary" href="#">Menswear</a>
+<span>/</span>
+<a class="hover:text-primary" href="#">Clothing</a>
+<span>/</span>
+<span class="text-primary font-bold">Jackets</span>
+</nav>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+<!-- Image Gallery -->
+<div class="lg:col-span-7 grid grid-cols-2 gap-4">
+<div class="col-span-2 aspect-[3/4] bg-slate-200 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Close up of a premium black leather biker jacket" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHpzLzQb9y_Iq5_FpevWmy7XkzZNWOP65rYu6Hj1vB9H27nVQGnwkx0-PrJSYXWdUsuEa38xjfD22LkWFBRYuXhFvRYgRbqMtC6Xp9UrVZNKUfQZ5gAcHoFRtvAqjh4luRzkqrc_JNS6sJHbqU2KcmPEQzdxqjRdjZVhEjyV97pmJxTS6uBGL2dUYzT1i65VskzuYKdEtA_0YrbRR85sHXqq7EtoNZI6-n7FNPk1tBzYbAdKGYU6hPbULVrbhLW8nDdWc5c7BSAQGk"/>
+</div>
+<div class="aspect-[3/4] bg-slate-200">
+<img class="w-full h-full object-cover" data-alt="Model wearing a designer leather jacket from front" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWHmFb5KhKOmfAcGzeC2wUsam_sBPg7Tg1WZfJQPPhcb7fgNSA8oNQqu-7roYL_DcIYCIQH5qv-hK4DoRVsvYw8Yo0KR0IE-1Ec124eTrYUOhJdgw9ZqgOH0MHiqiP03qWgzKrWeWTznMxUABUAyBxIHr3f8a8lZTUMlTqbd5nwvnYyV9x65zvAKUrxbrNkCxGV8mg227pAS1cIgJLtotO94NMjd0u-SRs_2fNGGR8IOt-g4uW3Uqa3VHfZHqddlO0JM_fCSv4Wxqv"/>
+</div>
+<div class="aspect-[3/4] bg-slate-200">
+<img class="w-full h-full object-cover" data-alt="Detail shot of jacket hardware and texture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuClukboTECn2FaHd5NoFMomcLbZbLS6cxpqakNJ5U84F29P8kBJEfAmg8fufXw-IVYp3k5BHWlGn03WPAleWzS5l6Waadzh0nsVUPj2Gadox_TqmkTuvpqa1XXVDSvxIISIcImkIe2aWzZeCCgb_no4HX4hdki8Cd3mn2PjCqiRne4z9GwAkefCLUIxzULDNmPMbtOEpSnoQ7E5mSAFYus5X0WZIsJLGzThKLfCBJQfuOUpbiuO-lpTBpZxkWDLU2sXBsls8JQKr3YN"/>
+</div>
+</div>
+<!-- Product Info -->
+<div class="lg:col-span-5 flex flex-col gap-8 lg:sticky lg:top-24 h-fit">
+<div>
+<h2 class="text-2xl font-extrabold uppercase tracking-tight">Saint Laurent</h2>
+<h1 class="text-lg font-light text-slate-600 dark:text-slate-400 mt-1">L01 Classic Leather Biker Jacket</h1>
+<p class="text-xl font-bold mt-4">$3,250</p>
+<p class="text-[10px] text-slate-400 mt-1 uppercase tracking-tighter">Import duties included</p>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-end">
+<label class="text-xs font-bold uppercase tracking-widest">Select Size (IT)</label>
+<a class="text-[10px] uppercase font-bold tracking-widest underline underline-offset-4 hover:text-slate-500" href="#">Size Guide</a>
+</div>
+<div class="relative">
+<select class="w-full border border-slate-300 dark:border-slate-700 bg-transparent rounded-none py-4 px-4 text-sm focus:ring-primary focus:border-primary appearance-none">
+<option>Select size</option>
+<option>44 IT</option>
+<option>46 IT - Last 1 left</option>
+<option>48 IT</option>
+<option>50 IT</option>
+<option>52 IT</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">expand_more</span>
+</div>
+<div class="flex gap-4 mt-6">
+<button class="flex-1 bg-primary text-white dark:bg-white dark:text-black py-5 font-bold uppercase text-xs tracking-[0.2em] hover:opacity-90 transition-opacity">
+                            Add to Bag
+                        </button>
+<button class="group/wishlist w-14 border border-slate-300 dark:border-slate-700 flex items-center justify-center hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-300">
+<span class="material-symbols-outlined text-slate-900 dark:text-white transition-all duration-300 group-hover/wishlist:fill-1">favorite</span>
+</button>
+</div>
+<p class="text-center text-[10px] text-slate-400 uppercase tracking-widest mt-2">Estimated delivery: 2-4 business days</p>
+</div>
+<!-- Product Details Tabs (Simplified) -->
+<div class="border-t border-slate-200 dark:border-slate-800 pt-6 space-y-6">
+<details class="group" open="">
+<summary class="flex justify-between items-center cursor-pointer list-none">
+<span class="text-xs font-bold uppercase tracking-widest">The Details</span>
+<span class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="mt-4 text-sm leading-relaxed text-slate-600 dark:text-slate-400 space-y-4">
+<p>An icon of the Parisian house, the L01 biker jacket encapsulates the rock 'n' roll aesthetic of Saint Laurent. Crafted in Italy from premium lambskin, it features a classic notched lapel and silver-tone hardware.</p>
+<ul class="list-disc pl-4 space-y-1">
+<li>Black lambskin leather</li>
+<li>Epaulettes, three zip pockets, snap-fastening flap pocket</li>
+<li>Zip-fastening cuffs, fully lined</li>
+<li>Asymmetric zip fastening</li>
+<li>Made in Italy</li>
+</ul>
+</div>
+</details>
+<details class="group border-t border-slate-200 dark:border-slate-800 pt-6">
+<summary class="flex justify-between items-center cursor-pointer list-none">
+<span class="text-xs font-bold uppercase tracking-widest">Composition &amp; Care</span>
+<span class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="mt-4 text-sm text-slate-600 dark:text-slate-400">
+<p class="font-bold mb-2">Composition</p>
+<p>Outer: Lamb Skin 100%</p>
+<p>Lining: Cupro 60%, Cotton 40%</p>
+<p class="font-bold mt-4 mb-2">Washing instructions</p>
+<p>Specialist Cleaning</p>
+</div>
+</details>
+<details class="group border-t border-slate-200 dark:border-slate-800 pt-6">
+<summary class="flex justify-between items-center cursor-pointer list-none">
+<span class="text-xs font-bold uppercase tracking-widest">About the Brand</span>
+<span class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="mt-4 text-sm text-slate-600 dark:text-slate-400 italic leading-relaxed">
+                            "Founded in 1961, Yves Saint Laurent was the first couture house to introduce the concept of luxury prêt-à-porter with a collection called 'Rive Gauche' in 1966. Today, under the creative direction of Anthony Vaccarello, the house continues to define modern elegance."
+                        </div>
+</details>
+</div>
+</div>
+</div>
+<!-- Styled With Section -->
+<section class="mt-24 border-t border-slate-200 dark:border-slate-800 pt-16">
+<h3 class="text-xs font-bold uppercase tracking-[0.3em] mb-10 text-center">Complete the Look</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+<!-- Recommended Item 1 -->
+<div class="group cursor-pointer">
+<div class="aspect-[3/4] bg-slate-100 overflow-hidden mb-4 relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Model wearing slim fit black trousers" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWBpi7PE5iQGMZK04QSJyCkKpjWy60AAwirVbvgBqrESCnBXazzkQeFjAvCg4-zD8uRr2Nk7Sb-n1-CsaSx5U-SQdYtk0Ab6AXcvX4X3cD5Ufl_24dbhfTKDeNPej3ifkD_wrTJOfkHCix3MyMzLvr0M16_gwAVn_9Z-2HZcYOdECkGFuTOtm2aCIBLV061pE5qK6YrpiUruSW_DWydQjDLRgNQswAyMVKcLyKEKWm_nb0bx42SbWLT1OHe-rfUN2lsEa_1vMb4Cf1"/>
+<button class="absolute top-4 right-4 text-white opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-black bg-white/80 p-1 rounded-full">favorite</span>
+</button>
+</div>
+<p class="text-[10px] font-bold uppercase tracking-widest">Saint Laurent</p>
+<p class="text-[10px] text-slate-500 uppercase tracking-tighter">Slim-fit tailored trousers</p>
+<p class="text-xs font-bold mt-1">$850</p>
+</div>
+<!-- Recommended Item 2 -->
+<div class="group cursor-pointer">
+<div class="aspect-[3/4] bg-slate-100 overflow-hidden mb-4 relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Luxury black leather chelsea boots" src="https://lh3.googleusercontent.com/aida-public/AB6AXuClNGq8e8Pb91zIwBReUB1JQ2o2R1lTBC458-CauEen97jbjHh-ebni66HkjwRopEQoI8F2mSrtVxxZegZFx3KmNH28WC4NVK79Hd_cnza4TBDfIXQSbpjRQ79Hul8LNyzRLLjfwNRyewg_idbCEHHeV3HPK_a67IGj_g3swq_8BB6ubeoXMLrHS55ZMFFo-wFt0zLaZQ7lPkJyUxWM-I2wzxndA3qX1hWNc-DcTRK-MOSRqVzRJgFaZNeIUlg4bnI_WZ0F8rR88G2I"/>
+<button class="absolute top-4 right-4 text-white opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-black bg-white/80 p-1 rounded-full">favorite</span>
+</button>
+</div>
+<p class="text-[10px] font-bold uppercase tracking-widest">Saint Laurent</p>
+<p class="text-[10px] text-slate-500 uppercase tracking-tighter">Wyatt chelsea boots</p>
+<p class="text-xs font-bold mt-1">$1,150</p>
+</div>
+<!-- Recommended Item 3 -->
+<div class="group cursor-pointer">
+<div class="aspect-[3/4] bg-slate-100 overflow-hidden mb-4 relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="High quality white cotton t-shirt" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9PFZhslMdXHzNF3FVG85tEudF0AOK4L2htnwT_ZhdGPe68c4JxjKZzmMouj586WwcbXNx3Ar1vc31hrkK5MdEoYHbETGk9ZPWVYON3tlsr45t-D6eO3myfXYtKUgr3zLNUlVQFdaxVtQ0IAgn8b67BswiFq3yNfon0Z1y3yCX4w_xLbxFJ_lJjxP3ExWrvmmP7RIHlNdKmcMkqA9_FBr2VBg7bC5BXaMniLBHWQHKhDQLRgpKeXupuaDyvEcVqvCdXTZLGOdsW_pa"/>
+<button class="absolute top-4 right-4 text-white opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-black bg-white/80 p-1 rounded-full">favorite</span>
+</button>
+</div>
+<p class="text-[10px] font-bold uppercase tracking-widest">Saint Laurent</p>
+<p class="text-[10px] text-slate-500 uppercase tracking-tighter">Classic crew neck t-shirt</p>
+<p class="text-xs font-bold mt-1">$450</p>
+</div>
+<!-- Recommended Item 4 -->
+<div class="group cursor-pointer">
+<div class="aspect-[3/4] bg-slate-100 overflow-hidden mb-4 relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Designer silver accessory" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyKnLO4u0Ej4eCLNOqfpuzK5ysfXx450qd2b3XfSodPu4Q68-nfSxQym2X2QOUr6glomGAFKlVEjlxUHIiz7PVpc45xmtkZ3OFNegxw9f0c416go62wVjd2WRK7uhbTn7sOKY2_RkS00wmWUNLNVcPkJWYjjrHsXT1Kwx0VzmpzgZL1fL51x9-yr2QStzUU-THUl6kdXPk15LcBo1lY4vTh-70SxAYDjfmYCENtKyNxtKGDsi0Yf1sARN8MICBY10z6yYGaw0i0VTh"/>
+<button class="absolute top-4 right-4 text-white opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-black bg-white/80 p-1 rounded-full">favorite</span>
+</button>
+</div>
+<p class="text-[10px] font-bold uppercase tracking-widest">Saint Laurent</p>
+<p class="text-[10px] text-slate-500 uppercase tracking-tighter">Engraved silver ring</p>
+<p class="text-xs font-bold mt-1">$295</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-white dark:bg-background-dark border-t border-slate-200 dark:border-slate-800 mt-20 py-16 px-6 lg:px-20">
+<div class="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+<div>
+<h4 class="text-xs font-bold uppercase tracking-[0.2em] mb-6">Customer Service</h4>
+<ul class="text-[11px] uppercase tracking-widest space-y-3 text-slate-500">
+<li><a class="hover:text-primary" href="#">Contact Us</a></li>
+<li><a class="hover:text-primary" href="#">Orders &amp; Delivery</a></li>
+<li><a class="hover:text-primary" href="#">Returns &amp; Refunds</a></li>
+<li><a class="hover:text-primary" href="#">FAQs</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-xs font-bold uppercase tracking-[0.2em] mb-6">About Farfetch</h4>
+<ul class="text-[11px] uppercase tracking-widest space-y-3 text-slate-500">
+<li><a class="hover:text-primary" href="#">About Us</a></li>
+<li><a class="hover:text-primary" href="#">Careers</a></li>
+<li><a class="hover:text-primary" href="#">Investors</a></li>
+<li><a class="hover:text-primary" href="#">Farfetch App</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-xs font-bold uppercase tracking-[0.2em] mb-6">Discount &amp; Loyalty</h4>
+<ul class="text-[11px] uppercase tracking-widest space-y-3 text-slate-500">
+<li><a class="hover:text-primary" href="#">Refer a Friend</a></li>
+<li><a class="hover:text-primary" href="#">Student Discount</a></li>
+<li><a class="hover:text-primary" href="#">Access Loyalty</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-xs font-bold uppercase tracking-[0.2em] mb-6">Newsletter</h4>
+<p class="text-[11px] uppercase tracking-widest text-slate-500 mb-4 leading-relaxed">Sign up for exclusive early sale access and luxury fashion updates.</p>
+<div class="flex gap-2">
+<input class="bg-slate-100 dark:bg-slate-800 border-none rounded-none text-[11px] w-full focus:ring-1 focus:ring-primary" placeholder="Email Address" type="email"/>
+<button class="bg-primary text-white dark:bg-white dark:text-black px-4 py-2 text-[10px] font-bold uppercase tracking-widest">Join</button>
+</div>
+</div>
+</div>
+<div class="max-w-[1400px] mx-auto mt-20 pt-8 border-t border-slate-100 dark:border-slate-800 flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex gap-4 text-slate-400">
+<a href="#"><span class="material-symbols-outlined">public</span></a>
+<a href="#"><span class="material-symbols-outlined">share</span></a>
+<a href="#"><span class="material-symbols-outlined">mail</span></a>
+</div>
+<p class="text-[10px] uppercase tracking-widest text-slate-400">© 2024 Farfetch UK Limited. All Rights Reserved.</p>
+<div class="flex gap-6 text-[10px] uppercase tracking-widest text-slate-400">
+<a class="hover:text-primary" href="#">Privacy Policy</a>
+<a class="hover:text-primary" href="#">Terms &amp; Conditions</a>
+</div>
+</div>
+</footer>
+</div>
+</body></html>

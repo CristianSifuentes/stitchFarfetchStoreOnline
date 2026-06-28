@@ -9,51 +9,116 @@ import { CartService } from '../../../core/services/cart.service';
   standalone: true,
   imports: [RouterLink, ProductCardComponent],
   template: `
-    <section class="rounded-2xl bg-black text-white">
-      <div class="grid gap-6 p-10 md:grid-cols-2">
-        <div>
-          <p class="mb-3 text-xs uppercase tracking-[0.2em] text-orange-300">New arrivals</p>
-          <h1 class="text-5xl font-extrabold">{{ store.heroTitle() }}</h1>
-          <p class="mt-4 text-zinc-200">Luxury fashion marketplace serving clients in 190+ countries.</p>
-          <div class="mt-8 flex gap-3">
-            <a routerLink="/menswear" class="rounded bg-orange-500 px-5 py-3 text-sm font-semibold">Shop Men</a>
-            <a routerLink="/kids" class="rounded bg-white px-5 py-3 text-sm font-semibold text-black">Shop Kids</a>
+
+    <!-- ─── Department Selector ─────────────────────────────────────────────── -->
+    <section class="py-10">
+      <h2 class="text-center text-xs font-bold uppercase tracking-[0.28em] text-zinc-400 mb-8">Choose a department</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+        <a routerLink="/womenswear" class="group relative aspect-[3/4] overflow-hidden block cursor-pointer">
+          <img
+            src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=720&q=80"
+            alt="Womenswear"
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            loading="eager"
+          />
+          <div class="absolute inset-0 bg-black/25 group-hover:bg-black/10 transition-colors duration-300"></div>
+          <div class="absolute bottom-8 left-0 right-0 flex justify-center">
+            <span class="bg-white text-black px-8 py-3 text-[11px] font-bold uppercase tracking-widest shadow-lg">Womenswear</span>
           </div>
-        </div>
-        <img class="h-80 w-full rounded-xl object-cover" alt="hero" src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1400&q=80" />
+        </a>
+
+        <a routerLink="/menswear" class="group relative aspect-[3/4] overflow-hidden block cursor-pointer">
+          <img
+            src="https://images.unsplash.com/photo-1520975954732-35dd22299614?auto=format&fit=crop&w=720&q=80"
+            alt="Menswear"
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            loading="eager"
+          />
+          <div class="absolute inset-0 bg-black/25 group-hover:bg-black/10 transition-colors duration-300"></div>
+          <div class="absolute bottom-8 left-0 right-0 flex justify-center">
+            <span class="bg-white text-black px-8 py-3 text-[11px] font-bold uppercase tracking-widest shadow-lg">Menswear</span>
+          </div>
+        </a>
+
+        <a routerLink="/kids" class="group relative aspect-[3/4] overflow-hidden block cursor-pointer">
+          <img
+            src="https://images.unsplash.com/photo-1519457431-44ccd64a579b?auto=format&fit=crop&w=720&q=80"
+            alt="Kidswear"
+            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            loading="eager"
+          />
+          <div class="absolute inset-0 bg-black/25 group-hover:bg-black/10 transition-colors duration-300"></div>
+          <div class="absolute bottom-8 left-0 right-0 flex justify-center">
+            <span class="bg-white text-black px-8 py-3 text-[11px] font-bold uppercase tracking-widest shadow-lg">Kidswear</span>
+          </div>
+        </a>
+
       </div>
     </section>
 
-    <section class="mt-12">
-      <div class="mb-4 flex items-center justify-between">
-        <h2 class="text-2xl font-bold">Editors' Picks</h2>
+    <!-- ─── Featured Editorial ────────────────────────────────────────────────── -->
+    <section class="grid grid-cols-1 lg:grid-cols-2 items-center bg-white">
+      <div class="p-8 md:p-16 space-y-6">
+        <span class="text-[10px] font-bold uppercase tracking-[0.28em] text-zinc-400">The Modern Muse</span>
+        <h3 class="text-4xl md:text-5xl font-extrabold leading-tight">{{ store.heroTitle() }}</h3>
+        <p class="text-zinc-500 max-w-md leading-relaxed">Curated pieces from the world's most iconic designers, blending timeless craftsmanship with contemporary silhouettes.</p>
+        <div class="pt-2 flex flex-wrap gap-3">
+          <a routerLink="/womenswear" class="bg-black text-white px-10 py-4 text-[11px] font-bold uppercase tracking-widest hover:bg-zinc-800 transition-colors">Shop Now</a>
+          <a routerLink="/menswear" class="border border-black px-10 py-4 text-[11px] font-bold uppercase tracking-widest hover:bg-zinc-50 transition-colors">View All</a>
+        </div>
       </div>
-      <div class="grid gap-4 md:grid-cols-3">
+      <div class="aspect-square overflow-hidden">
+        <img
+          src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=900&q=80"
+          alt="Editorial fashion"
+          class="w-full h-full object-cover"
+          loading="lazy"
+        />
+      </div>
+    </section>
+
+    <!-- ─── Editors' Picks ────────────────────────────────────────────────────── -->
+    <section class="py-16">
+      <div class="flex items-center justify-between mb-10">
+        <h2 class="text-xl font-bold uppercase tracking-[0.1em]">Editors' Picks</h2>
+        <a routerLink="/womenswear" class="text-[10px] font-bold uppercase tracking-widest border-b border-black pb-0.5 hover:text-zinc-500 hover:border-zinc-500 transition-colors">View All</a>
+      </div>
+      <div class="grid gap-8 md:gap-10 grid-cols-2 md:grid-cols-3">
         @for (item of store.catalog(); track item.id) {
           <app-product-card [item]="item" (addToBag)="addToBag($event)" />
         }
       </div>
     </section>
 
+    <!-- ─── Newsletter ─────────────────────────────────────────────────────────── -->
     @defer (on viewport) {
-      <section class="mt-12 rounded-xl bg-white p-8">
-        <h3 class="text-2xl font-bold">Stay ahead of the curve</h3>
-        <p class="mt-2 text-sm text-zinc-600">Signal-form newsletter with zoneless reactive validation.</p>
-        <form class="mt-4 flex flex-col gap-3 md:flex-row" (submit)="$event.preventDefault()">
-          <input
-            class="rounded border px-4 py-3"
-            type="email"
-            aria-label="Email address"
-            [value]="email()"
-            (input)="onEmailInput($event)"
-            placeholder="Enter your email address"
-          />
-          <button class="rounded bg-black px-6 py-3 text-white disabled:opacity-50" [disabled]="!isEmailValid()">Subscribe</button>
-        </form>
+      <section class="border-t border-zinc-200 py-24">
+        <div class="max-w-2xl mx-auto text-center space-y-5">
+          <h3 class="text-2xl md:text-3xl font-extrabold uppercase tracking-[0.28em]">The Farfetch Editorial</h3>
+          <p class="text-zinc-500 max-w-md mx-auto leading-relaxed text-sm">Curated trends, exclusive interviews, and the latest from the world's most iconic designers.</p>
+          <form class="mt-6 flex flex-col md:flex-row gap-2" (submit)="$event.preventDefault()">
+            <input
+              class="flex-1 bg-transparent border-0 border-b border-zinc-300 rounded-none focus:ring-0 focus:border-black px-0 py-3 text-sm placeholder:text-zinc-400 outline-none"
+              type="email"
+              aria-label="Email address"
+              [value]="email()"
+              (input)="onEmailInput($event)"
+              placeholder="Enter your email address"
+            />
+            <button
+              class="bg-black text-white px-12 py-3 text-[11px] font-bold uppercase tracking-[0.2em] hover:bg-zinc-800 hover:tracking-[0.26em] transition-all duration-300 disabled:opacity-40 whitespace-nowrap"
+              [disabled]="!isEmailValid()"
+            >
+              Subscribe
+            </button>
+          </form>
+        </div>
       </section>
     } @placeholder {
-      <div class="mt-12 h-36 animate-pulse rounded-xl bg-zinc-200"></div>
+      <div class="mt-12 h-36 animate-pulse bg-zinc-200"></div>
     }
+
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
