@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#000000",
+              "background-light": "#f7f7f7",
+              "background-dark": "#191919",
+            },
+            fontFamily: {
+              "display": ["Plus Jakarta Sans", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100">
+<!-- Top Notification Bar -->
+<div class="w-full bg-primary text-white py-2.5 px-4 text-center text-xs font-medium tracking-wider uppercase">
+        Enjoy Free Shipping on orders over $200
+    </div>
+<!-- Navigation Header -->
+<header class="border-b border-slate-200 dark:border-slate-800 sticky top-0 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md z-50">
+<div class="max-w-[1440px] mx-auto px-4 md:px-10">
+<!-- Top Utility Row -->
+<div class="flex items-center justify-between py-4 border-b border-slate-100 dark:border-slate-800 lg:border-none">
+<nav class="hidden lg:flex items-center gap-8 text-sm font-semibold uppercase tracking-tight">
+<a class="hover:underline underline-offset-4" href="#">Womenswear</a>
+<a class="hover:underline underline-offset-4" href="#">Menswear</a>
+<a class="hover:underline underline-offset-4" href="#">Kidswear</a>
+</nav>
+<!-- Mobile Menu Icon -->
+<div class="lg:hidden">
+<span class="material-symbols-outlined cursor-pointer">menu</span>
+</div>
+<!-- Central Logo -->
+<div class="absolute left-1/2 -translate-x-1/2">
+<h1 class="text-3xl md:text-4xl font-black tracking-tighter text-primary dark:text-white uppercase">FARFETCH</h1>
+</div>
+<!-- Right Icons -->
+<div class="flex items-center gap-4 md:gap-6">
+<button class="hidden md:flex items-center">
+<span class="material-symbols-outlined text-2xl">flag</span>
+</button>
+<button class="flex items-center">
+<span class="material-symbols-outlined text-2xl">person</span>
+</button>
+<button class="flex items-center">
+<span class="material-symbols-outlined text-2xl">favorite</span>
+</button>
+<button class="flex items-center relative">
+<span class="material-symbols-outlined text-2xl">shopping_bag</span>
+<span class="absolute -top-1 -right-1 bg-primary text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">0</span>
+</button>
+</div>
+</div>
+<!-- Search Bar Row (Desktop Only) -->
+<div class="py-4 hidden md:block">
+<div class="max-w-xl mx-auto relative group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary">search</span>
+<input class="w-full bg-slate-100 dark:bg-slate-800 border-none rounded-none py-3 pl-12 pr-4 text-sm focus:ring-1 focus:ring-primary placeholder:text-slate-500" placeholder="What are you looking for?" type="text"/>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-[1440px] mx-auto px-4 md:px-10 py-8 space-y-16">
+<!-- Hero Section: Choose a Department -->
+<section>
+<h2 class="text-2xl md:text-3xl font-bold text-center mb-8 uppercase tracking-wide">Choose a department</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<!-- Womenswear -->
+<div class="group relative aspect-[3/4] overflow-hidden cursor-pointer">
+<div class="absolute inset-0 bg-neutral-200 transition-transform duration-700 group-hover:scale-105 bg-cover bg-center" data-alt="Luxury fashion model wearing elegant womenswear" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCIqYTZs-_yaMK2ehHctlxDKjm5dXPjkCuvHv3jFkrtBzVv_UO_UE02kru02oEoKbM9AwK05mREGzgFfn0mn7NCV4boWtCW9_sGesfMUM2A5kvyIlBPXUCH_HA5ES-cZd5s-at2AMed_IVXXzqmqikcjP1CGqPQ-h9pvIvpIPzE4J4cgH1RJ0yxM0dUc7f8xQRKyGoMaiz-WgDGtoP6YMA_IZNBVoWasC7Kn-BNVHMhG26QFC4W-dhF2fREdbb2ct7WR6svglLgTJE7')"></div>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300"></div>
+<div class="absolute bottom-8 left-0 right-0 text-center">
+<span class="inline-block bg-white text-primary px-8 py-3 text-sm font-bold uppercase tracking-widest shadow-lg">Womenswear</span>
+</div>
+</div>
+<!-- Menswear -->
+<div class="group relative aspect-[3/4] overflow-hidden cursor-pointer">
+<div class="absolute inset-0 bg-neutral-200 transition-transform duration-700 group-hover:scale-105 bg-cover bg-center" data-alt="Stylish man in contemporary designer menswear" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDyfnFvLrUZP0kA4Px3Z52hFuY4ep47jzHcFRaCoV58j_v5XYy8cg2YhXkw5SMkRj-tAmjDlgpXgGzedK1h_R0pBP_e0D5nySwOBSvwM25DXiVzHPLbhR09kCb4ChPBt9SvB3oUDMa3cFX09FtFEcINg1sw4Zy0DtIg9kzbhUBFQihVcAGlVJ8XBjCrWJNoYDgtTdIzhsbaGpRbnMhmyd19cUQHZKlGSSwljNcWPw4TeJbXC3H-UYKjTYA7NEN8FslLptOpBVa9ePn0')"></div>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300"></div>
+<div class="absolute bottom-8 left-0 right-0 text-center">
+<span class="inline-block bg-white text-primary px-8 py-3 text-sm font-bold uppercase tracking-widest shadow-lg">Menswear</span>
+</div>
+</div>
+<!-- Kidswear -->
+<div class="group relative aspect-[3/4] overflow-hidden cursor-pointer">
+<div class="absolute inset-0 bg-neutral-200 transition-transform duration-700 group-hover:scale-105 bg-cover bg-center" data-alt="Kids wearing trendy luxury street apparel" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAyS2j26H9f279bWF0evE8tshuIrXyBeYtdeURfK-XZOVWuNU5BHCB_vbrhE2WrLqS98iJYG1MgVICuLnCcd_VVhZuObwi8mBVrE8IGmMhWvvX3PtJ5zXA6FenSmPUvaIeCw_vb0_ftY-udO1rUHkHmCCeD83NHBpRs99K96oE_-9aAYSbQoOIFT5CUxdejiGnx9vxgygfk6oCLJvzR4OKNXOBNY1HT0JamGZ1d1WKZY-CjqSw5V2MEDyqHkNP_UAzOfcpnoiabVPHH')"></div>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300"></div>
+<div class="absolute bottom-8 left-0 right-0 text-center">
+<span class="inline-block bg-white text-primary px-8 py-3 text-sm font-bold uppercase tracking-widest shadow-lg">Kidswear</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Featured Editorial -->
+<section class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center bg-white dark:bg-slate-900">
+<div class="p-8 md:p-16 space-y-6">
+<span class="text-xs font-bold uppercase tracking-[0.2em] text-slate-500">The Modern Muse</span>
+<h3 class="text-4xl md:text-5xl font-extrabold leading-tight">Elevated Essentials for the New Season</h3>
+<p class="text-lg text-slate-600 dark:text-slate-400 max-w-md">Discover curated pieces from the world's most iconic designers, blending timeless craftsmanship with contemporary silhouettes.</p>
+<div class="pt-4 flex gap-4">
+<button class="bg-primary text-white px-10 py-4 font-bold uppercase text-sm tracking-widest hover:bg-slate-800 transition-colors">Shop Now</button>
+<button class="border border-primary px-10 py-4 font-bold uppercase text-sm tracking-widest hover:bg-slate-50 transition-colors">View All</button>
+</div>
+</div>
+<div class="aspect-square bg-cover bg-center" data-alt="Editorial close up of high fashion accessory" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAjorW5sVItE1KtsV8zcJP0y6lepPHKyp9to4ADW9WOonJu8tvg-5iDn8CXQElOiUcm992MRCZ5Me1pQHPFpmHNfe7V3005ST_wTP4JRRtKThpAZsg1w-tln8rUqEaE2SvZp8_-oKS5yu1is5djBzCcHp25ji8FiUBf49eyFk6wzjBYM5JWbsB0rSVBWwA4LrdzcSwuNJdc156tShU2VtidSLEiJQ5y1gypEBkKlz_NzrpRYJu0fVkhjRUHjn613lzk1RgGwv-HKEPn')"></div>
+</section>
+<!-- Shop by Category Grid -->
+<section>
+<div class="flex items-center justify-between mb-8">
+<h2 class="text-2xl font-bold uppercase tracking-tight">Womenswear Spotlight</h2>
+<a class="text-sm font-bold underline underline-offset-4" href="#">View All</a>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+<!-- Category 1 -->
+<div class="space-y-4 group cursor-pointer">
+<div class="aspect-[3/4] overflow-hidden bg-slate-100 relative">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="High-end designer handbags category" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNHTdsIo3QLAzJjncb1y4CLyCp5WoFtaJ_0WuT_TpombAy6QmAfUjHVPt1V9Zdh-K_eVdqzubDXT5Sx2hifY4LpMwj2goL0JBSogJYGqoFJXeiV7VoEJ_CLmhX27_BZmMCpCXAaKHs2e5IGObfYFTzeK_dTwkh2zO73YVAu3KBI8iCzJuTGR4llLZJ_aHtLngDRVZVTebqbOjXkX8GZPgdSXEHpb1FjFpgv7eUjsMJoLt2IOkqtFwxQVGEZcvw8mCaJEupgrZbL4fi"/>
+</div>
+<div class="space-y-1">
+<h4 class="font-bold text-sm uppercase">Designer Bags</h4>
+<p class="text-xs text-slate-500 uppercase tracking-tighter">Gucci, Prada, Saint Laurent</p>
+</div>
+</div>
+<!-- Category 2 -->
+<div class="space-y-4 group cursor-pointer">
+<div class="aspect-[3/4] overflow-hidden bg-slate-100 relative">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Luxury designer heels category" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrbeRDZklZQY_PTMmED0ju0F2MZN8ZsQvUXoXY_8Jn7oYtoI3sq6NMi-jg0RBYkBqDQwbEXzSCjVB7aSmWfbyOyllDAWWJ9yVfzzqS845DCFEppF5M7PaomS3ObSOJLFW3iwgR6RCOeljL387mF4Le3P8wzMjLJr2BOad__ak8hvmr1lBhyV1Tv-Jxp_DWgN8soYcmF_OWA1DHj9n_FyIW7UUeGZlK3Y1rl5L6ajQ34GzJsdd7Lzzm-FR5bjzQk-FMZmbqKx8btGxt"/>
+</div>
+<div class="space-y-1">
+<h4 class="font-bold text-sm uppercase">Iconic Footwear</h4>
+<p class="text-xs text-slate-500 uppercase tracking-tighter">Jimmy Choo, Balenciaga</p>
+</div>
+</div>
+<!-- Category 3 -->
+<div class="space-y-4 group cursor-pointer">
+<div class="aspect-[3/4] overflow-hidden bg-slate-100 relative">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Runway ready dresses category" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkmisyaOsq_YQqw8cmXt3XOD-parmPxf_sJ4ozqAW4UxUa3_0Epodpckh4gnuMjhJkep-H6ETia9MjQl937_oMax6UUw5EqfzvRgk8umK48sRYDg3fL56kzLtBMofM0EFSZqNJOC9EmAsnpGQnc8FsnI_1lGUrQsfAWgpJoCwHk5NdHvxuY5tMuWZ4ZNXouUJEHKfQ2Pc5QjihPSuy-7zkBA9Rjl1v3309H5XCdBehlNMMatskS_zjKeAgBjMWtdOjPawVHTC7rS3_"/>
+</div>
+<div class="space-y-1">
+<h4 class="font-bold text-sm uppercase">Runway Dresses</h4>
+<p class="text-xs text-slate-500 uppercase tracking-tighter">Valentino, Zimmerman</p>
+</div>
+</div>
+<!-- Category 4 -->
+<div class="space-y-4 group cursor-pointer">
+<div class="aspect-[3/4] overflow-hidden bg-slate-100 relative">
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Fine jewelry and watches category" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTXO1K9FyEePCBqxJVsQLbQNuNkYX9-dBvMCSFerr8pEaj4XrayMSvNPT3ILPoZmYWvIp8uMHNWq7_mHwAky4Ob-NGTjoK7sV5LFGo8DMmj-6A3aKaYM3MrN3LSnZ9_kY6uD59df9lJhtBQ3bS-Q9AVMOlZRfvB5bl2WWM9LJpE9LJ52rKmA8pf_-6YVQpy4yAb80yJxV-5s_Qm9axBpBy09eOrmRglyMAlkTEp5c_ZAxu2wWcrZvyR1bFM7fiRIGI5LS7ZtIh-AKC"/>
+</div>
+<div class="space-y-1">
+<h4 class="font-bold text-sm uppercase">Fine Jewelry</h4>
+<p class="text-xs text-slate-500 uppercase tracking-tighter">Cartier, Chopard</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Newsletter Section -->
+<section class="border-t border-slate-200 dark:border-slate-800 pt-16 pb-8">
+<div class="max-w-2xl mx-auto text-center space-y-6">
+<h3 class="text-2xl font-bold uppercase">The Farfetch Editorial</h3>
+<p class="text-slate-600 dark:text-slate-400">Sign up for early access to sales, exclusive collaborations and new arrivals.</p>
+<div class="flex flex-col md:flex-row gap-2">
+<input class="flex-1 bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-700 rounded-none focus:ring-primary focus:border-primary" placeholder="Enter your email address" type="email"/>
+<button class="bg-primary text-white px-8 py-3 font-bold uppercase text-sm tracking-widest whitespace-nowrap">Subscribe</button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-white dark:bg-black py-16 px-4 md:px-10 border-t border-slate-100 dark:border-slate-900">
+<div class="max-w-[1440px] mx-auto grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-10">
+<div class="col-span-2 lg:col-span-1">
+<h5 class="font-bold uppercase mb-6 text-sm">Customer Service</h5>
+<ul class="space-y-4 text-xs font-medium text-slate-500 hover:text-slate-900 transition-colors">
+<li><a href="#">Contact Us</a></li>
+<li><a href="#">Shipping &amp; Delivery</a></li>
+<li><a href="#">Returns &amp; Refunds</a></li>
+<li><a href="#">Payment &amp; Pricing</a></li>
+<li><a href="#">FAQs</a></li>
+</ul>
+</div>
+<div>
+<h5 class="font-bold uppercase mb-6 text-sm">About Farfetch</h5>
+<ul class="space-y-4 text-xs font-medium text-slate-500">
+<li><a href="#">About Us</a></li>
+<li><a href="#">Investors</a></li>
+<li><a href="#">Farfetch Partner Networks</a></li>
+<li><a href="#">Affiliate Program</a></li>
+<li><a href="#">Careers</a></li>
+</ul>
+</div>
+<div>
+<h5 class="font-bold uppercase mb-6 text-sm">Legal and Cookies</h5>
+<ul class="space-y-4 text-xs font-medium text-slate-500">
+<li><a href="#">Terms &amp; Conditions</a></li>
+<li><a href="#">Privacy Policy</a></li>
+<li><a href="#">Accessibility</a></li>
+</ul>
+</div>
+<div class="col-span-2">
+<h5 class="font-bold uppercase mb-6 text-sm">Mobile App</h5>
+<p class="text-xs text-slate-500 mb-6">Experience the best of luxury fashion on the go with the Farfetch app.</p>
+<div class="flex gap-4">
+<div class="w-32 h-10 bg-slate-200 rounded flex items-center justify-center text-[10px] font-bold uppercase tracking-tight">App Store</div>
+<div class="w-32 h-10 bg-slate-200 rounded flex items-center justify-center text-[10px] font-bold uppercase tracking-tight">Google Play</div>
+</div>
+</div>
+</div>
+<div class="max-w-[1440px] mx-auto mt-16 pt-8 border-t border-slate-100 dark:border-slate-900 flex flex-col md:flex-row justify-between items-center gap-6">
+<p class="text-[10px] text-slate-400 uppercase tracking-widest">© 2024 FARFETCH UK LIMITED. ALL RIGHTS RESERVED.</p>
+<div class="flex gap-6">
+<span class="material-symbols-outlined text-slate-400">social_leaderboard</span>
+<span class="material-symbols-outlined text-slate-400">camera</span>
+<span class="material-symbols-outlined text-slate-400">share</span>
+</div>
+</div>
+</footer>
+</body></html>
