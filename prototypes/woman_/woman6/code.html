@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Farfetch | Women's Luxury Fashion</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#000000",
+                        "background-light": "#ffffff",
+                        "background-dark": "#0a0a0a",
+                        "neutral-soft": "#f5f5f5",
+                        "border-light": "#e5e5e5"
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
+<!-- Top Navigation -->
+<header class="sticky top-0 z-50 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-border-light dark:border-white/10">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-12 py-4 flex items-center justify-between">
+<div class="flex items-center gap-12">
+<a class="text-2xl font-extrabold tracking-tighter text-primary dark:text-white uppercase" href="#">Farfetch</a>
+<nav class="hidden lg:flex items-center gap-8 text-xs font-semibold uppercase tracking-widest">
+<a class="text-primary/60 hover:text-primary transition-colors" href="#">Men</a>
+<a class="text-primary underline underline-offset-8 transition-colors" href="#">Women</a>
+<a class="text-primary/60 hover:text-primary transition-colors" href="#">Kids</a>
+</nav>
+</div>
+<div class="flex-1 max-w-md mx-12 hidden md:block">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+<input class="w-full bg-neutral-soft dark:bg-white/5 border-none rounded-none py-2.5 pl-10 pr-4 text-sm focus:ring-1 focus:ring-primary/20 placeholder:text-slate-400 transition-all" placeholder="Search for brands and pieces..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="hover:opacity-60 transition-opacity"><span class="material-symbols-outlined">person</span></button>
+<button class="hover:opacity-60 transition-opacity"><span class="material-symbols-outlined">favorite</span></button>
+<button class="relative hover:opacity-60 transition-opacity">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="absolute -top-1 -right-1 bg-primary text-white text-[8px] w-4 h-4 flex items-center justify-center rounded-full">0</span>
+</button>
+</div>
+</div>
+</header>
+<main class="max-w-[1440px] mx-auto px-6 lg:px-12 py-6">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-2 text-[10px] uppercase tracking-widest text-slate-400 mb-8">
+<a class="hover:text-primary transition-colors" href="#">Home</a>
+<span class="material-symbols-outlined text-[10px]">chevron_right</span>
+<span class="text-primary">Women</span>
+</nav>
+<!-- Hero Section -->
+<section class="relative aspect-[21/9] w-full overflow-hidden bg-neutral-soft mb-16">
+<img class="w-full h-full object-cover grayscale-[20%]" data-alt="Editorial high fashion photography of a woman in luxury couture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjaLgmMaSJovV9Ieb50yQtDYIOY2HMVUWIvsFa5O-9RMpCllP9crxEAsRLkXY-lI_TbDIeoT4p_e_FHTnFiQp3DcaPlOk0z6YL8VB2vsgMVvfla0-lIG1vHBHj8gKWm-cNs0knGbPLW2GiGZNe1m8LkFHEHk5ePMsYrXUBFEjFARs6I1ESjj66-Xq0tZJW4WgJA_RxZYYcrraVFjy0orhjkb0fnDHyrhAYpxQ5bkzUhZSVQdZdO9ljeIojmkJ7jgjQltiZtVYEu64o"/>
+<div class="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-transparent flex flex-col justify-center px-12 lg:px-24">
+<p class="text-white text-xs font-bold tracking-[0.3em] uppercase mb-4">SS24 Collection</p>
+<h1 class="text-white text-5xl lg:text-7xl font-light tracking-tight max-w-xl mb-8 leading-tight">The Modern Icon</h1>
+<p class="text-white/80 text-lg max-w-md mb-10 font-light">Experience the definitive edit of the season's most coveted pieces from world-leading designers.</p>
+<div class="flex gap-4">
+<button class="bg-white text-black px-10 py-4 text-xs font-bold uppercase tracking-widest hover:bg-black hover:text-white transition-all">Shop New In</button>
+<button class="border border-white text-white px-10 py-4 text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all">Trending Now</button>
+</div>
+</div>
+</section>
+<!-- Quick Categories -->
+<section class="mb-20">
+<div class="flex overflow-x-auto no-scrollbar gap-12 border-b border-border-light dark:border-white/10 pb-6 justify-center">
+<a class="group flex flex-col items-center gap-3" href="#">
+<span class="text-xs font-bold uppercase tracking-widest text-primary border-b-2 border-primary pb-1">Dresses</span>
+</a>
+<a class="group flex flex-col items-center gap-3" href="#">
+<span class="text-xs font-bold uppercase tracking-widest text-slate-400 hover:text-primary transition-colors">Bags</span>
+</a>
+<a class="group flex flex-col items-center gap-3" href="#">
+<span class="text-xs font-bold uppercase tracking-widest text-slate-400 hover:text-primary transition-colors">Shoes</span>
+</a>
+<a class="group flex flex-col items-center gap-3" href="#">
+<span class="text-xs font-bold uppercase tracking-widest text-slate-400 hover:text-primary transition-colors">Accessories</span>
+</a>
+<a class="group flex flex-col items-center gap-3" href="#">
+<span class="text-xs font-bold uppercase tracking-widest text-slate-400 hover:text-primary transition-colors">Jewelry</span>
+</a>
+<a class="group flex flex-col items-center gap-3" href="#">
+<span class="text-xs font-bold uppercase tracking-widest text-slate-400 hover:text-primary transition-colors">Knitwear</span>
+</a>
+</div>
+</section>
+<!-- Designer Spotlight -->
+<section class="mb-24">
+<div class="flex justify-between items-end mb-10">
+<div>
+<h2 class="text-3xl font-light tracking-tight mb-2">Designer Spotlight</h2>
+<p class="text-slate-500 text-sm">A curated selection from our favorite luxury houses.</p>
+</div>
+<a class="text-xs font-bold uppercase tracking-widest border-b border-primary pb-1" href="#">View All Brands</a>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+<!-- Designer 1 -->
+<div class="group cursor-pointer">
+<div class="aspect-[3/4] overflow-hidden bg-neutral-soft mb-4 relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Prada designer product shot luxury bag" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAe0eyKnWP8522SkzfSUfHeCAs5ri0HtCqttcfJkHPesbB5y1795iZuPR6-u5UQB3cK1Ltp_61GBcLjPkEmuEpmAaNSmAdCoiYyqvz7tgvCSpqwXUIGNj47ytqM-Au0ZvM_DGv7O0eUyJv5_-MLBHte1vS_9xI19xLL3yyuufhGtiQYXdb3toQHgSgA_Pm84y6PZxcyETsQZIDgMDth_tSqZPUBBNT46KvhI7zeVlQSZqF8kuUVmNB8Pv_0grjowmvJDAmnQIIB7BI"/>
+<button class="absolute top-4 right-4 bg-white/80 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-sm">favorite</span>
+</button>
+</div>
+<h3 class="text-xs font-bold uppercase tracking-widest mb-1">Prada</h3>
+<p class="text-sm font-light text-slate-600 line-clamp-1">Cleo brushed leather shoulder bag</p>
+<p class="text-sm mt-2 font-medium">$2,950</p>
+</div>
+<!-- Designer 2 -->
+<div class="group cursor-pointer">
+<div class="aspect-[3/4] overflow-hidden bg-neutral-soft mb-4 relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Gucci luxury silk dress on model" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDiOethxgP7Tg57IxteGprRzx1tjn3JtPyg1opNmmOUL5wWs7MQjI9OvVVEa2lMDq0ALkqiRbmcgE-_J9NDuvv4Xq2ymLwoam5s9jj7OfTDPJCJ2ciGR2FXnlsDfo1ju-lyT5SE9aYszQBJw2l31widKZJxhZkw5ui6qcOgvLdoGLVPfkT285VpVWoLice3AsboZseUv2iAGqxeT7B3gx-vwPafYbFt1pelgPsCDlEfFY7hveHaIp1UF8muaQbILvuic55cC49cPLtV"/>
+<button class="absolute top-4 right-4 bg-white/80 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-sm">favorite</span>
+</button>
+</div>
+<h3 class="text-xs font-bold uppercase tracking-widest mb-1">Gucci</h3>
+<p class="text-sm font-light text-slate-600 line-clamp-1">GG-logo silk midi dress</p>
+<p class="text-sm mt-2 font-medium">$3,400</p>
+</div>
+<!-- Designer 3 -->
+<div class="group cursor-pointer">
+<div class="aspect-[3/4] overflow-hidden bg-neutral-soft mb-4 relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Saint Laurent high heels luxury shoes" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKKwsuPeCSRaqNetJxEUtEds1Bagz8Aopa5dhxzWN0F2g4YL2LYo40grqq58x71-HuWNXrgHo8hG0bYxjbkLxFYT6o3WZJB8bwUKvlhlMPeST-CzqAJ6gniaWX9UHuvmYZjKbXgbkHUn0toJQdbaEGDZMamWha4SjnGnBPxHtuXCsg1ckDn5eqzh4VATEbmbE3KGqdUFD3_ksJRPJ2vHxKEX9-QAKTl-UImsaD5Kp19250qgvC0_eOzAOiUtbBTbXyK2ybl6QIOFT9"/>
+<button class="absolute top-4 right-4 bg-white/80 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-sm">favorite</span>
+</button>
+</div>
+<h3 class="text-xs font-bold uppercase tracking-widest mb-1">Saint Laurent</h3>
+<p class="text-sm font-light text-slate-600 line-clamp-1">Cassandre 110mm leather pumps</p>
+<p class="text-sm mt-2 font-medium">$1,150</p>
+</div>
+<!-- Designer 4 -->
+<div class="group cursor-pointer">
+<div class="aspect-[3/4] overflow-hidden bg-neutral-soft mb-4 relative">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Burberry classic trench coat" src="https://lh3.googleusercontent.com/aida-public/AB6AXuACZWcobiyLhm4X4tmJhoLqPf0XigINm_Vy8F9qOKI4yOnjUGY9Ih1J8hxm0XfA2uYDgcw-IiyNMYc2DnPd7C9Oltu_oecS3NVikUJf8UsqDVgItPBw_zCrMWjmw8ott5NzzS_WtULPFC4S5OKDCZ0o-ggPA1HT46-0jy76D29P9W1PeVhkJS42aGPruBcdasTLWpbwPhBiquUgjJRgzbI0XK7zh4jlQhTTDnZm-t_BQuweLwsbCixigNK3M06q11dGZSBxfeq9ghbr"/>
+<button class="absolute top-4 right-4 bg-white/80 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-sm">favorite</span>
+</button>
+</div>
+<h3 class="text-xs font-bold uppercase tracking-widest mb-1">Burberry</h3>
+<p class="text-sm font-light text-slate-600 line-clamp-1">The Kensington Heritage trench coat</p>
+<p class="text-sm mt-2 font-medium">$2,490</p>
+</div>
+</div>
+</section>
+<!-- Brand Grid Banner -->
+<section class="mb-24 bg-neutral-soft dark:bg-white/5 py-12 px-6">
+<div class="grid grid-cols-2 md:grid-cols-6 gap-8 items-center justify-items-center opacity-60">
+<span class="text-xl font-bold tracking-tighter uppercase italic">BALENCIAGA</span>
+<span class="text-xl font-bold tracking-widest uppercase">CHANEL</span>
+<span class="text-xl font-serif tracking-tight uppercase">VALENTINO</span>
+<span class="text-xl font-bold tracking-tighter uppercase italic">VERSACE</span>
+<span class="text-xl font-bold tracking-widest uppercase">LOEWE</span>
+<span class="text-xl font-serif tracking-tight uppercase">GIVENCHY</span>
+</div>
+</section>
+<!-- Product Grid Title -->
+<section class="mb-12">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+<h2 class="text-3xl font-light tracking-tight">New Season Arrivals</h2>
+<div class="flex items-center gap-4">
+<div class="relative inline-block border-b border-primary">
+<select class="appearance-none bg-transparent border-none text-[10px] font-bold uppercase tracking-widest pr-8 py-2 focus:ring-0 cursor-pointer">
+<option>Sort By: Newest First</option>
+<option>Price: High to Low</option>
+<option>Price: Low to High</option>
+</select>
+<span class="material-symbols-outlined absolute right-0 top-1/2 -translate-y-1/2 text-xs pointer-events-none">expand_more</span>
+</div>
+<button class="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest bg-black text-white px-6 py-2">
+                        Filter <span class="material-symbols-outlined text-sm">tune</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Extended Grid -->
+<section class="grid grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16 mb-24">
+<!-- Row 1 -->
+<div class="group relative cursor-pointer">
+<div class="aspect-[3/4] bg-neutral-soft mb-4 relative overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Luxury shoulder bag black leather" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCK9tvZb8DIlZZ596qgNZr6j2If5tPRSbNNv-BHtnHfJWCGlA_GpebK7NuKE2Bta5ygKYUU9eVzB321r6wjbxliV27Dx5tQpvZZIa3rhBM4RcR4m8sr5RjDrDLizQTqXh_YReyUXWrzR4H1uzOzUV0Y-kLGuop3EyfPtNXHOUtQypim3lui4ViEWdh4ra_SgUtA-hse2geLF7BxQmrwBTd-csoUravNYKoc1R0KdNgKPhTwuRR_0utd4HStznN0nvGUAXWpRb43ur-z"/>
+<span class="absolute top-3 left-3 bg-white text-[8px] font-bold uppercase tracking-widest px-2 py-1">New Season</span>
+<button class="absolute top-3 right-3 text-primary bg-white/90 p-1.5 rounded-full"><span class="material-symbols-outlined text-sm">favorite</span></button>
+</div>
+<h4 class="text-[10px] font-bold uppercase tracking-widest mb-1">Bottega Veneta</h4>
+<p class="text-xs text-slate-500 font-light mb-1">Small Hop leather tote bag</p>
+<p class="text-sm font-medium">$4,100</p>
+</div>
+<div class="group relative cursor-pointer">
+<div class="aspect-[3/4] bg-neutral-soft mb-4 relative overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Luxury sunglasses portrait" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJmyBaanlSSnxDZEU56wIX087pj3AXJVdwlN5zgXEzXbu4qeZJHNqdksrm-dOQuMNcs9GOky-bxHRKR2VsICmCNTJfte5Sz86cDYl67jfZIUStSX2kzUmPhOUuL2W2iOqboYQN08C1FSgxbDQS_ZJk0OMYPsmwuvnm9gNnPDWwo8Cv64B6DN0l_a_7hjLlnY8KaPkqFDRZHYBTUqEAtk8PCAlamaNamIc1Vs8tb_Dl8h_VoJc81pehq4Mi2VO2WPhxCFScqw4f4cWr"/>
+<button class="absolute top-3 right-3 text-primary bg-white/90 p-1.5 rounded-full"><span class="material-symbols-outlined text-sm">favorite</span></button>
+</div>
+<h4 class="text-[10px] font-bold uppercase tracking-widest mb-1">Loewe</h4>
+<p class="text-xs text-slate-500 font-light mb-1">Flamenco Clutch Mini</p>
+<p class="text-sm font-medium">$2,250</p>
+</div>
+<div class="group relative cursor-pointer">
+<div class="aspect-[3/4] bg-neutral-soft mb-4 relative overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Floral luxury dress on hanger" src="https://lh3.googleusercontent.com/aida-public/AB6AXuArpgiGPzZWNJJJRsORSS_hcMLKNLZV2jPP7FEhk39fS5jWr75M-ihVlLL8rZeD_ZSxPJVKi64QC4F5sdoz_Es0YVNdiSGlROOo2pyiq56Ug_v68RKy-4Xqj88M0oqHQ-t7KQvjWpHEKHplkEcQKHteyYsnZVK4jlnlW5CkxWSXXkZK6eP2qkB-LBzrIFYDp5VDVGqie1nC3hWj5lM9b2FRXM1a9LwNCC5QQzMiaEGRuVFJ1cXA7kAK8i8wHMDvJAV24JwmG0wkTjpQ"/>
+<button class="absolute top-3 right-3 text-primary bg-white/90 p-1.5 rounded-full"><span class="material-symbols-outlined text-sm">favorite</span></button>
+</div>
+<h4 class="text-[10px] font-bold uppercase tracking-widest mb-1">Jacquemus</h4>
+<p class="text-xs text-slate-500 font-light mb-1">La Robe Bahia draped dress</p>
+<p class="text-sm font-medium">$745</p>
+</div>
+<div class="group relative cursor-pointer">
+<div class="aspect-[3/4] bg-neutral-soft mb-4 relative overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Statement high fashion heels" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAAulmPEIVLeWu0wKFDCO_oKSXVdE_10QByH6LTPAircwU_TNPdm7dVyZ01xj6HiXOn5y4a2imVD5Z8wlAJMzwBmmIruW20pVY0seJZIDnQQuVmb_GNNuPd-1BgcIzzvYxhwKMZFvZtdriHShCLnpCM04bFY8wMDKqmpSEj3edvUbue9O_s1g46eGcyX4UOcj8P6sWiLJtgiOqtuIO4RmG2n56BSMaLDOJw2Q4hf-TQucQJ8VNNPypnHc9alSWx9hQqCCBisi2fTyzQ"/>
+<button class="absolute top-3 right-3 text-primary bg-white/90 p-1.5 rounded-full"><span class="material-symbols-outlined text-sm">favorite</span></button>
+</div>
+<h4 class="text-[10px] font-bold uppercase tracking-widest mb-1">Aminā Muaddi</h4>
+<p class="text-xs text-slate-500 font-light mb-1">Begum 95mm glass slingbacks</p>
+<p class="text-sm font-medium">$1,020</p>
+</div>
+<!-- Row 2 -->
+<div class="group relative cursor-pointer">
+<div class="aspect-[3/4] bg-neutral-soft mb-4 relative overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Luxury watch minimalist shot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPLP--luso4OgfG3eAv7iuizPo254WQxkBhCtZeGWK_Kp6c_QlNEpw5lINh6rZZGnOFIevoKMjrr7uxTg1J77l_JcUDpzRGBT9BzrA-jPz3DRQz7S6WqnktAHnuTZXrnYakhrvhybiy6XB3rV1DzNi1zlX9pQlkb9bncpSV9LokKx86kz_8z4bvwJ-YBpRD8cWzjqIdlztGBRJg3izIiG4D9qCQO_t4Tpy-Dkc1Ng0S3eWqAxKjDwpOi1LGXfpWbSvGGQ5byBPOQWj"/>
+<button class="absolute top-3 right-3 text-primary bg-white/90 p-1.5 rounded-full"><span class="material-symbols-outlined text-sm">favorite</span></button>
+</div>
+<h4 class="text-[10px] font-bold uppercase tracking-widest mb-1">Cartier</h4>
+<p class="text-xs text-slate-500 font-light mb-1">Tank Must small model watch</p>
+<p class="text-sm font-medium">$3,300</p>
+</div>
+<div class="group relative cursor-pointer">
+<div class="aspect-[3/4] bg-neutral-soft mb-4 relative overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Luxury black t-shirt premium" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjW-ASYoMi3S6nbJkKiMfpg7C58B2s5YhvDTl9TF4PDbytrSZWGjJKuoKRIVPA-epRRw7wSIunppuB-F0s5pCN9s3TPsa3Fp8NhQCSZUf16akSkN0dbz1M5Icx2Ih79oKc7KqOWXGkAfkYnsD14TA4RGhHY-Odjw_IMbjbsrTEdHjvTJ5wRc6EPlvELUufBml9WSBFJSHlu7pEwunqDBZiZbGARQwVFX6rwTURy0jZWA7eyG0GHPL5tHDmanhmNUY9kmbGA7A1VoTU"/>
+<button class="absolute top-3 right-3 text-primary bg-white/90 p-1.5 rounded-full"><span class="material-symbols-outlined text-sm">favorite</span></button>
+</div>
+<h4 class="text-[10px] font-bold uppercase tracking-widest mb-1">Miu Miu</h4>
+<p class="text-xs text-slate-500 font-light mb-1">Cashmere cardigan jacket</p>
+<p class="text-sm font-medium">$2,150</p>
+</div>
+<div class="group relative cursor-pointer">
+<div class="aspect-[3/4] bg-neutral-soft mb-4 relative overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Luxury white silk blouse" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVzVohpXIspkri8vF-02XFtxdRygqfJwfX5d1YRmZskRmEU_6I8wnpLEztm29MbU3dwD0_Gu_IW5gqdNCwln-vBht8Jd1SdA06XKpoNSDjm62aVht97PgcXDupthxBYFiAimckKKGon8Dp4HFYX-SYQoR4QbLN9CI06ubMPq0Yih44pG34Prx-8rjkb_vihGJO4x5d41aCmselUHwYF9pNmTlE-zZJKzNt42ugbpoYsJEaeATgPIor6xUdFIpbDXaLoXep5MaV5qHo"/>
+<button class="absolute top-3 right-3 text-primary bg-white/90 p-1.5 rounded-full"><span class="material-symbols-outlined text-sm">favorite</span></button>
+</div>
+<h4 class="text-[10px] font-bold uppercase tracking-widest mb-1">The Row</h4>
+<p class="text-xs text-slate-500 font-light mb-1">Margaux 15 leather tote</p>
+<p class="text-sm font-medium">$4,390</p>
+</div>
+<div class="group relative cursor-pointer">
+<div class="aspect-[3/4] bg-neutral-soft mb-4 relative overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Premium wool coat grey" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtoF3ACq2N1z_klje9nL5W31z6hRfTB2Z-tl3IT-1TGLRrML6od0hNX1170ljwhj1m0YgvQ5ECnkYUIJDJmla-Vcw4subv71_Ha3qkLb9AvY_p4RE2ThTfI88K9Df-d8xQ3UIqDkudYPXWNS8DnOvkKo7YEqSOtfzVnR-YVvm3R31eG48Uz0gxkWIh1UBwI9m7kQHtmI8cgCzCDehW1GIhct5T1RFGBFZs6LnU_j5Nk6UeFnN8MjVIftTam9qBbvs3-NymPwOp6-3D"/>
+<button class="absolute top-3 right-3 text-primary bg-white/90 p-1.5 rounded-full"><span class="material-symbols-outlined text-sm">favorite</span></button>
+</div>
+<h4 class="text-[10px] font-bold uppercase tracking-widest mb-1">Max Mara</h4>
+<p class="text-xs text-slate-500 font-light mb-1">Ludmilla double-faced cashmere coat</p>
+<p class="text-sm font-medium">$6,850</p>
+</div>
+</section>
+<!-- Newsletter Section -->
+<section class="border-t border-border-light dark:border-white/10 pt-20 pb-20 text-center max-w-2xl mx-auto">
+<h3 class="text-xs font-bold uppercase tracking-[0.3em] mb-4">Stay Inspired</h3>
+<h2 class="text-3xl font-light tracking-tight mb-8">Receive early access to sales and exclusive fashion news.</h2>
+<div class="flex flex-col sm:flex-row gap-0 border-b border-primary">
+<input class="flex-1 bg-transparent border-none py-4 text-sm focus:ring-0 placeholder:text-slate-400" placeholder="Your email address" type="email"/>
+<button class="bg-black text-white px-8 py-4 text-xs font-bold uppercase tracking-widest hover:bg-slate-800 transition-all">Sign Up</button>
+</div>
+<p class="text-[10px] text-slate-400 mt-6 leading-relaxed">By signing up, you agree to our Terms &amp; Conditions and Privacy Policy. You can unsubscribe at any time.</p>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-neutral-soft dark:bg-white/5 border-t border-border-light dark:border-white/10 mt-12">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-12 py-16">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+<div>
+<h4 class="text-[10px] font-bold uppercase tracking-widest mb-6">Customer Service</h4>
+<ul class="flex flex-col gap-3 text-sm font-light text-slate-600 dark:text-slate-400">
+<li><a class="hover:text-primary" href="#">Contact Us</a></li>
+<li><a class="hover:text-primary" href="#">Orders &amp; Delivery</a></li>
+<li><a class="hover:text-primary" href="#">Returns &amp; Refunds</a></li>
+<li><a class="hover:text-primary" href="#">FAQs</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-[10px] font-bold uppercase tracking-widest mb-6">About Farfetch</h4>
+<ul class="flex flex-col gap-3 text-sm font-light text-slate-600 dark:text-slate-400">
+<li><a class="hover:text-primary" href="#">About Us</a></li>
+<li><a class="hover:text-primary" href="#">Investors</a></li>
+<li><a class="hover:text-primary" href="#">Careers</a></li>
+<li><a class="hover:text-primary" href="#">Sustainability</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-[10px] font-bold uppercase tracking-widest mb-6">Shopping with Us</h4>
+<ul class="flex flex-col gap-3 text-sm font-light text-slate-600 dark:text-slate-400">
+<li><a class="hover:text-primary" href="#">Student Discount</a></li>
+<li><a class="hover:text-primary" href="#">App Download</a></li>
+<li><a class="hover:text-primary" href="#">Farfetch Membership</a></li>
+<li><a class="hover:text-primary" href="#">Refer a Friend</a></li>
+</ul>
+</div>
+<div class="flex flex-col">
+<h4 class="text-[10px] font-bold uppercase tracking-widest mb-6">Social Media</h4>
+<div class="flex gap-4">
+<a class="bg-white dark:bg-black w-8 h-8 rounded-full flex items-center justify-center border border-border-light dark:border-white/10 hover:border-primary transition-colors" href="#">
+<i class="text-xs uppercase font-bold not-italic">Ig</i>
+</a>
+<a class="bg-white dark:bg-black w-8 h-8 rounded-full flex items-center justify-center border border-border-light dark:border-white/10 hover:border-primary transition-colors" href="#">
+<i class="text-xs uppercase font-bold not-italic">Fb</i>
+</a>
+<a class="bg-white dark:bg-black w-8 h-8 rounded-full flex items-center justify-center border border-border-light dark:border-white/10 hover:border-primary transition-colors" href="#">
+<i class="text-xs uppercase font-bold not-italic">Pi</i>
+</a>
+</div>
+</div>
+</div>
+<div class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-border-light dark:border-white/10">
+<p class="text-[10px] uppercase tracking-widest text-slate-400 mb-4 md:mb-0">© 2024 Farfetch UK Limited. All Rights Reserved.</p>
+<div class="flex gap-8 text-[10px] uppercase tracking-widest text-slate-400">
+<a class="hover:text-primary" href="#">Privacy Policy</a>
+<a class="hover:text-primary" href="#">Terms &amp; Conditions</a>
+</div>
+</div>
+</div>
+</footer>
+</body></html>

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#000000",
+                        "background-light": "#f7f7f7",
+                        "background-dark": "#191919",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: "Plus Jakarta Sans", sans-serif;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-primary dark:text-slate-100 transition-colors duration-300">
+<!-- Top Navigation -->
+<header class="sticky top-0 z-50 w-full border-b border-primary/10 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
+<div class="flex items-center gap-12">
+<a class="flex items-center gap-2" href="#">
+<span class="text-2xl font-black tracking-tighter uppercase">Farfetch</span>
+</a>
+<nav class="hidden md:flex items-center gap-8 text-xs font-bold uppercase tracking-widest">
+<a class="hover:text-primary/60 transition-colors" href="#">Women</a>
+<a class="hover:text-primary/60 transition-colors" href="#">Men</a>
+<a class="hover:text-primary/60 transition-colors" href="#">Kids</a>
+<a class="hover:text-primary/60 transition-colors" href="#">Sale</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden lg:flex items-center bg-primary/5 dark:bg-white/5 px-4 py-2 rounded">
+<span class="material-symbols-outlined text-xl opacity-50">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-64 placeholder:text-primary/40 dark:placeholder:text-white/40" placeholder="Search brands, items..." type="text"/>
+</div>
+<button class="p-2 hover:bg-primary/5 rounded-full transition-colors">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+<button class="p-2 hover:bg-primary/5 rounded-full transition-colors relative">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="absolute top-1 right-1 bg-primary text-white text-[10px] w-4 h-4 flex items-center justify-center rounded-full">2</span>
+</button>
+<button class="p-2 lg:hidden">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+</header>
+<main class="max-w-[1440px] mx-auto px-6 lg:px-12 py-8">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-2 text-[10px] uppercase tracking-widest mb-12 opacity-60">
+<a href="#">Home</a>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<a href="#">Women</a>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<a href="#">Clothing</a>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<a href="#">Dresses</a>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="font-bold text-primary">Prada</span>
+</nav>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+<!-- Gallery Section -->
+<div class="lg:col-span-7 flex flex-col md:flex-row-reverse gap-4">
+<!-- Main Large Image -->
+<div class="flex-1 aspect-[3/4] overflow-hidden bg-primary/5 rounded-lg">
+<img alt="Luxury silk dress on model" class="w-full h-full object-cover" data-alt="High-end editorial shot of a woman in a black silk luxury dress" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB47MBtUIRrT62AQ0B1-ouzK7sbb8t7aqsl1w2HEIIr3tw8zoOM1eLm_MZ9SP1EGx813FG6Hsua5Ztg-17cSOmy98Nlwx6QScO2jljwCV3IDkAlZq1HhjROt9mcPUKu_0higxAgVMLcm_LV5RycTwg6LVQBg_En414FIlDqlxSrEUX7xY1KprqJYhSgeyTiM2Z6IrQg5TgMfvXJ-A1Nwz-IyO-myFsqnLOBGjzkBN__qYVGPLhGwgWm3k_mKcpv-lk-D39D4_OQIxTm"/>
+</div>
+<!-- Thumbnails -->
+<div class="flex md:flex-col gap-4 overflow-x-auto no-scrollbar md:w-24">
+<button class="w-24 md:w-full aspect-[3/4] flex-shrink-0 border-2 border-primary rounded overflow-hidden">
+<img alt="Thumbnail 1" class="w-full h-full object-cover" data-alt="Close up thumbnail of luxury dress" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVw6Sl9EpWP_EwZJHGjdo0HyaBlc69k6Kh6cozucByRvmBLZ-Oba8YsbynTrhDIn7BuZko9Kp8KvhlXi0I2cMTSMxlxbWDIkgNMueILme-iIHxGxjLvw_oFShpaAioV9zFU3v2hkVao9YY0dQg7MWzs2hqSSVTxL6-vebchYEXI75f5T0A5OFLIvp6iBrOFj5iGwttak0Sn7DPb5D4myZEp-u8JP-QWjVpqcczzxFrKV80ihTmdDZtOzhGxTrzXapSgJq7XhbqNyIQ"/>
+</button>
+<button class="w-24 md:w-full aspect-[3/4] flex-shrink-0 border border-transparent hover:border-primary/20 rounded overflow-hidden">
+<img alt="Thumbnail 2" class="w-full h-full object-cover" data-alt="Back view of a luxury silk dress" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB393hoYj3m5c4ZDinQhLCRSTADEI__usbICTQpovV3IbUARCEjXhb-wbfzzBVZ4po2JWfQuWAtHPVDVkoyNv14filMpPxrNoawpNrGElY-8BNQZy2D5Xnr_ghDWmpLgWnum6TqRJ7wpEHCDLrdHtsuzZkhUHNlYeJv2UZIc1hUqblmB98ZKkMckIoH4_8DxY_GwqnLV8RQ7HXPk7Itk0uF6loZJCMvl__mZ0rf1y9P9OSWYsFIOEhEGW-Xge1Rcmt0ZKceQgMpMO99"/>
+</button>
+<button class="w-24 md:w-full aspect-[3/4] flex-shrink-0 border border-transparent hover:border-primary/20 rounded overflow-hidden">
+<img alt="Thumbnail 3" class="w-full h-full object-cover" data-alt="Close up detail of fabric texture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC69m23WYKNhJFhaT1oy6hdgEkovObu3-xpAADpa6u2W-eVkiiWlg5PjK1K3Qs9KWKssmIYYcdwoxkZHsH2k3B2D6v0BGwgDPtsreKou01xv_Ame0vgzggaCPTSlq0kghAzv2lvPRCjk_inocx49F-trfRqE29YzmBcSuPiH6W48G78vf1RhZxQv7vuBq7jsUIHCKdva2a6tdUI2AZVmTVn54tWDIoFKOwXy9uHGW3YExzo681Qg4iU9Q8CBCD0NrxVdBwH3rdnTYLy"/>
+</button>
+<button class="w-24 md:w-full aspect-[3/4] flex-shrink-0 border border-transparent hover:border-primary/20 rounded overflow-hidden">
+<img alt="Thumbnail 4" class="w-full h-full object-cover" data-alt="Editorial lifestyle shot of luxury clothing" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBU6iVQQTlBx7KmhAUFCVEp-0y2VmYSdtvjGOkBZpFcPwyt9tiS5z4f2iHiR1mK2EZu1FBtU5gQdT2a43efM5TzlM8g2YT_VEL5vocc1Iee4B3bYddHnASog2WSK9jxq2fCSO3JIDAbqCDk2auN-WSzNon0sGpKKtNgQhAn8s-D5rVBXPlrZ-mdtzBrx4mV4ZbxVJyB4WxM4nvJa1qMOGnUlL3MHDVtXPX7qLP2VRD9nqo1hlbpbLhSNN3HUvqLCp5W4u85g8FB0EfT"/>
+</button>
+</div>
+</div>
+<!-- Product Details Section -->
+<div class="lg:col-span-5 flex flex-col gap-8">
+<div>
+<h2 class="text-xs uppercase tracking-[0.3em] font-bold mb-2 text-primary/60">New Season</h2>
+<h1 class="text-3xl font-black uppercase tracking-tight mb-2">PRADA</h1>
+<p class="text-xl font-light text-primary/80 dark:text-slate-300">Embroidered Silk-Georgette Midi Dress</p>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-2xl font-bold">$4,250</span>
+<span class="text-xs uppercase tracking-widest text-primary/50">Import duties included</span>
+</div>
+<!-- Size Selector -->
+<div class="flex flex-col gap-4">
+<div class="flex justify-between items-end">
+<label class="text-[10px] uppercase font-bold tracking-widest">Select Size (IT)</label>
+<button class="text-[10px] uppercase font-bold underline underline-offset-4 tracking-widest opacity-60 hover:opacity-100">Size Guide</button>
+</div>
+<div class="grid grid-cols-4 gap-2">
+<button class="py-4 border border-primary/10 hover:border-primary text-sm font-medium transition-colors">38</button>
+<button class="py-4 border border-primary/10 hover:border-primary text-sm font-medium transition-colors">40</button>
+<button class="py-4 border border-primary text-sm font-bold bg-primary text-white">42</button>
+<button class="py-4 border border-primary/10 hover:border-primary text-sm font-medium transition-colors">44</button>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex gap-3">
+<button class="flex-1 bg-primary dark:bg-slate-100 text-white dark:text-primary py-5 text-sm font-black uppercase tracking-[0.2em] rounded hover:opacity-90 transition-opacity">
+        Add to Bag
+    </button>
+<button class="aspect-square border border-primary/20 hover:border-primary px-5 rounded flex items-center justify-center transition-all group">
+<span class="material-symbols-outlined text-xl transition-all group-hover:[font-variation-settings:'FILL'_1]">favorite</span>
+</button>
+</div>
+<!-- Product Info Accordion -->
+<div class="border-t border-primary/10 pt-8 flex flex-col gap-6">
+<details class="group" open="">
+<summary class="flex justify-between items-center cursor-pointer list-none">
+<span class="text-xs font-bold uppercase tracking-widest">The Details</span>
+<span class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="mt-4 text-sm leading-relaxed text-primary/70 dark:text-slate-400 space-y-4">
+<p>Crafted from delicate silk-georgette, this Prada midi dress epitomises the brand's fusion of classic elegance and contemporary edge. Featuring intricate floral embroidery and a semi-sheer finish, it offers a sophisticated silhouette for evening occasions.</p>
+<ul class="list-disc pl-4 space-y-1">
+<li>Black silk-georgette</li>
+<li>Floral embroidery detail</li>
+<li>Concealed rear zip fastening</li>
+<li>Sleeveless design</li>
+<li>Midi length</li>
+</ul>
+</div>
+</details>
+<details class="group border-t border-primary/10 pt-6">
+<summary class="flex justify-between items-center cursor-pointer list-none">
+<span class="text-xs font-bold uppercase tracking-widest">Composition</span>
+<span class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="mt-4 text-sm text-primary/70 dark:text-slate-400">
+<p class="font-bold mb-2">Outer: Silk 100%, Polyester 100%</p>
+<p class="font-bold">Lining: Viscose 100%</p>
+<p class="mt-4 text-xs italic">Washing instructions: Dry Clean Only</p>
+</div>
+</details>
+<details class="group border-t border-primary/10 pt-6">
+<summary class="flex justify-between items-center cursor-pointer list-none">
+<span class="text-xs font-bold uppercase tracking-widest">Shipping &amp; Returns</span>
+<span class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="mt-4 text-sm text-primary/70 dark:text-slate-400">
+<div class="flex items-start gap-3 mb-4">
+<span class="material-symbols-outlined text-lg">local_shipping</span>
+<p>Standard shipping: 3-5 business days. Express shipping available at checkout.</p>
+</div>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-lg">autorenew</span>
+<p>Free returns within 14 days of receipt. Conditions apply.</p>
+</div>
+</div>
+</details>
+</div>
+</div>
+</div>
+<!-- Designer Spotlight -->
+<section class="mt-24 py-16 border-t border-primary/10">
+<div class="flex flex-col md:flex-row items-center gap-12">
+<div class="w-48 h-48 rounded-full overflow-hidden flex-shrink-0 grayscale">
+<img alt="Prada aesthetic" class="w-full h-full object-cover" data-alt="Abstract artistic image representing Prada brand aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCI2bgCM-iBykMwe6Zz0J1C9zSHI1vHz57yw348h9SHsadQQ-GG3P__j6Qqgvefx9qN8C_PqgzfI3xFiNyijpqq_g1s3RIxsKdRSjWZT7ZXSBmzDY1vwULdFVKta2xQLoBM5svUlKRXU3_iyPUnjVnssKy_qKYPPCEQ8NaotuMcpSWJ-H4BiiM6rjQQQztRdmPt5pYztYtuTo9NK01XrYsrhAwWrEanvBjoabBpI_wJ7tPAhhmmHx9_1BbIwUZRPnm2pwmtyytKv-F6"/>
+</div>
+<div class="max-w-2xl text-center md:text-left">
+<h3 class="text-xs uppercase tracking-[0.3em] font-bold mb-4">The Designer</h3>
+<h4 class="text-2xl font-black mb-4">PRADA</h4>
+<p class="text-primary/70 dark:text-slate-400 text-sm leading-loose">
+                        Under the creative direction of Miuccia Prada and Raf Simons, the Milanese house continues to challenge conventional beauty. Expect intellectual designs that balance industrial materials with artisan craftsmanship.
+                    </p>
+</div>
+</div>
+</section>
+<!-- Recommended Items -->
+<section class="mt-24 mb-12">
+<div class="flex items-end justify-between mb-8">
+<h3 class="text-xs uppercase tracking-[0.3em] font-bold">You may also like</h3>
+<a class="text-xs uppercase font-bold underline underline-offset-4 opacity-60 hover:opacity-100" href="#">Shop Prada</a>
+</div>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Product Card 1 -->
+<div class="group cursor-pointer">
+<div class="aspect-[3/4] overflow-hidden bg-primary/5 mb-4 relative">
+<img alt="Shoes" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Designer leather heels" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIT7Aj37o7rwQGG8teoug01cjgJmkiOnVwQM7QXZygw1O0WwbOGlUHL938guekUhgYLz-bp1jjZQSiEnU7uYImPIro8e1eyffVGgmoyLLJi_8XaSTxfwL17QloIRFoO3SEWDdKBZ209OUq-xIyGUxD3qj4y8shbNlgZ8oo_PuJaOaPvThl37YtAb_bsYmHkfP2g-f4hSDJefOUWFWI2TN9LPbdq7Vqrr1MK6REvZCnHRv_1TfzeLGNQsJKBvRRGlD0RetvuGfaHG08"/>
+<button class="absolute top-4 right-4 text-white hover:text-primary transition-colors">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+</div>
+<p class="text-[10px] font-bold uppercase tracking-widest mb-1">Prada</p>
+<p class="text-sm font-light text-primary/70 dark:text-slate-400 truncate mb-2">Triangle-logo leather pumps</p>
+<p class="text-sm font-bold">$1,150</p>
+</div>
+<!-- Product Card 2 -->
+<div class="group cursor-pointer">
+<div class="aspect-[3/4] overflow-hidden bg-primary/5 mb-4 relative">
+<img alt="Bag" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Classic luxury leather handbag" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAV0-6E3BpF6ix09pIH2KalMHbVnNfOrW5ZYpT1-m9zxI8bk60IrmytR88jH2ze30YXHQ0jNaAFouJiw6xjLZv34Z6XCAMfz0gvfa2BVejBz845h1_mEsukDpcml3Pe4vGXH3F5yUW4fxe0LTdjEBcJRiwZoiy3_3BLaBPBAat3KJGLpQfxa_4kHz2JPJzotVx1m8uo7XCithkmjb90kJkoH0eG8Rdc8CfNNM7eB3htmIqh6aW609VCDGTbhAuA79HRLtleahAfSd3L"/>
+<button class="absolute top-4 right-4 text-white hover:text-primary transition-colors">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+</div>
+<p class="text-[10px] font-bold uppercase tracking-widest mb-1">Prada</p>
+<p class="text-sm font-light text-primary/70 dark:text-slate-400 truncate mb-2">Cleo leather shoulder bag</p>
+<p class="text-sm font-bold">$2,850</p>
+</div>
+<!-- Product Card 3 -->
+<div class="group cursor-pointer">
+<div class="aspect-[3/4] overflow-hidden bg-primary/5 mb-4 relative">
+<img alt="Top" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Luxury knit top" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKQdRAykaG6XraK9IL07LugAsdK4WRSCiPHMtAgrDGHl3ngtw4Vxt0sqA2k3Y0BHonfJ_zX5hlw-LD2pkzeJZi1mNyje5tWGIYityA3xH4lTvL4NIsTVCLJv9XsMKRYgd1OpOBs66eHzE_QoLsehXHP-eZU9WZ7GBFbr_kzrS514xSCtAt276Ah7licI0m0QFSvoo2fLGH9IgJnIlE4m8dIjFPbNHYnH_lbSvzQqLgODO1RLhuzrbPwBOJoriWg6aFPWAnYsFjmJf5"/>
+<button class="absolute top-4 right-4 text-white hover:text-primary transition-colors">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+</div>
+<p class="text-[10px] font-bold uppercase tracking-widest mb-1">Prada</p>
+<p class="text-sm font-light text-primary/70 dark:text-slate-400 truncate mb-2">Embroidered poplin top</p>
+<p class="text-sm font-bold">$950</p>
+</div>
+<!-- Product Card 4 -->
+<div class="group cursor-pointer">
+<div class="aspect-[3/4] overflow-hidden bg-primary/5 mb-4 relative">
+<img alt="Skirt" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Silk midi skirt" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4UMwtJ_RfErKSLq0a6nMEdK1y3q9CPNM6EllWdfmavVm_G6gP4ZSqmaTcTpKvdyyymKTV4inN91I1ovWsRchDWe5po3Am7hQGjuV_J95hPV2VuhgrbOzZsZLS01F1c_aPpbPyTYxGFDKtPD3Qd-PhlNVf7vwn4MXdQmRhhTKcT6HR8RLcHwi2MmZpFy8MdZVLVM6vdH6lUrSX6PQ9bRHOcr7xZxB9Vgb2JUj6e570NT102x5jDkn8MyFIIiKQFhmRpfhZKdmvnZfe"/>
+<button class="absolute top-4 right-4 text-white hover:text-primary transition-colors">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+</div>
+<p class="text-[10px] font-bold uppercase tracking-widest mb-1">Prada</p>
+<p class="text-sm font-light text-primary/70 dark:text-slate-400 truncate mb-2">Circled logo silk skirt</p>
+<p class="text-sm font-bold">$1,800</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-primary text-white py-20">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-12 grid grid-cols-1 md:grid-cols-4 gap-12">
+<div class="space-y-6">
+<h2 class="text-2xl font-black uppercase tracking-tighter">Farfetch</h2>
+<p class="text-xs opacity-60 leading-relaxed uppercase tracking-widest">The global platform for luxury fashion. Shop the world's best boutiques.</p>
+</div>
+<div>
+<h5 class="text-xs font-black uppercase tracking-[0.2em] mb-6">Customer Service</h5>
+<ul class="text-xs font-medium space-y-4 opacity-60">
+<li><a class="hover:opacity-100" href="#">Contact Us</a></li>
+<li><a class="hover:opacity-100" href="#">Orders &amp; Delivery</a></li>
+<li><a class="hover:opacity-100" href="#">Payments &amp; Pricing</a></li>
+<li><a class="hover:opacity-100" href="#">Returns &amp; Refunds</a></li>
+<li><a class="hover:opacity-100" href="#">FAQs</a></li>
+</ul>
+</div>
+<div>
+<h5 class="text-xs font-black uppercase tracking-[0.2em] mb-6">About Farfetch</h5>
+<ul class="text-xs font-medium space-y-4 opacity-60">
+<li><a class="hover:opacity-100" href="#">About Us</a></li>
+<li><a class="hover:opacity-100" href="#">Investors</a></li>
+<li><a class="hover:opacity-100" href="#">Careers</a></li>
+<li><a class="hover:opacity-100" href="#">Farfetch App</a></li>
+</ul>
+</div>
+<div>
+<h5 class="text-xs font-black uppercase tracking-[0.2em] mb-6">Newsletter</h5>
+<p class="text-xs opacity-60 mb-4">Sign up for exclusive early sale access and luxury drops.</p>
+<form class="flex border-b border-white/20 pb-2">
+<input class="bg-transparent border-none focus:ring-0 text-xs flex-1 placeholder:text-white/40" placeholder="Email Address" type="email"/>
+<button class="text-xs font-bold uppercase tracking-widest">Join</button>
+</form>
+</div>
+</div>
+<div class="max-w-[1440px] mx-auto px-6 lg:px-12 mt-20 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between gap-4">
+<p class="text-[10px] opacity-40 uppercase tracking-widest">© 2024 FARFETCH UK Limited. All rights reserved.</p>
+<div class="flex gap-6 opacity-40 text-[10px] uppercase tracking-widest">
+<a href="#">Privacy Policy</a>
+<a href="#">Terms &amp; Conditions</a>
+</div>
+</div>
+</footer>
+</body></html>
