@@ -1,5 +1,5 @@
 import { CurrencyPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { HomeStore } from '../../home/store/home.store';
 import { ProductCardComponent } from '../../../shared/ui/product-card/product-card.component';
@@ -23,11 +23,19 @@ interface MensDesignerSpot {
   readonly image: string;
 }
 
+
 @Component({
   selector: 'app-mens-page',
   standalone: true,
   imports: [RouterLink, CurrencyPipe, ProductCardComponent],
   template: `
+
+    <!-- ─── Breadcrumb ──────────────────────────────────────────────────────── -->
+    <nav class="flex items-center gap-2 text-[10px] uppercase tracking-widest text-zinc-400 py-5 px-4 md:px-0" aria-label="Breadcrumb">
+      <a routerLink="/" class="hover:text-black transition-colors duration-150">Home</a>
+      <span class="text-zinc-300">/</span>
+      <span class="text-black font-bold">Menswear</span>
+    </nav>
 
     <!-- ─── Cinematic Hero ───────────────────────────────────────────────────── -->
     <section class="relative w-full aspect-[21/9] min-h-[420px] flex items-center overflow-hidden">
@@ -103,7 +111,10 @@ interface MensDesignerSpot {
 
     <!-- ─── The Menswear Edit ────────────────────────────────────────────────── -->
     <section class="py-16 px-4 md:px-10 bg-white">
-      <h3 class="text-3xl font-bold mb-12">The Menswear Edit</h3>
+      <div class="flex items-end justify-between mb-10 border-b border-zinc-200 pb-4">
+        <h3 class="text-3xl font-bold">The Menswear Edit</h3>
+        <a href="#" class="text-[10px] font-bold uppercase tracking-widest underline underline-offset-8 hover:text-zinc-400 transition-colors">View All</a>
+      </div>
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
         @for (item of sortedMenswear(); track item.id) {
           <app-product-card [item]="item" (addToBag)="addToBag($event)" />
@@ -130,6 +141,76 @@ interface MensDesignerSpot {
       </div>
     </section>
 
+    <!-- ─── Complete the Look ────────────────────────────────────────────────── -->
+    <!-- Top 4 aspirational picks from the real catalog — editorial card style, no CTA -->
+    <section class="py-20 px-4 md:px-10 bg-zinc-50">
+      <h2 class="text-xs font-bold uppercase tracking-[0.3em] text-zinc-400 text-center mb-12">Complete the Look</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+        @for (item of completeTheLook(); track item.id; let i = $index) {
+          <a [routerLink]="['/product', item.id]" class="group block">
+            <div class="relative aspect-[3/4] overflow-hidden bg-zinc-200">
+              <img
+                [src]="item.image"
+                [alt]="item.title"
+                class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                loading="lazy"
+              />
+              @if (i === 0) {
+                <span class="absolute top-3 left-3 bg-black text-white text-[9px] font-bold uppercase tracking-widest px-2 py-1">Top Pick</span>
+              }
+              <button
+                type="button"
+                class="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
+                aria-label="Add to wishlist"
+                (click)="$event.preventDefault()"
+              >
+                <span class="flex items-center justify-center w-8 h-8 bg-white/85 backdrop-blur-sm rounded-full shadow-sm">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                  </svg>
+                </span>
+              </button>
+            </div>
+            <div class="pt-4 space-y-1.5">
+              <p class="text-[10px] font-bold uppercase tracking-widest text-zinc-400">{{ item.brand }}</p>
+              <h5 class="text-sm font-light text-zinc-700 leading-snug">{{ item.title }}</h5>
+              <p class="text-sm font-bold">{{ item.price | currency }}</p>
+            </div>
+          </a>
+        }
+      </div>
+    </section>
+
+    <!-- ─── Newsletter ───────────────────────────────────────────────────────── -->
+    @defer (on viewport) {
+      <section class="bg-zinc-900 py-20 px-4">
+        <div class="max-w-2xl mx-auto text-center">
+          <p class="text-[10px] font-bold uppercase tracking-[0.3em] text-zinc-400 mb-4">Stay in the Loop</p>
+          <h3 class="text-3xl font-bold text-white mb-4">Menswear, First</h3>
+          <p class="text-zinc-400 mb-10 text-sm leading-relaxed max-w-md mx-auto">
+            Exclusive early access to sales, new arrivals and styling edits delivered straight to your inbox.
+          </p>
+          <form class="flex flex-col sm:flex-row gap-0" (submit)="$event.preventDefault()">
+            <input
+              type="email"
+              class="flex-1 bg-transparent border border-white/20 border-r-0 px-6 py-4 text-white text-sm placeholder:text-zinc-500 focus:outline-none focus:border-white/50 transition-colors"
+              placeholder="Enter your email address"
+              [value]="email()"
+              (input)="onEmailInput($event)"
+              aria-label="Email address"
+            />
+            <button
+              type="button"
+              class="bg-white text-black px-10 py-4 text-[11px] font-bold uppercase tracking-widest hover:bg-zinc-200 transition-colors disabled:opacity-30 whitespace-nowrap"
+              [disabled]="!isEmailValid()"
+            >Subscribe</button>
+          </form>
+        </div>
+      </section>
+    } @placeholder {
+      <div class="h-48 animate-pulse bg-zinc-200"></div>
+    }
+
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -137,12 +218,23 @@ export class MensPageComponent {
   protected readonly store = inject(HomeStore);
   private readonly cart = inject(CartService);
 
+  protected readonly email = signal('');
+  protected readonly isEmailValid = computed(() => /.+@.+\..+/.test(this.email()));
+
+  protected onEmailInput(e: Event): void {
+    this.email.set((e.target as HTMLInputElement)?.value ?? '');
+  }
+
   protected readonly sortedMenswear = computed(() => [...this.store.menswear()].sort((a, b) => a.price - b.price));
   protected readonly brandCount = computed(() => new Set(this.store.menswear().map((item) => item.brand)).size);
   protected readonly startingPrice = computed(() => {
     const prices = this.store.menswear().map((item) => item.price);
     return prices.length ? Math.min(...prices) : 0;
   });
+  // Top 4 most expensive items — aspirational cross-sell picks with guaranteed image URLs
+  protected readonly completeTheLook = computed(() =>
+    [...this.store.menswear()].sort((a, b) => b.price - a.price).slice(0, 4)
+  );
 
   protected readonly lookbookImages = [
     {
