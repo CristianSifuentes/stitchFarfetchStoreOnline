@@ -65,6 +65,17 @@ interface CatalogItem {
 `sizesFor(item)` gives the size run: IT sizes for clothing, EU for shoes, ages for kids. Bags, accessories and
 jewelry are one size.
 
+## Product photography
+
+- **Every photo must show the product it names.** When adding a product, check the image (no logos of other
+  brands, no adult model on a kids item). `catalog.json` never reuses a photo for two products.
+- **Size per context:** `sizedImage(url, width)` asks imgix (Unsplash) for the width the UI needs: cards 600px,
+  product page 1200px. Other hosts pass through unchanged.
+- **Generated gallery:** `galleryFor(url)` builds the product page gallery from one photo: the full view plus two
+  focal-point zooms (`crop=focalpoint&fp-z`), the detail shots a luxury PDP shows.
+- **Designer tiles** use `featureDesigner()`: the house's newest *clothing* piece first (then bags, shoes,
+  accessories, jewelry), so a designer is never pictured by a wallet.
+
 ## Design system
 
 Tokens and utilities live in `src/styles.css` (Tailwind v4 `@theme` + `@utility`). Tailwind v4 doesn't read
@@ -126,5 +137,5 @@ can't drift. `rounded-full` remains for functional circles only (the wishlist bu
 
 ## Tests
 
-`npm test` (Vitest): `formatPrice` and `queryCatalog` / `designersIn`, the listing's filter, search and sort
-logic.
+`npm test` (Vitest): `formatPrice`, `queryCatalog` / `designersIn` (the listing's filter, search and sort
+logic), `sizedImage` / `galleryFor` and `featureDesigner`.
