@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { DEPARTMENTS } from '../../../core/catalog';
+import { DEPARTMENTS, featureDesigner } from '../../../core/catalog';
 import { CatalogStore } from '../../../core/services/catalog.store';
 import { BrandStripComponent } from '../../../shared/ui/brand-strip/brand-strip.component';
 import { DesignerCardComponent } from '../../../shared/ui/designer-card/designer-card.component';
@@ -17,7 +17,7 @@ const DEPARTMENT_IMAGES: Record<string, string> = {
 const FEATURED_DESIGNERS = [
   { name: 'Bottega Veneta', eyebrow: 'New Season' },
   { name: 'Max Mara', eyebrow: 'Investment Piece' },
-  { name: 'Saint Laurent', eyebrow: 'The Tailoring Edit' },
+  { name: 'Saint Laurent', eyebrow: 'Icons of the House' },
   { name: 'Burberry Kids', eyebrow: 'Heritage for Kids' }
 ] as const;
 
@@ -31,12 +31,12 @@ const HOME_BRANDS = ['Prada', 'Gucci', 'Saint Laurent', 'Burberry', 'Loewe', 'Ba
       <section class="pt-12" aria-labelledby="departments-heading">
         <p class="label-caps mb-3 text-center text-muted">SS24 Collection</p>
         <h1 id="departments-heading" class="text-headline mb-10 text-center">Choose your world</h1>
-        <div class="grid gap-4 md:grid-cols-3">
+        <div class="grid grid-cols-3 gap-2 md:gap-4">
           @for (department of departments; track department.id) {
             <a [routerLink]="department.path" class="group relative block aspect-[3/4] overflow-hidden bg-surface">
               <img [src]="images[department.id]" [alt]="department.label" class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="eager" />
               <div class="absolute inset-0 bg-black/20 transition-colors duration-300 group-hover:bg-black/5"></div>
-              <span class="btn btn-light absolute bottom-8 left-1/2 -translate-x-1/2">{{ department.label }}</span>
+              <span class="btn btn-light absolute bottom-3 left-1/2 -translate-x-1/2 px-4 py-2.5 md:bottom-8 md:px-10 md:py-4">{{ department.label }}</span>
             </a>
           }
         </div>
@@ -112,10 +112,8 @@ export class HomePageComponent {
 
   protected readonly designers = computed(() =>
     FEATURED_DESIGNERS.flatMap((designer) => {
-      const pieces = this.catalog.newest().filter((item) => item.brand === designer.name);
-      return pieces.length
-        ? [{ ...designer, image: pieces[0].image, from: Math.min(...pieces.map((item) => item.price)) }]
-        : [];
+      const feature = featureDesigner(this.catalog.all(), designer.name);
+      return feature ? [{ ...feature, eyebrow: designer.eyebrow }] : [];
     })
   );
 }

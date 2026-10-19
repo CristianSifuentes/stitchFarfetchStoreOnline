@@ -74,15 +74,17 @@ const PAGE_SIZE = 8;
           }
         </div>
 
-        <div class="mx-auto mt-16 flex max-w-xs flex-col items-center gap-4 text-center">
-          <p class="text-xs text-muted">Viewing {{ visible().length }} of {{ results().length }} items</p>
-          <div class="h-px w-full bg-line" aria-hidden="true">
-            <div class="h-px bg-ink transition-[width] duration-500" [style.width.%]="(visible().length / results().length) * 100"></div>
+        @if (results().length > pageSize) {
+          <div class="mx-auto mt-16 flex max-w-xs flex-col items-center gap-4 text-center">
+            <p class="text-xs text-muted">Viewing {{ visible().length }} of {{ results().length }} items</p>
+            <div class="h-px w-full bg-line" aria-hidden="true">
+              <div class="h-px bg-ink transition-[width] duration-500" [style.width.%]="(visible().length / results().length) * 100"></div>
+            </div>
+            @if (visible().length < results().length) {
+              <button type="button" class="btn btn-primary mt-2" (click)="limit.set(limit() + pageSize)">Load more</button>
+            }
           </div>
-          @if (visible().length < results().length) {
-            <button type="button" class="btn btn-primary mt-2" (click)="limit.set(limit() + pageSize)">Load more</button>
-          }
-        </div>
+        }
       } @else {
         <div class="py-24 text-center">
           <p class="text-headline">No items match your selection</p>
@@ -158,7 +160,8 @@ export class ProductListingPageComponent {
     if (!department) {
       return 'Every piece across womenswear, menswear and kidswear, from the world’s leading luxury houses.';
     }
-    return DESCRIPTIONS[department];
+    const category = this.category();
+    return category ? CATEGORY_DESCRIPTIONS[category] : DESCRIPTIONS[department];
   });
 
   protected readonly breadcrumb = computed<Crumb[]>(() => {
@@ -187,4 +190,13 @@ const DESCRIPTIONS: Record<Department, string> = {
   menswear:
     'From sharp tailoring to technical outerwear and statement sneakers, discover the season’s defining menswear from established and emerging designers.',
   kids: 'Premium essentials for babies, kids and teens: weather-ready outerwear, playful dresses and signature sneakers from the most-loved houses.'
+};
+
+// What each category holds, the same in every department.
+const CATEGORY_DESCRIPTIONS: Record<ProductCategory, string> = {
+  clothing: 'Tailoring, knitwear, outerwear and dresses: the season’s defining pieces, cut by the houses that set the pace.',
+  shoes: 'From hand-finished leather classics to statement heels and the sneakers of the moment.',
+  bags: 'Totes, shoulder bags and backpacks in the finest leathers, built to be carried for years.',
+  accessories: 'Sunglasses, watches, belts and small leather goods: the details that finish a look.',
+  jewelry: 'Fine and fashion jewelry, from everyday bands to pieces made to be noticed.'
 };

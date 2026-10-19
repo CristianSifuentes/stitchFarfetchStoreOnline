@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CatalogItem } from '../../../core/catalog/catalog.model';
+import { sizedImage } from '../../../core/catalog/images';
 import { CartService } from '../../../core/services/cart.service';
 import { PricePipe } from '../../pipes/price.pipe';
 import { WishlistButtonComponent } from '../wishlist-button/wishlist-button.component';
@@ -16,7 +17,7 @@ import { WishlistButtonComponent } from '../wishlist-button/wishlist-button.comp
       <a [routerLink]="['/product', item().id]" class="block">
         <div class="relative aspect-[3/4] overflow-hidden bg-surface">
           <img
-            [src]="item().image"
+            [src]="image()"
             [alt]="item().brand + ' ' + item().title"
             class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             [attr.loading]="eager() ? 'eager' : 'lazy'"
@@ -53,4 +54,7 @@ export class ProductCardComponent {
   readonly item = input.required<CatalogItem>();
   // Above-the-fold cards load immediately.
   readonly eager = input(false);
+
+  // Cards render at most ~360px wide; 600px covers 2x screens.
+  protected readonly image = computed(() => sizedImage(this.item().image, 600));
 }

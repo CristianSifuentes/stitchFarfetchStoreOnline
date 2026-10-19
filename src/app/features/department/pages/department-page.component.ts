@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { CATEGORIES, Department, departmentInfo } from '../../../core/catalog';
+import { CATEGORIES, Department, departmentInfo, featureDesigner } from '../../../core/catalog';
 import { CatalogStore, byNewest } from '../../../core/services/catalog.store';
 import { BrandStripComponent } from '../../../shared/ui/brand-strip/brand-strip.component';
 import { BreadcrumbComponent } from '../../../shared/ui/breadcrumb/breadcrumb.component';
@@ -171,10 +171,8 @@ export class DepartmentPageComponent {
 
   protected readonly designers = computed(() =>
     this.content().designers.flatMap((designer) => {
-      const pieces = this.items().filter((item) => item.brand === designer.name);
-      return pieces.length
-        ? [{ ...designer, image: pieces[0].image, from: Math.min(...pieces.map((item) => item.price)) }]
-        : [];
+      const feature = featureDesigner(this.items(), designer.name);
+      return feature ? [{ ...feature, eyebrow: designer.eyebrow }] : [];
     })
   );
 

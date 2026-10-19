@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, linkedSignal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { categoryLabel, departmentInfo, sizesFor } from '../../../core/catalog';
+import { categoryLabel, departmentInfo, galleryFor, sizesFor } from '../../../core/catalog';
 import { CartService } from '../../../core/services/cart.service';
 import { CatalogStore } from '../../../core/services/catalog.store';
 import { WishlistService } from '../../../core/services/wishlist.service';
@@ -22,10 +22,27 @@ const RELATED_COUNT = 4;
         <app-breadcrumb [items]="breadcrumb()" />
 
         <section class="grid gap-10 lg:grid-cols-12 lg:gap-16">
-          <div class="lg:col-span-7">
-            <div class="aspect-[3/4] overflow-hidden bg-surface">
-              <img class="h-full w-full object-cover" [src]="item.image" [alt]="item.brand + ' ' + item.title" loading="eager" />
+          <div class="flex flex-col gap-3 lg:col-span-7 lg:flex-row-reverse">
+            <div class="aspect-[3/4] flex-1 overflow-hidden bg-surface">
+              <img class="h-full w-full object-cover" [src]="gallery()[activeImage()].src" [alt]="item.brand + ' ' + item.title + ', ' + gallery()[activeImage()].label" loading="eager" />
             </div>
+            @if (gallery().length > 1) {
+              <div class="no-scrollbar flex gap-3 overflow-x-auto lg:w-20 lg:flex-col" role="group" aria-label="Product images">
+                @for (image of gallery(); track image.src; let i = $index) {
+                  <button
+                    type="button"
+                    class="aspect-[3/4] w-20 shrink-0 overflow-hidden border bg-surface transition-colors"
+                    [class.border-ink]="activeImage() === i"
+                    [class.border-transparent]="activeImage() !== i"
+                    [attr.aria-pressed]="activeImage() === i"
+                    [attr.aria-label]="image.label"
+                    (click)="activeImage.set(i)"
+                  >
+                    <img class="h-full w-full object-cover" [src]="image.src" alt="" loading="lazy" />
+                  </button>
+                }
+              </div>
+            }
           </div>
 
           <div class="space-y-8 lg:col-span-5 lg:sticky lg:top-40 lg:self-start">
@@ -148,9 +165,15 @@ export class ProductPageComponent {
     return item ? sizesFor(item) : [];
   });
 
+  protected readonly gallery = computed(() => {
+    const item = this.product();
+    return item ? galleryFor(item.image) : [];
+  });
+
   // Reset whenever the product changes.
   protected readonly selectedSize = linkedSignal<string | null, string | null>({ source: this.id, computation: () => null });
   protected readonly added = linkedSignal({ source: this.id, computation: () => false });
+  protected readonly activeImage = linkedSignal({ source: this.id, computation: () => 0 });
   protected readonly needsSize = linkedSignal({ source: this.id, computation: () => false });
 
   protected readonly saved = computed(() => this.wishlist.has(this.id()));
