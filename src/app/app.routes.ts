@@ -1,5 +1,24 @@
 import { Routes } from '@angular/router';
+import { Department } from './core/catalog/catalog.model';
 import { PublicLayoutComponent } from './layouts/public-layout/public-layout.component';
+
+const department = () =>
+  import('./features/department/pages/department-page.component').then((m) => m.DepartmentPageComponent);
+const listing = () =>
+  import('./features/listing/pages/product-listing-page.component').then((m) => m.ProductListingPageComponent);
+
+// Each department has the same two pages — a landing and a listing — so
+// their routes are generated from one shape (Farfetch: /women, /women/items).
+function departmentRoutes(path: string, id: Department): Routes {
+  return [
+    { path, loadComponent: department, data: { department: id }, title: titleFor(id) },
+    { path: `${path}/items`, loadComponent: listing, data: { department: id }, title: `${titleFor(id)} · Shop all` }
+  ];
+}
+
+function titleFor(id: Department): string {
+  return { womenswear: 'Womenswear', menswear: 'Menswear', kids: 'Kidswear' }[id] + ' | FARFETCH';
+}
 
 export const routes: Routes = [
   {
@@ -8,23 +27,22 @@ export const routes: Routes = [
     children: [
       {
         path: '',
+        title: 'FARFETCH | Luxury Fashion',
         loadComponent: () => import('./features/home/pages/home-page.component').then((m) => m.HomePageComponent)
       },
-      {
-        path: 'womenswear',
-        loadComponent: () => import('./features/womens/pages/womens-page.component').then((m) => m.WomensPageComponent)
-      },
-      {
-        path: 'menswear',
-        loadComponent: () => import('./features/mens/pages/mens-page.component').then((m) => m.MensPageComponent)
-      },
-      {
-        path: 'kids',
-        loadComponent: () => import('./features/kids/pages/kids-page.component').then((m) => m.KidsPageComponent)
-      },
+      ...departmentRoutes('womenswear', 'womenswear'),
+      ...departmentRoutes('menswear', 'menswear'),
+      ...departmentRoutes('kids', 'kids'),
+      { path: 'search', loadComponent: listing, data: { department: null }, title: 'Shop all | FARFETCH' },
       {
         path: 'product/:id',
+        title: 'Product | FARFETCH',
         loadComponent: () => import('./features/product/pages/product-page.component').then((m) => m.ProductPageComponent)
+      },
+      {
+        path: '**',
+        title: 'Page not found | FARFETCH',
+        loadComponent: () => import('./features/not-found/pages/not-found-page.component').then((m) => m.NotFoundPageComponent)
       }
     ]
   }
