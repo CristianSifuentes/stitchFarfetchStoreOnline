@@ -1,14 +1,269 @@
 @import "tailwindcss";
 
-:root {
-  --brand-primary: #000000;
-  --brand-accent: #f97316;
+/* ──────────────────────────────────────────────────────────────────────────
+   Design system: "Monochrome Absolute" (prototypes/woman_/woman8/DESIGN.md)
+   Monochrome palette, sharp 0px corners, no shadows, light display type,
+   uppercase micro-labels. Every page reads from these tokens and utilities;
+   components never invent their own type scale, colors or buttons.
+   ────────────────────────────────────────────────────────────────────────── */
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --color-ink: #000000;
+  --color-canvas: #ffffff;
+  --color-surface: #f5f5f5;
+  --color-line: #e5e5e5;
+  --color-muted: #767676;
+  --color-error: #ba1a1a;
+
+  /* Sharp by design: no radius scale and no shadow scale exist, so
+     rounded-lg / shadow-md simply can't be used. rounded-full stays for
+     the few functional circles (wishlist button, count badges). */
+  --radius-*: initial;
+  --shadow-*: initial;
+  --inset-shadow-*: initial;
+  --drop-shadow-*: initial;
 }
 
-body {
-  margin: 0;
-  min-height: 100vh;
+@layer base {
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+    background: var(--color-canvas);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :where(a, button, input, select, summary):focus-visible {
+    outline: 1px solid var(--color-ink);
+    outline-offset: 3px;
+  }
 }
 
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+/* ── Layout ─────────────────────────────────────────────────────────────── */
+
+/* The page frame: 1440px max, 20px mobile / 64px desktop margins. */
+@utility page-container {
+  width: 100%;
+  max-width: 90rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+
+  @media (width >= 64rem) {
+    padding-inline: 4rem;
+  }
+}
+
+/* Vertical rhythm between page sections. */
+@utility section-y {
+  padding-block: 4rem;
+
+  @media (width >= 48rem) {
+    padding-block: 6rem;
+  }
+}
+
+/* Every product grid in the app: 2 → 3 → 4 columns. */
+@utility product-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 1rem;
+  row-gap: 2.5rem;
+
+  @media (width >= 48rem) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 1.5rem;
+    row-gap: 3rem;
+  }
+
+  @media (width >= 64rem) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* ── Typography ─────────────────────────────────────────────────────────── */
+
+/* Hero headlines: light and tight. */
+@utility text-display {
+  font-size: clamp(2.5rem, 1.6rem + 3vw, 4rem);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+/* Section and page titles. */
+@utility text-headline {
+  font-size: clamp(1.75rem, 1.45rem + 1vw, 2rem);
+  font-weight: 300;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+/* Sub-titles: card titles over images, the brand on a product page. */
+@utility text-title {
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 1.3;
+}
+
+/* The "luxury label": brands, nav, buttons, eyebrows. */
+@utility label-caps {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* ── Controls ───────────────────────────────────────────────────────────── */
+
+/* Buttons: square, uppercase, and they invert on hover instead of lifting. */
+@utility btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem 2.5rem;
+  border: 1px solid transparent;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease-in-out,
+    color 0.2s ease-in-out,
+    border-color 0.2s ease-in-out;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+  }
+}
+
+@utility btn-primary {
+  background: var(--color-ink);
+  border-color: var(--color-ink);
+  color: var(--color-canvas);
+
+  &:not(:disabled):hover {
+    background: var(--color-canvas);
+    color: var(--color-ink);
+  }
+}
+
+@utility btn-secondary {
+  background: var(--color-canvas);
+  border-color: var(--color-ink);
+  color: var(--color-ink);
+
+  &:not(:disabled):hover {
+    background: var(--color-ink);
+    color: var(--color-canvas);
+  }
+}
+
+/* On top of photography: solid white, inverting to an outline. */
+@utility btn-light {
+  background: var(--color-canvas);
+  border-color: var(--color-canvas);
+  color: var(--color-ink);
+
+  &:not(:disabled):hover {
+    background: transparent;
+    color: var(--color-canvas);
+  }
+}
+
+/* On top of photography: white outline, filling on hover. */
+@utility btn-outline-light {
+  background: transparent;
+  border-color: var(--color-canvas);
+  color: var(--color-canvas);
+
+  &:not(:disabled):hover {
+    background: var(--color-canvas);
+    color: var(--color-ink);
+  }
+}
+
+/* "View all", "Size guide": an underlined label, never a button. */
+@utility link-cta {
+  display: inline-block;
+  padding-bottom: 0.125rem;
+  border-bottom: 1px solid currentColor;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: color 0.2s ease-in-out;
+
+  &:hover {
+    color: var(--color-muted);
+  }
+}
+
+/* Inputs: a single bottom border that darkens on focus. */
+@utility input-line {
+  width: 100%;
+  padding-block: 0.75rem;
+  border: 0;
+  border-bottom: 1px solid var(--color-line);
+  background: transparent;
+  font-size: 0.875rem;
+  color: var(--color-ink);
+  outline: none;
+  transition: border-color 0.2s ease-in-out;
+
+  &::placeholder {
+    color: var(--color-muted);
+  }
+
+  &:focus {
+    border-bottom-color: var(--color-ink);
+  }
+}
+
+/* Native selects styled as a label with a chevron. */
+@utility select-line {
+  appearance: none;
+  padding: 0.25rem 1.25rem 0.25rem 0;
+  border: 0;
+  background: transparent
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.5'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")
+    no-repeat right center / 0.875rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  cursor: pointer;
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* A card's "Add to bag": always visible on touch; on hover devices it
+   appears with the card's hover, or with keyboard focus. */
+@utility quick-add {
+  transition: opacity 0.2s ease-in-out;
+
+  @media (hover: hover) {
+    opacity: 0;
+
+    :where(.group):hover &,
+    &:focus-visible {
+      opacity: 1;
+    }
+  }
+}
