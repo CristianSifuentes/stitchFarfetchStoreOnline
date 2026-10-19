@@ -378,5 +378,83 @@
     "category": "clothing",
     "description": "Breathable pleated cotton dress with ruffled shoulder detail and lightweight lining.",
     "addedAt": "2024-02-07"
+  },
+  {
+    "id": "kj-11",
+    "title": "Round metal-frame sunglasses",
+    "brand": "Fendi Kids",
+    "price": 210,
+    "image": "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=900&q=80",
+    "department": "kids",
+    "category": "accessories",
+    "description": "Lightweight round metal frames with tinted lenses and full UV protection, sized for children.",
+    "addedAt": "2024-02-15",
+    "badge": "New Season"
+  },
+  {
+    "id": "kj-12",
+    "title": "Mesh-back trucker cap",
+    "brand": "Off-White Kids",
+    "price": 145,
+    "image": "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?auto=format&fit=crop&w=900&q=80",
+    "department": "kids",
+    "category": "accessories",
+    "description": "Structured cotton-twill trucker cap with a breathable mesh back and an adjustable snap strap.",
+    "addedAt": "2024-02-14"
+  },
+  {
+    "id": "kj-13",
+    "title": "Washed cotton baseball cap",
+    "brand": "Moncler Enfant",
+    "price": 165,
+    "image": "https://images.unsplash.com/photo-1521369909029-2afed882baee?auto=format&fit=crop&w=900&q=80",
+    "department": "kids",
+    "category": "accessories",
+    "description": "Garment-washed cotton cap with a curved peak and tonal embroidered logo.",
+    "addedAt": "2024-02-13"
+  },
+  {
+    "id": "kj-14",
+    "title": "Freshwater pearl necklace",
+    "brand": "Dodo",
+    "price": 380,
+    "image": "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=900&q=80",
+    "department": "kids",
+    "category": "jewelry",
+    "description": "Strand of hand-knotted freshwater pearls with a sterling silver clasp; a first-communion classic.",
+    "addedAt": "2024-02-12"
+  },
+  {
+    "id": "kj-15",
+    "title": "Luna crescent pendant necklace",
+    "brand": "Aliita",
+    "price": 260,
+    "image": "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=900&q=80",
+    "department": "kids",
+    "category": "jewelry",
+    "description": "Delicate gold-plated chain with a crescent-moon pendant set with tiny crystals.",
+    "addedAt": "2024-02-11"
+  },
+  {
+    "id": "kj-16",
+    "title": "Chunky gold chain bracelet",
+    "brand": "Monica Vinader",
+    "price": 295,
+    "image": "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&w=900&q=80",
+    "department": "kids",
+    "category": "jewelry",
+    "description": "Polished 18k gold-vermeil curb chain with an easy toggle fastening for small wrists.",
+    "addedAt": "2024-02-10"
+  },
+  {
+    "id": "kj-17",
+    "title": "Twisted gold huggie hoops",
+    "brand": "Missoma",
+    "price": 150,
+    "image": "https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=900&q=80",
+    "department": "kids",
+    "category": "jewelry",
+    "description": "Small twisted huggie hoops in 18k gold-plated recycled silver, light enough for everyday wear.",
+    "addedAt": "2024-02-09"
   }
 ]
