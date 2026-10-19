@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec5b13",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#221610",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<title>New Arrivals: Womenswear | LUXURY FASHION</title>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased">
+<!-- Top Navigation -->
+<header class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-12 py-4 flex items-center justify-between">
+<div class="flex items-center gap-12">
+<a class="flex items-center gap-2 group" href="#">
+<div class="size-8 bg-primary flex items-center justify-center rounded">
+<span class="material-symbols-outlined text-white text-xl">grid_view</span>
+</div>
+<h1 class="text-xl font-black tracking-tighter uppercase">Luxury Fashion</h1>
+</a>
+<nav class="hidden lg:flex items-center gap-8">
+<a class="text-sm font-semibold hover:text-primary transition-colors uppercase tracking-wide" href="#">New In</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors uppercase tracking-wide" href="#">Designers</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors uppercase tracking-wide" href="#">Clothing</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors uppercase tracking-wide" href="#">Shoes</a>
+<a class="text-sm font-semibold hover:text-primary transition-colors uppercase tracking-wide text-primary" href="#">Sale</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative hidden md:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xl">search</span>
+<input class="pl-10 pr-4 py-2 bg-slate-100 dark:bg-slate-800 border-none rounded-full text-sm focus:ring-2 focus:ring-primary w-64" placeholder="Search brands, items..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors relative">
+<span class="material-symbols-outlined">favorite</span>
+<span class="absolute top-1 right-1 size-2 bg-primary rounded-full"></span>
+</button>
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
+<span class="material-symbols-outlined">shopping_bag</span>
+</button>
+<button class="p-1 border border-slate-200 dark:border-slate-700 rounded-full">
+<div class="size-8 rounded-full bg-cover bg-center" data-alt="User profile circular portrait" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCGeNL5rJEHtsFeB0rZXm6IDjF_hvNeVNwdHTVtSGlMq_lB2LQsSXG0woJcUramA9m0qSprzWWTxpZZTgAtna_uvn7MaKha0P3cvjrSIIkLT9SUoCJwn_3r-Daa7ATkIU9mevvHyqaCUJjw1Ok6YOjZmFN5WeajH8Wes9E0b8NIPupMTghRFd_sXpAb2zbSFrD-PPHz-aOi0Z_0TK2dyBBDr8OmH6sXmFKaeQonAA5VCL3Gctx2ou8pkQe1v53yojHa77Y-1qTdnlO1')"></div>
+</button>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-[1440px] mx-auto px-6 lg:px-12 py-8">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-2 text-xs uppercase tracking-widest text-slate-500 mb-8">
+<a class="hover:text-primary" href="#">Home</a>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<a class="hover:text-primary" href="#">Women</a>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="text-slate-900 dark:text-slate-100 font-bold">New Arrivals</span>
+</nav>
+<!-- Page Header -->
+<div class="mb-12 max-w-2xl">
+<h2 class="text-4xl md:text-5xl font-black mb-4 tracking-tight">New Arrivals: Womenswear</h2>
+<p class="text-lg text-slate-600 dark:text-slate-400 leading-relaxed font-light">
+                Explore the definitive edit of this season's most coveted pieces. From runway-fresh silhouettes to timeless investment staples, discover the latest collections from our curated list of world-renowned designers.
+            </p>
+</div>
+<!-- Filters Bar -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-slate-200 dark:border-slate-800 mb-8">
+<div class="flex flex-wrap gap-3">
+<button class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-semibold hover:border-primary transition-all">
+                    Category <span class="material-symbols-outlined text-sm">expand_more</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-semibold hover:border-primary transition-all">
+                    Designer <span class="material-symbols-outlined text-sm">expand_more</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-semibold hover:border-primary transition-all">
+                    Size <span class="material-symbols-outlined text-sm">expand_more</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-semibold hover:border-primary transition-all">
+                    Color <span class="material-symbols-outlined text-sm">expand_more</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-semibold hover:border-primary transition-all">
+                    Price <span class="material-symbols-outlined text-sm">expand_more</span>
+</button>
+</div>
+<div class="flex items-center gap-4">
+<p class="text-xs font-bold text-slate-500 uppercase">Sort By</p>
+<select class="bg-transparent border-none text-sm font-bold focus:ring-0 cursor-pointer pr-8">
+<option>Newest Arrivals</option>
+<option>Price: Low to High</option>
+<option>Price: High to Low</option>
+<option>Best Sellers</option>
+</select>
+</div>
+</div>
+<!-- Product Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-12">
+<!-- Product Card 1 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-[3/4] overflow-hidden bg-slate-100 dark:bg-slate-800 rounded-xl mb-4">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Model wearing high fashion trench coat" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGFsjKjxSFBASqBs5eppAnZjnSYlEizjCEMKKsT2vta36SwlbylxZG_BJQanG2ORqk2t3Df6NvQASN3BkJzCadN06I9hGV-2tx2bE7B6xB18xZatshayiZ1KP8nWFqjbwDSS4gkldjZp5E5KgqxL855DkLtCtSHwApfXttxBph3amaqAm2wA9eiW89LvKsfzB7FPUIFw09sE5SRmKy2DW2T3ONdzWloQqtFTuIVJ6YBmO5AVGDpX1dAIoEgc-ruO0Eti7opkW0DYhE"/>
+<button class="absolute top-4 right-4 size-10 bg-white/90 dark:bg-slate-900/90 flex items-center justify-center rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-xl">favorite</span>
+</button>
+<div class="absolute bottom-4 left-4">
+<span class="px-3 py-1 bg-primary text-white text-[10px] font-bold uppercase tracking-widest rounded-full">New In</span>
+</div>
+</div>
+<div class="space-y-1">
+<h3 class="text-xs font-black uppercase tracking-widest text-slate-500">Saint Laurent</h3>
+<p class="text-sm font-medium leading-snug">Double-breasted Wool Gabardine Trench Coat</p>
+<p class="text-base font-bold text-primary mt-2">$3,490</p>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-[3/4] overflow-hidden bg-slate-100 dark:bg-slate-800 rounded-xl mb-4">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Model wearing minimalist summer dress" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhnbmrVEy3DusxK25pfk5UZxGed8SFvMwZNLysGU8wbkAyhnKvskpiGvMa1_YqnndlO7Ny703wdEGXbZfhyNw068uegyguIOMlpfTbVSwOImabrgBLVJuKWJmQV45DS9BqJXupMS0J5B90ixeNzFF8TxeYOjGf2zg5aVbaTSJBmP1QT4Wb9K4_pNqYnx5Ck_mO6aJBL4O0UuIyACnEMEIfKb9B1bkA9fh3quFQz7s0m_PKuk46ZMsYuMYjB210op526FuFliqfHIdS"/>
+<button class="absolute top-4 right-4 size-10 bg-white/90 dark:bg-slate-900/90 flex items-center justify-center rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-xl">favorite</span>
+</button>
+</div>
+<div class="space-y-1">
+<h3 class="text-xs font-black uppercase tracking-widest text-slate-500">Jacquemus</h3>
+<p class="text-sm font-medium leading-snug">La Robe Saudade Draped Long Dress</p>
+<p class="text-base font-bold text-primary mt-2">$845</p>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-[3/4] overflow-hidden bg-slate-100 dark:bg-slate-800 rounded-xl mb-4">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="High fashion leather handbag detail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaLCSxiLaSzJSbTttVnrAoJYhIy1rWMkYWPKhITUUyEFQB_dzKgje6Z_Of9Ifx6fStlLAoUpDhlVWMcgoCTPiiJ1mzAzSDzvpQZSx23R3M3NKvB1H0f-rRK3S3xUofvNPYffiW4tqlOEyrTP8LUkacnOzO1Dg4_8x-Semp2mPVo_OHbe6vf_Jpyay3A-prpGJI7Z7xY3h29TuDwNEnNjymqDsB4cPCFN01dPErhIHZEqdCVm6zPW8xoyyIPaWOFv8V3lD7cG6-6en2"/>
+<button class="absolute top-4 right-4 size-10 bg-white/90 dark:bg-slate-900/90 flex items-center justify-center rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-xl">favorite</span>
+</button>
+</div>
+<div class="space-y-1">
+<h3 class="text-xs font-black uppercase tracking-widest text-slate-500">Bottega Veneta</h3>
+<p class="text-sm font-medium leading-snug">Medium Andiamo Intrecciato Leather Bag</p>
+<p class="text-base font-bold text-primary mt-2">$4,900</p>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-[3/4] overflow-hidden bg-slate-100 dark:bg-slate-800 rounded-xl mb-4">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Model in tailored blazer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuABMYkuiu0YZIg6wdhRdN-mjV5Wt2sHPSMtaNwDaqqcHp3PptrUVgABOwNFwN-aTs-p7TWe4y8cGCpFCCYtkb_KTS5OVOLKWSx4f320uQ3d4SxIzVasllHyUvnRpeJle0ZE8UI9Ja7ntTdQMcnjxUReg3wrht0OZBYzhFY8oQMUys4rBDgkj1AMDgzPriHZhV9ZQkupiavtmN59yFvhGZo_7dyjbDYCOe5Qa6TrDBQ5o7KBFkp-hb3ZTBEJ0gysY9mQ7RpjEDleGP2L"/>
+<button class="absolute top-4 right-4 size-10 bg-white/90 dark:bg-slate-900/90 flex items-center justify-center rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-xl">favorite</span>
+</button>
+<div class="absolute bottom-4 left-4">
+<span class="px-3 py-1 bg-black text-white text-[10px] font-bold uppercase tracking-widest rounded-full">Limited Edition</span>
+</div>
+</div>
+<div class="space-y-1">
+<h3 class="text-xs font-black uppercase tracking-widest text-slate-500">The Row</h3>
+<p class="text-sm font-medium leading-snug">Mila Tailored Silk-Blend Blazer</p>
+<p class="text-base font-bold text-primary mt-2">$2,850</p>
+</div>
+</div>
+<!-- Product Card 5 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-[3/4] overflow-hidden bg-slate-100 dark:bg-slate-800 rounded-xl mb-4">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Luxury brand shoes on white pedestal" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGUHNqPZnHN12m7x_vfoKU71VyWVMGVDT1OUJ0hAs8RuTR-CKBSzf2xRj214UALtmoV2t0nsffhuEHxj4IasXHxMuZLu_c5B1EkhyF-IhFlM5uTHW7DoS6IdjP6H5NJSgqeBWCgdnieVU3gNbL2SRkw8k2de9m4mFMFPwmX6_y7I-8e0xlcjlC8mnp8wrVuMMMwlDvtBd522cDs7roSnTAlzl34jN_9mSiremrZAHLu4n7sNgICY0gjzXP9krYRmt1dxbaTJk2F3jg"/>
+<button class="absolute top-4 right-4 size-10 bg-white/90 dark:bg-slate-900/90 flex items-center justify-center rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-xl">favorite</span>
+</button>
+</div>
+<div class="space-y-1">
+<h3 class="text-xs font-black uppercase tracking-widest text-slate-500">Prada</h3>
+<p class="text-sm font-medium leading-snug">Brushed Leather Slingback Pumps</p>
+<p class="text-base font-bold text-primary mt-2">$1,150</p>
+</div>
+</div>
+<!-- Product Card 6 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-[3/4] overflow-hidden bg-slate-100 dark:bg-slate-800 rounded-xl mb-4">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Model wearing pleated midi skirt" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCConEAPSMNjhcOyqEA4Jm3CcDTQUFhq4sBK8D25iUHytevrug4z9sRTEL3hok48dkFb70n76XFUhrchH-fnXNfqYhCHJeOY2VSBhrPtF3kQId9P9oNti08w4gglKhYR6PKOlNbXcfoda3OK7DYV9bXpE-84hqShJQkLPS3FL8-IepP4Tv1sGzcJZbJEsUeP1KZkZ3v-hUXYwoVV5IQu6m_Avrzvyuy4WxT9p2zoSAbxJT3_5YeuR4fELUvWIVzpOFlyxejfgUPAg7P"/>
+<button class="absolute top-4 right-4 size-10 bg-white/90 dark:bg-slate-900/90 flex items-center justify-center rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-xl">favorite</span>
+</button>
+</div>
+<div class="space-y-1">
+<h3 class="text-xs font-black uppercase tracking-widest text-slate-500">Loewe</h3>
+<p class="text-sm font-medium leading-snug">Pleated Asymmetric Midi Skirt</p>
+<p class="text-base font-bold text-primary mt-2">$1,250</p>
+</div>
+</div>
+<!-- Product Card 7 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-[3/4] overflow-hidden bg-slate-100 dark:bg-slate-800 rounded-xl mb-4">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Close up of luxury knitwear" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDj8MVSaj_1qUGMZDrXjGZRBra-2jozfYFK-XGP3lDme2OrWYQHk1tS7LRqpC9xG0S0nYjLlcy3A-NFCjeN7FIY7EoKnfngvP5873ey2aAlxg1YSHSoDk-4qs4O6zvyVehtQOA7B04gEvXQVeAasvitk7OOugjwQH5I59gLu9ZiIztOsPlPSaFbD-Gl5pOSiaXOhTh4QtdLC0kbRf8aPf1eCg4KmzBnFaj2evDvicj2RY5ldpFnCXDgMe4MBRbHxeknWvqwZJKx2Z20"/>
+<button class="absolute top-4 right-4 size-10 bg-white/90 dark:bg-slate-900/90 flex items-center justify-center rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-xl">favorite</span>
+</button>
+</div>
+<div class="space-y-1">
+<h3 class="text-xs font-black uppercase tracking-widest text-slate-500">Khaite</h3>
+<p class="text-sm font-medium leading-snug">The Jo Cashmere Polo Sweater</p>
+<p class="text-base font-bold text-primary mt-2">$780</p>
+</div>
+</div>
+<!-- Product Card 8 -->
+<div class="group cursor-pointer">
+<div class="relative aspect-[3/4] overflow-hidden bg-slate-100 dark:bg-slate-800 rounded-xl mb-4">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Elegant evening accessories" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkY6ammeluFgcK8gJouG6vhA2d_QtIHFe-osPp3Enq1BUYzt9Xgkv7PW66unCvNLU-Q29nQszTS4PAh1SFylN3N2vLdNyK02eS3_xWpFOjJlC9-TFJ5DEzQttg979VVb-QRXGpROpyUAKYc2MX9aQ-ghWa38B_JKTvFwW1ZwvoMU90viPJfhd_DWbKUjyCZ5nSsUvLx0hwWxVd4sjHIaTzukeYYPDPJ40F6TV-T5JU-nn87X6IRW337ozKjUfRzw4Ab-4XakIbokOq"/>
+<button class="absolute top-4 right-4 size-10 bg-white/90 dark:bg-slate-900/90 flex items-center justify-center rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-xl">favorite</span>
+</button>
+<div class="absolute bottom-4 left-4">
+<span class="px-3 py-1 bg-primary/20 text-primary text-[10px] font-bold uppercase tracking-widest rounded-full backdrop-blur-sm">Exclusive</span>
+</div>
+</div>
+<div class="space-y-1">
+<h3 class="text-xs font-black uppercase tracking-widest text-slate-500">Alaïa</h3>
+<p class="text-sm font-medium leading-snug">Le Coeur Heart-Shaped Shoulder Bag</p>
+<p class="text-base font-bold text-primary mt-2">$1,290</p>
+</div>
+</div>
+</div>
+<!-- Pagination -->
+<div class="mt-20 flex flex-col items-center gap-6">
+<p class="text-sm font-medium text-slate-500 italic">Showing 8 of 424 items</p>
+<div class="flex items-center gap-2">
+<button class="p-2 border border-slate-200 dark:border-slate-800 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-30" disabled="">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<div class="flex items-center">
+<button class="px-4 py-2 text-sm font-black bg-primary text-white rounded-lg">1</button>
+<button class="px-4 py-2 text-sm font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg">2</button>
+<button class="px-4 py-2 text-sm font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg">3</button>
+<span class="px-2 text-slate-400">...</span>
+<button class="px-4 py-2 text-sm font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg">53</button>
+</div>
+<button class="p-2 border border-slate-200 dark:border-slate-800 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+<button class="mt-4 px-12 py-4 border-2 border-slate-900 dark:border-slate-100 text-sm font-black uppercase tracking-[0.2em] hover:bg-slate-900 hover:text-white dark:hover:bg-slate-100 dark:hover:text-slate-900 transition-all">
+                Load More
+            </button>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-slate-100 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 mt-24">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-12 py-16">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+<div>
+<h4 class="text-xs font-black uppercase tracking-[0.2em] mb-6">Customer Service</h4>
+<ul class="space-y-4 text-sm text-slate-600 dark:text-slate-400 font-medium">
+<li><a class="hover:text-primary transition-colors" href="#">Contact Us</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Shipping &amp; Delivery</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Returns &amp; Refunds</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">FAQ</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-xs font-black uppercase tracking-[0.2em] mb-6">About Us</h4>
+<ul class="space-y-4 text-sm text-slate-600 dark:text-slate-400 font-medium">
+<li><a class="hover:text-primary transition-colors" href="#">Our Story</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Designers</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Careers</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Sustainability</a></li>
+</ul>
+</div>
+<div class="lg:col-span-2">
+<h4 class="text-xs font-black uppercase tracking-[0.2em] mb-6">Join our Newsletter</h4>
+<p class="text-sm text-slate-600 dark:text-slate-400 mb-6 font-medium">Get early access to sales and the latest fashion drops.</p>
+<form class="flex gap-2">
+<input class="flex-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-4 py-3 text-sm focus:ring-primary focus:border-primary" placeholder="Enter your email address" type="email"/>
+<button class="bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 px-8 py-3 rounded-lg text-sm font-black uppercase tracking-widest hover:bg-primary dark:hover:bg-primary transition-colors" type="submit">Sign Up</button>
+</form>
+</div>
+</div>
+<div class="mt-20 pt-8 border-t border-slate-200 dark:border-slate-800 flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-6 text-[10px] font-black uppercase tracking-[0.1em] text-slate-500">
+<a class="hover:text-slate-900 dark:hover:text-slate-100" href="#">Privacy Policy</a>
+<a class="hover:text-slate-900 dark:hover:text-slate-100" href="#">Terms &amp; Conditions</a>
+<a class="hover:text-slate-900 dark:hover:text-slate-100" href="#">Cookie Preferences</a>
+</div>
+<div class="flex gap-6">
+<a class="text-slate-500 hover:text-primary transition-colors" href="#">
+<svg class="size-5 fill-current" viewbox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"></path></svg>
+</a>
+<a class="text-slate-500 hover:text-primary transition-colors" href="#">
+<svg class="size-5 fill-current" viewbox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path></svg>
+</a>
+</div>
+</div>
+<p class="mt-8 text-center text-[10px] text-slate-400 font-bold uppercase tracking-[0.3em]">© 2024 Luxury Fashion Inc. All Rights Reserved.</p>
+</div>
+</footer>
+</body></html>

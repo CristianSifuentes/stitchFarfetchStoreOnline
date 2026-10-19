@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#000000",
+                        "background-light": "#f7f7f7",
+                        "background-dark": "#191919",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased">
+<!-- Premium Navigation -->
+<header class="sticky top-0 z-50 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+<div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+<div class="flex items-center gap-12">
+<a class="flex items-center gap-2" href="#">
+<span class="text-2xl font-extrabold tracking-tighter uppercase">Luxe</span>
+</a>
+<nav class="hidden lg:flex items-center gap-8">
+<a class="text-sm font-medium hover:text-primary/60 transition-colors" href="#">New In</a>
+<a class="text-sm font-medium hover:text-primary/60 transition-colors" href="#">Brands</a>
+<a class="text-sm font-medium border-b-2 border-primary" href="#">Womenswear</a>
+<a class="text-sm font-medium hover:text-primary/60 transition-colors" href="#">Menswear</a>
+<a class="text-sm font-medium hover:text-primary/60 transition-colors" href="#">Editorial</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden md:flex items-center bg-slate-100 dark:bg-slate-800 rounded-full px-4 py-1.5 border border-transparent focus-within:border-slate-300 transition-all">
+<span class="material-symbols-outlined text-slate-500 text-lg">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-48 placeholder:text-slate-500" placeholder="Search brands..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors relative">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-primary rounded-full"></span>
+</button>
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
+<span class="material-symbols-outlined">person</span>
+</button>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-6 py-12">
+<!-- Breadcrumbs & Header -->
+<div class="mb-12">
+<nav class="flex items-center gap-2 text-xs uppercase tracking-widest text-slate-500 mb-6">
+<a class="hover:text-primary transition-colors" href="#">Home</a>
+<span class="material-symbols-outlined text-[10px]">chevron_right</span>
+<span class="text-slate-900 dark:text-slate-100 font-semibold">Womenswear</span>
+</nav>
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<h1 class="text-5xl font-extrabold tracking-tight mb-4">Womenswear</h1>
+<p class="text-lg text-slate-500 max-w-2xl font-light leading-relaxed">
+                        Curated collections from the world’s most iconic fashion houses. Experience timeless elegance and contemporary luxury in every piece.
+                    </p>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-6 py-3 border border-slate-200 dark:border-slate-800 rounded-full text-sm font-semibold hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors">
+<span class="material-symbols-outlined text-lg">tune</span>
+                        Filters
+                    </button>
+<div class="relative group">
+<button class="flex items-center gap-2 px-6 py-3 border border-slate-200 dark:border-slate-800 rounded-full text-sm font-semibold hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors">
+                            Sort by: Featured
+                            <span class="material-symbols-outlined text-lg">expand_more</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Refined Product Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-16">
+<!-- Product Card 1 -->
+<div class="group">
+<div class="relative aspect-[3/4] overflow-hidden bg-slate-100 dark:bg-slate-900 mb-6">
+<img class="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" data-alt="Gucci GG Marmont black leather shoulder bag" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCeE9AAGE3VKXWSCdoAW2R6_WSQvyWxLm_vD3z_c0UqqFO6EWkVzv47yRsQhhSHKjLFOZZPTEQLLYaMxszfcKMRlg7_pvDor2Wyh5OgsruSXjlPEmj_fPfoJpzYk-TXZP8rxrbXUAU1HuyVXuywGVE-RmGz2hWvSkWnQXOQ_p5uMa6t3H2Wly_I6hTF8Dj3GJ6XFBkAzV56PMC2iqZMIc-zoVPWYwAulm4jyFNWHVg1j5zHgxFq0cbhv-QXXvgio3yx6Rp-cpZBK676"/>
+<button class="absolute bottom-4 left-4 right-4 bg-primary text-white py-3 px-4 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 text-xs font-bold uppercase tracking-widest flex items-center justify-center gap-2">
+                        Add to Bag
+                    </button>
+<button class="absolute top-4 right-4 p-2 bg-white/80 backdrop-blur rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-xl text-slate-900">favorite</span>
+</button>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-xs uppercase tracking-widest text-slate-400 font-bold">Gucci</span>
+<h3 class="text-base font-medium text-slate-900 dark:text-slate-100">GG Marmont Small Shoulder Bag</h3>
+<p class="text-sm font-light mt-1 text-slate-900 dark:text-slate-100">$2,550</p>
+</div>
+</div>
+<!-- Product Card 2 -->
+<div class="group">
+<div class="relative aspect-[3/4] overflow-hidden bg-slate-100 dark:bg-slate-900 mb-6">
+<img class="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" data-alt="Prada Cleo white leather shoulder bag" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-GZVVli_EhODvsmbCWQJ5qeZc5MJtbBZr7K8zO6qPLrorZbrGbWkX0JtFmjMc1SO4MomcAvAdCYcRsY3z1Ahe3OPFNpJRYTM6RypbJwJ3MhJYprNzdFoCsBmyAJZUwmktAYdxh5iih-KUyc4I4OKoUmXW6KEsNIuNEGogTbH2j87fL0PSI79roaoTC75suNNYz7M0L9sCUzwHW-YzvvKCoVrgL3AqZv91ZumN637bXGtD4Gv9ZNMLu6eeVSnqQbiI6V4D5w6eXEYW"/>
+<button class="absolute bottom-4 left-4 right-4 bg-primary text-white py-3 px-4 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 text-xs font-bold uppercase tracking-widest flex items-center justify-center gap-2">
+                        Add to Bag
+                    </button>
+<button class="absolute top-4 right-4 p-2 bg-white/80 backdrop-blur rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-xl text-slate-900">favorite</span>
+</button>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-xs uppercase tracking-widest text-slate-400 font-bold">Prada</span>
+<h3 class="text-base font-medium text-slate-900 dark:text-slate-100">Cleo Spazzolato Shoulder Bag</h3>
+<p class="text-sm font-light mt-1 text-slate-900 dark:text-slate-100">$2,900</p>
+</div>
+</div>
+<!-- Product Card 3 -->
+<div class="group">
+<div class="relative aspect-[3/4] overflow-hidden bg-slate-100 dark:bg-slate-900 mb-6">
+<img class="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" data-alt="Saint Laurent quilted leather shoulder bag" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGIdklfPjdmD3I_2x0HgRWnqkROgYYQT6-s8QVSlGzx8VVCJO126jQeXAfBh1oMM4SWejHKAgnXHkP2CgTLU8yr77xVSvwBJy6RGdx6Jxm6ArS3zNxlVEojBNOaU1YdVViISiWnVO5Ov6Rc8Rb7IPizhkD912V4uo6uDVaSqzGh4btYAEEPLDBWnjGQrWigif5txebgXcSgrVQDhHiKFPAsYF5tIMtUIcdFpFa9wJG7CsvLjRFWCgCM-Qnw8DBtFHMkB8400bKe_KL"/>
+<button class="absolute bottom-4 left-4 right-4 bg-primary text-white py-3 px-4 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 text-xs font-bold uppercase tracking-widest flex items-center justify-center gap-2">
+                        Add to Bag
+                    </button>
+<button class="absolute top-4 right-4 p-2 bg-white/80 backdrop-blur rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-xl text-slate-900">favorite</span>
+</button>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-xs uppercase tracking-widest text-slate-400 font-bold">Saint Laurent</span>
+<h3 class="text-base font-medium text-slate-900 dark:text-slate-100">Loulou Small in Matelassé</h3>
+<p class="text-sm font-light mt-1 text-slate-900 dark:text-slate-100">$2,850</p>
+</div>
+</div>
+<!-- Product Card 4 -->
+<div class="group">
+<div class="relative aspect-[3/4] overflow-hidden bg-slate-100 dark:bg-slate-900 mb-6">
+<img class="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" data-alt="Balenciaga oversized logo hoodie in charcoal grey" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6m30Wo-XsA3niOmW1QuDC32CQhX1Zarazp9XW4M142whF0psk8B96moAGVpmhLBQwqTDtOracMN5gvXFrmr0iJg3qkIahxfU4DI8NjsOt_a5bVYZxGd82ZeKUCOpqKtkdCXIGHLO-3VNjCP9w1g4N-Pvxb9cCGcamE_mn_nP_2wTgPE-gzhgJ_TW3yOv8ncIjKUX2yY--XZTXS0KwEq5kPSME0lm8lYiLpJHkqf6S4lwTaHRqeMLrnNAV1cT34nKQS3_vALGqI0Yk"/>
+<button class="absolute bottom-4 left-4 right-4 bg-primary text-white py-3 px-4 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 text-xs font-bold uppercase tracking-widest flex items-center justify-center gap-2">
+                        Add to Bag
+                    </button>
+<button class="absolute top-4 right-4 p-2 bg-white/80 backdrop-blur rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-xl text-slate-900">favorite</span>
+</button>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-xs uppercase tracking-widest text-slate-400 font-bold">Balenciaga</span>
+<h3 class="text-base font-medium text-slate-900 dark:text-slate-100">Oversized Logo Cotton Hoodie</h3>
+<p class="text-sm font-light mt-1 text-slate-900 dark:text-slate-100">$1,150</p>
+</div>
+</div>
+<!-- Product Card 5 (Repeated for Grid Visual) -->
+<div class="group">
+<div class="relative aspect-[3/4] overflow-hidden bg-slate-100 dark:bg-slate-900 mb-6">
+<img class="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" data-alt="Luxury designer evening dress in deep emerald" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBY4mbrALlE6naGYmsCpveNEPsHKghva7_o3jY1RtE4xrVXTwbTwqzJ_Q-wluIZ7NrxizT-M4kG_Uxs9XIqojeihoqg_ieoodLIgP7Bptq4NNxJ7fsXuPlG2eUn--U6B9JKE5eGmReQTA3Rb3xDwH9eKq6ltRVpUfjngQyNFrF_zVRqCghjetOx5JgJLoZmk0CWjLPXsaqiuwFXziapB5-h_g5lkr29Ve8AVWlj_YCrkI8oHU9PRMG5Db02y_kvIorrCeCCP3jS39W"/>
+<button class="absolute bottom-4 left-4 right-4 bg-primary text-white py-3 px-4 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 text-xs font-bold uppercase tracking-widest flex items-center justify-center gap-2">
+                        Add to Bag
+                    </button>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-xs uppercase tracking-widest text-slate-400 font-bold">Alexander McQueen</span>
+<h3 class="text-base font-medium text-slate-900 dark:text-slate-100">Draped Silk Evening Gown</h3>
+<p class="text-sm font-light mt-1 text-slate-900 dark:text-slate-100">$4,200</p>
+</div>
+</div>
+<!-- Product Card 6 -->
+<div class="group">
+<div class="relative aspect-[3/4] overflow-hidden bg-slate-100 dark:bg-slate-900 mb-6">
+<img class="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" data-alt="Classic beige trench coat on a model" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDes8xEA8wHgrhGTK_wvmGngTecElLu_izBpCoU6lJIFCafw8u_pQzgjWAFMFD2-h8I_BD7GIW7VRH37jwlK5QGQ3-aOCQoCpm4BZ-mLAylUfTSt5IFQYUUa4hkXXtRIc4o-xJSViK13AwgmRC1et0BCw1VFbZsxGTuJTUvIvLxmzfLIL8clcusnzS01q44et1pJWE1CvINJqu4OcGtF7Z0zQFNfe2gqAuMreJyZOx4JjcDOI_JnVKKEn1tctfABDn1PZkwokBLYCf7"/>
+<button class="absolute bottom-4 left-4 right-4 bg-primary text-white py-3 px-4 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 text-xs font-bold uppercase tracking-widest flex items-center justify-center gap-2">
+                        Add to Bag
+                    </button>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-xs uppercase tracking-widest text-slate-400 font-bold">Burberry</span>
+<h3 class="text-base font-medium text-slate-900 dark:text-slate-100">Heritage Waterloo Trench Coat</h3>
+<p class="text-sm font-light mt-1 text-slate-900 dark:text-slate-100">$2,490</p>
+</div>
+</div>
+<!-- Product Card 7 -->
+<div class="group">
+<div class="relative aspect-[3/4] overflow-hidden bg-slate-100 dark:bg-slate-900 mb-6">
+<img class="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" data-alt="Valentino Roman Stud leather bag in metallic gold" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA70Xs4k5dx0IKiW9sO-Q4AZ_iPOm_eIeOoOvpr7llBmLAszDEnb7f-D2sARFdLttEnCZzFu1HXvwTSflhjPAsyP7ENSWFPgjd_N6DF7XorRR5q-aMHwG2eNM78iu6AU9414vdzltKuCveWl_pYCoUiOcnNo_xZEB4QUCvQjfG_mpcD8LnjQUChb09t-JEGoTTU2FyAM73DsJVr9oi4_Q-fsJPD2b2__i9eeLpywSuhBsuxUSdXi7Sx-GJYUdxXpkFsHy4SRdwWvxHK"/>
+<button class="absolute bottom-4 left-4 right-4 bg-primary text-white py-3 px-4 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 text-xs font-bold uppercase tracking-widest flex items-center justify-center gap-2">
+                        Add to Bag
+                    </button>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-xs uppercase tracking-widest text-slate-400 font-bold">Valentino Garavani</span>
+<h3 class="text-base font-medium text-slate-900 dark:text-slate-100">Large Roman Stud Shoulder Bag</h3>
+<p class="text-sm font-light mt-1 text-slate-900 dark:text-slate-100">$3,400</p>
+</div>
+</div>
+<!-- Product Card 8 -->
+<div class="group">
+<div class="relative aspect-[3/4] overflow-hidden bg-slate-100 dark:bg-slate-900 mb-6">
+<img class="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" data-alt="Luxury blue velvet high heel shoes" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCqhH35kCkYhAZAxOQbrkmjmaHgSrst3bguV0vFW3LhB2bsQBqYsETkV6nIY2Vx7O0CdbiazByyaJMWKArXtoDBGqQeKV2Bzb_a8M_cjOK42aDSG9UfjDcA3bf3RGhDUb-CMh3vpPkoNZQsdm708TSzcs7NMO6-GrB-nxTeximKisoe_62qVbUwoIZbv0xd8Hq-j2RhIHVknMF8T-Xxm1hR9QJvTV1ccNycidFsgJUoi3Q2q2laAV86X1_1nK0UOOasSrO5dU4dEAc"/>
+<button class="absolute bottom-4 left-4 right-4 bg-primary text-white py-3 px-4 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 text-xs font-bold uppercase tracking-widest flex items-center justify-center gap-2">
+                        Add to Bag
+                    </button>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-xs uppercase tracking-widest text-slate-400 font-bold">Manolo Blahnik</span>
+<h3 class="text-base font-medium text-slate-900 dark:text-slate-100">Hangisi 105 Jewel Buckle Pumps</h3>
+<p class="text-sm font-light mt-1 text-slate-900 dark:text-slate-100">$1,125</p>
+</div>
+</div>
+</div>
+<!-- Pagination -->
+<div class="mt-20 border-t border-slate-200 dark:border-slate-800 pt-12 flex items-center justify-between">
+<button class="flex items-center gap-2 text-sm font-bold uppercase tracking-widest group">
+<span class="material-symbols-outlined group-hover:-translate-x-1 transition-transform">arrow_back</span>
+                Previous
+            </button>
+<div class="flex items-center gap-4">
+<span class="text-sm font-bold border-b-2 border-primary">01</span>
+<span class="text-sm font-medium text-slate-400 hover:text-primary transition-colors cursor-pointer">02</span>
+<span class="text-sm font-medium text-slate-400 hover:text-primary transition-colors cursor-pointer">03</span>
+<span class="text-sm font-medium text-slate-400 hover:text-primary transition-colors cursor-pointer">04</span>
+</div>
+<button class="flex items-center gap-2 text-sm font-bold uppercase tracking-widest group">
+                Next
+                <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-slate-100 dark:bg-slate-900 mt-24 py-16">
+<div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
+<div class="flex flex-col gap-6">
+<span class="text-xl font-extrabold uppercase tracking-tighter">Luxe</span>
+<p class="text-sm text-slate-500 font-light leading-relaxed">The global destination for luxury fashion. Curated for the discerning eye.</p>
+</div>
+<div>
+<h4 class="text-xs font-bold uppercase tracking-widest mb-6">Assistance</h4>
+<ul class="flex flex-col gap-3 text-sm font-light text-slate-500">
+<li><a class="hover:text-primary transition-colors" href="#">Shipping Information</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Returns &amp; Exchanges</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Payment Methods</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Contact Us</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-xs font-bold uppercase tracking-widest mb-6">The Boutique</h4>
+<ul class="flex flex-col gap-3 text-sm font-light text-slate-500">
+<li><a class="hover:text-primary transition-colors" href="#">About Luxe</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Personal Shopping</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Sitemap</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Careers</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-xs font-bold uppercase tracking-widest mb-6">Newsletter</h4>
+<p class="text-sm text-slate-500 font-light mb-4">Subscribe for early access to new arrivals.</p>
+<div class="flex border-b border-primary py-2">
+<input class="bg-transparent border-none focus:ring-0 text-sm w-full p-0 placeholder:text-slate-400" placeholder="Your email" type="email"/>
+<button class="text-xs font-bold uppercase tracking-widest">Join</button>
+</div>
+</div>
+</div>
+<div class="max-w-7xl mx-auto px-6 mt-16 pt-8 border-t border-slate-200 dark:border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] uppercase tracking-[0.2em] text-slate-400">
+<span>© 2024 LUXE INTERNATIONAL. ALL RIGHTS RESERVED.</span>
+<div class="flex gap-6">
+<a class="hover:text-primary" href="#">Privacy Policy</a>
+<a class="hover:text-primary" href="#">Terms of Service</a>
+<a class="hover:text-primary" href="#">Accessibility</a>
+</div>
+</div>
+</footer>
+</body></html>
