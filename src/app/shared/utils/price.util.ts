@@ -1,3 +1,3 @@
 export function formatPrice(value: number): string {
-  return `$${value.toLocaleString('en-US')}`;
+  return `$${Math.round(value).toLocaleString('en-US')}`;
 }

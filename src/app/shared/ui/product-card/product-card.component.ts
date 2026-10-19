@@ -1,58 +1,56 @@
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { CurrencyPipe } from '@angular/common';
-import { CatalogItem } from '../../../core/models/catalog-item.model';
+import { CatalogItem } from '../../../core/catalog/catalog.model';
+import { CartService } from '../../../core/services/cart.service';
+import { PricePipe } from '../../pipes/price.pipe';
+import { WishlistButtonComponent } from '../wishlist-button/wishlist-button.component';
 
+// The one product card (DESIGN.md "Product Cards"): 3:4 image, no border,
+// no shadow; brand in label caps, name and price in body text. The heart is
+// always available; "Add to bag" is a quiet text action revealed on hover.
 @Component({
   selector: 'app-product-card',
-  standalone: true,
-  imports: [RouterLink, CurrencyPipe],
+  imports: [RouterLink, PricePipe, WishlistButtonComponent],
   template: `
-    <article class="group" [attr.aria-label]="item().title">
-
+    <article class="group relative">
       <a [routerLink]="['/product', item().id]" class="block">
-        <div class="aspect-[3/4] overflow-hidden bg-zinc-100 relative">
+        <div class="relative aspect-[3/4] overflow-hidden bg-surface">
           <img
             [src]="item().image"
-            [alt]="item().title"
-            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-            loading="lazy"
+            [alt]="item().brand + ' ' + item().title"
+            class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+            [attr.loading]="eager() ? 'eager' : 'lazy'"
+            decoding="async"
           />
-          <!-- Wishlist heart — revealed on hover (decorative, consistent with all prototypes) -->
-          <button
-            type="button"
-            class="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10"
-            aria-label="Add to wishlist"
-            (click)="$event.preventDefault()"
-          >
-            <span class="flex items-center justify-center w-8 h-8 bg-white/85 backdrop-blur-sm rounded-full shadow-sm">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-              </svg>
-            </span>
-          </button>
+          @if (item().badge) {
+            <span class="absolute left-3 top-3 bg-canvas px-2 py-1 text-[9px] font-semibold uppercase tracking-[0.12em]">{{ item().badge }}</span>
+          }
         </div>
-        <div class="space-y-1.5 pt-4">
-          <p class="text-[10px] font-bold uppercase tracking-widest text-zinc-400">{{ item().brand }}</p>
-          <h3 class="text-sm font-light text-zinc-700 leading-snug">{{ item().title }}</h3>
-          <p class="text-sm font-bold">{{ item().price | currency }}</p>
+        <div class="space-y-1 pt-4">
+          <p class="label-caps">{{ item().brand }}</p>
+          <h3 class="line-clamp-1 text-sm text-muted">{{ item().title }}</h3>
+          <p class="text-sm">{{ item().price | price }}</p>
         </div>
       </a>
 
+      <app-wishlist-button class="absolute right-3 top-3" [productId]="item().id" [label]="item().brand + ' ' + item().title" />
+
       <button
         type="button"
-        class="mt-4 w-full border border-black py-2.5 text-[10px] font-bold uppercase tracking-widest hover:bg-black hover:text-white transition-colors duration-200"
-        (click)="addToBag.emit(item().id)"
-        [attr.aria-label]="'Add ' + item().title + ' to bag'"
+        class="quick-add link-cta mt-3"
+        [attr.aria-label]="'Add ' + item().brand + ' ' + item().title + ' to bag'"
+        (click)="cart.add(item().id)"
       >
-        Add to Bag
+        Add to bag
       </button>
-
     </article>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductCardComponent {
+  protected readonly cart = inject(CartService);
+
   readonly item = input.required<CatalogItem>();
-  readonly addToBag = output<string>();
+  // Above-the-fold cards load immediately.
+  readonly eager = input(false);
 }
