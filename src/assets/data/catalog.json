@@ -1,12 +1,148 @@
 [
   {
+    "id": "ww-1",
+    "title": "Small Hop leather tote bag",
+    "brand": "Bottega Veneta",
+    "price": 4100,
+    "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuCK9tvZb8DIlZZ596qgNZr6j2If5tPRSbNNv-BHtnHfJWCGlA_GpebK7NuKE2Bta5ygKYUU9eVzB321r6wjbxliV27Dx5tQpvZZIa3rhBM4RcR4m8sr5RjDrDLizQTqXh_YReyUXWrzR4H1uzOzUV0Y-kLGuop3EyfPtNXHOUtQypim3lui4ViEWdh4ra_SgUtA-hse2geLF7BxQmrwBTd-csoUravNYKoc1R0KdNgKPhTwuRR_0utd4HStznN0nvGUAXWpRb43ur-z",
+    "department": "womenswear",
+    "category": "bags",
+    "description": "Intrecciato-woven leather tote with a slouchy, structured-free body and a single shoulder strap.",
+    "addedAt": "2024-03-28",
+    "badge": "New Season"
+  },
+  {
+    "id": "ww-2",
+    "title": "Anagram acetate sunglasses",
+    "brand": "Loewe",
+    "price": 520,
+    "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuDJmyBaanlSSnxDZEU56wIX087pj3AXJVdwlN5zgXEzXbu4qeZJHNqdksrm-dOQuMNcs9GOky-bxHRKR2VsICmCNTJfte5Sz86cDYl67jfZIUStSX2kzUmPhOUuL2W2iOqboYQN08C1FSgxbDQS_ZJk0OMYPsmwuvnm9gNnPDWwo8Cv64B6DN0l_a_7hjLlnY8KaPkqFDRZHYBTUqEAtk8PCAlamaNamIc1Vs8tb_Dl8h_VoJc81pehq4Mi2VO2WPhxCFScqw4f4cWr",
+    "department": "womenswear",
+    "category": "accessories",
+    "description": "Oversized acetate frames with the Anagram logo at the temples and tinted lenses.",
+    "addedAt": "2024-03-27"
+  },
+  {
+    "id": "ww-3",
+    "title": "Floral print sleeveless midi dress",
+    "brand": "Jacquemus",
+    "price": 745,
+    "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuArpgiGPzZWNJJJRsORSS_hcMLKNLZV2jPP7FEhk39fS5jWr75M-ihVlLL8rZeD_ZSxPJVKi64QC4F5sdoz_Es0YVNdiSGlROOo2pyiq56Ug_v68RKy-4Xqj88M0oqHQ-t7KQvjWpHEKHplkEcQKHteyYsnZVK4jlnlW5CkxWSXXkZK6eP2qkB-LBzrIFYDp5VDVGqie1nC3hWj5lM9b2FRXM1a9LwNCC5QQzMiaEGRuVFJ1cXA7kAK8i8wHMDvJAV24JwmG0wkTjpQ",
+    "department": "womenswear",
+    "category": "clothing",
+    "description": "Light cotton midi dress in an all-over floral print with a fitted bodice and a full skirt.",
+    "addedAt": "2024-03-26"
+  },
+  {
+    "id": "ww-4",
+    "title": "Begum 95mm mules",
+    "brand": "Amina Muaddi",
+    "price": 1020,
+    "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuAAulmPEIVLeWu0wKFDCO_oKSXVdE_10QByH6LTPAircwU_TNPdm7dVyZ01xj6HiXOn5y4a2imVD5Z8wlAJMzwBmmIruW20pVY0seJZIDnQQuVmb_GNNuPd-1BgcIzzvYxhwKMZFvZtdriHShCLnpCM04bFY8wMDKqmpSEj3edvUbue9O_s1g46eGcyX4UOcj8P6sWiLJtgiOqtuIO4RmG2n56BSMaLDOJw2Q4hf-TQucQJ8VNNPypnHc9alSWx9hQqCCBisi2fTyzQ",
+    "department": "womenswear",
+    "category": "shoes",
+    "description": "Square-toe mules on a sculpted 95mm heel in soft suede.",
+    "addedAt": "2024-03-25"
+  },
+  {
+    "id": "ww-5",
+    "title": "Tank Must small model watch",
+    "brand": "Cartier",
+    "price": 3300,
+    "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuDPLP--luso4OgfG3eAv7iuizPo254WQxkBhCtZeGWK_Kp6c_QlNEpw5lINh6rZZGnOFIevoKMjrr7uxTg1J77l_JcUDpzRGBT9BzrA-jPz3DRQz7S6WqnktAHnuTZXrnYakhrvhybiy6XB3rV1DzNi1zlX9pQlkb9bncpSV9LokKx86kz_8z4bvwJ-YBpRD8cWzjqIdlztGBRJg3izIiG4D9qCQO_t4Tpy-Dkc1Ng0S3eWqAxKjDwpOi1LGXfpWbSvGGQ5byBPOQWj",
+    "department": "womenswear",
+    "category": "jewelry",
+    "description": "The rectangular Tank case in steel with a lacquered dial and a leather strap.",
+    "addedAt": "2024-03-24"
+  },
+  {
+    "id": "ww-6",
+    "title": "Logo-embroidered cotton T-shirt",
+    "brand": "Miu Miu",
+    "price": 650,
+    "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuDjW-ASYoMi3S6nbJkKiMfpg7C58B2s5YhvDTl9TF4PDbytrSZWGjJKuoKRIVPA-epRRw7wSIunppuB-F0s5pCN9s3TPsa3Fp8NhQCSZUf16akSkN0dbz1M5Icx2Ih79oKc7KqOWXGkAfkYnsD14TA4RGhHY-Odjw_IMbjbsrTEdHjvTJ5wRc6EPlvELUufBml9WSBFJSHlu7pEwunqDBZiZbGARQwVFX6rwTURy0jZWA7eyG0GHPL5tHDmanhmNUY9kmbGA7A1VoTU",
+    "department": "womenswear",
+    "category": "clothing",
+    "description": "Relaxed-fit jersey T-shirt with a discreet embroidered logo at the chest.",
+    "addedAt": "2024-03-23"
+  },
+  {
+    "id": "ww-7",
+    "title": "Silk charmeuse shirt",
+    "brand": "The Row",
+    "price": 2390,
+    "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuDVzVohpXIspkri8vF-02XFtxdRygqfJwfX5d1YRmZskRmEU_6I8wnpLEztm29MbU3dwD0_Gu_IW5gqdNCwln-vBht8Jd1SdA06XKpoNSDjm62aVht97PgcXDupthxBYFiAimckKKGon8Dp4HFYX-SYQoR4QbLN9CI06ubMPq0Yih44pG34Prx-8rjkb_vihGJO4x5d41aCmselUHwYF9pNmTlE-zZJKzNt42ugbpoYsJEaeATgPIor6xUdFIpbDXaLoXep5MaV5qHo",
+    "department": "womenswear",
+    "category": "clothing",
+    "description": "Fluid silk charmeuse shirt with a point collar and a concealed placket.",
+    "addedAt": "2024-03-22"
+  },
+  {
+    "id": "ww-8",
+    "title": "Ludmilla double-faced cashmere coat",
+    "brand": "Max Mara",
+    "price": 6850,
+    "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuCtoF3ACq2N1z_klje9nL5W31z6hRfTB2Z-tl3IT-1TGLRrML6od0hNX1170ljwhj1m0YgvQ5ECnkYUIJDJmla-Vcw4subv71_Ha3qkLb9AvY_p4RE2ThTfI88K9Df-d8xQ3UIqDkudYPXWNS8DnOvkKo7YEqSOtfzVnR-YVvm3R31eG48Uz0gxkWIh1UBwI9m7kQHtmI8cgCzCDehW1GIhct5T1RFGBFZs6LnU_j5Nk6UeFnN8MjVIftTam9qBbvs3-NymPwOp6-3D",
+    "department": "womenswear",
+    "category": "clothing",
+    "description": "Double-faced cashmere coat with a wrap front, notched lapels and a tie belt.",
+    "addedAt": "2024-03-21"
+  },
+  {
+    "id": "ww-9",
+    "title": "Galleria Saffiano leather tote",
+    "brand": "Prada",
+    "price": 2950,
+    "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuBAe0eyKnWP8522SkzfSUfHeCAs5ri0HtCqttcfJkHPesbB5y1795iZuPR6-u5UQB3cK1Ltp_61GBcLjPkEmuEpmAaNSmAdCoiYyqvz7tgvCSpqwXUIGNj47ytqM-Au0ZvM_DGv7O0eUyJv5_-MLBHte1vS_9xI19xLL3yyuufhGtiQYXdb3toQHgSgA_Pm84y6PZxcyETsQZIDgMDth_tSqZPUBBNT46KvhI7zeVlQSZqF8kuUVmNB8Pv_0grjowmvJDAmnQIIB7BI",
+    "department": "womenswear",
+    "category": "bags",
+    "description": "Structured Saffiano leather tote with the enamel triangle logo and a detachable strap.",
+    "addedAt": "2024-03-20",
+    "badge": "New Season"
+  },
+  {
+    "id": "ww-10",
+    "title": "Belted silk shirt dress",
+    "brand": "Gucci",
+    "price": 3400,
+    "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuDiOethxgP7Tg57IxteGprRzx1tjn3JtPyg1opNmmOUL5wWs7MQjI9OvVVEa2lMDq0ALkqiRbmcgE-_J9NDuvv4Xq2ymLwoam5s9jj7OfTDPJCJ2ciGR2FXnlsDfo1ju-lyT5SE9aYszQBJw2l31widKZJxhZkw5ui6qcOgvLdoGLVPfkT285VpVWoLice3AsboZseUv2iAGqxeT7B3gx-vwPafYbFt1pelgPsCDlEfFY7hveHaIp1UF8muaQbILvuic55cC49cPLtV",
+    "department": "womenswear",
+    "category": "clothing",
+    "description": "Printed silk shirt dress with a self-tie belt and a midi-length skirt.",
+    "addedAt": "2024-03-19"
+  },
+  {
+    "id": "ww-11",
+    "title": "Opyum 110mm leather pumps",
+    "brand": "Saint Laurent",
+    "price": 1150,
+    "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuBKKwsuPeCSRaqNetJxEUtEds1Bagz8Aopa5dhxzWN0F2g4YL2LYo40grqq58x71-HuWNXrgHo8hG0bYxjbkLxFYT6o3WZJB8bwUKvlhlMPeST-CzqAJ6gniaWX9UHuvmYZjKbXgbkHUn0toJQdbaEGDZMamWha4SjnGnBPxHtuXCsg1ckDn5eqzh4VATEbmbE3KGqdUFD3_ksJRPJ2vHxKEX9-QAKTl-UImsaD5Kp19250qgvC0_eOzAOiUtbBTbXyK2ybl6QIOFT9",
+    "department": "womenswear",
+    "category": "shoes",
+    "description": "Pointed-toe pumps in glossy leather on a 110mm stiletto heel.",
+    "addedAt": "2024-03-18"
+  },
+  {
+    "id": "ww-12",
+    "title": "The Kensington Heritage trench coat",
+    "brand": "Burberry",
+    "price": 2490,
+    "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuACZWcobiyLhm4X4tmJhoLqPf0XigINm_Vy8F9qOKI4yOnjUGY9Ih1J8hxm0XfA2uYDgcw-IiyNMYc2DnPd7C9Oltu_oecS3NVikUJf8UsqDVgItPBw_zCrMWjmw8ott5NzzS_WtULPFC4S5OKDCZ0o-ggPA1HT46-0jy76D29P9W1PeVhkJS42aGPruBcdasTLWpbwPhBiquUgjJRgzbI0XK7zh4jlQhTTDnZm-t_BQuweLwsbCixigNK3M06q11dGZSBxfeq9ghbr",
+    "department": "womenswear",
+    "category": "clothing",
+    "description": "The double-breasted gabardine trench with storm flaps, epaulettes and a belted waist.",
+    "addedAt": "2024-03-17"
+  },
+  {
     "id": "wb-1",
     "title": "Single-Breasted Wool Blazer",
     "brand": "Thom Browne",
     "price": 2450,
     "image": "https://images.unsplash.com/photo-1593030761757-71fae45fa0e7?auto=format&fit=crop&w=900&q=80",
-    "category": "womenswear",
-    "description": "Precision tailoring in premium wool with a modern silhouette."
+    "department": "womenswear",
+    "category": "clothing",
+    "description": "Precision tailoring in premium wool with a modern silhouette.",
+    "addedAt": "2024-02-28"
   },
   {
     "id": "ms-1",
@@ -14,8 +150,10 @@
     "brand": "Rick Owens",
     "price": 1120,
     "image": "https://images.unsplash.com/photo-1614252369475-531eba835eb1?auto=format&fit=crop&w=900&q=80",
-    "category": "menswear",
-    "description": "Architectural high-top with luxury calfskin construction."
+    "department": "menswear",
+    "category": "shoes",
+    "description": "Architectural high-top with luxury calfskin construction.",
+    "addedAt": "2024-02-27"
   },
   {
     "id": "ms-2",
@@ -23,8 +161,11 @@
     "brand": "Saint Laurent",
     "price": 2890,
     "image": "https://images.unsplash.com/photo-1516257984-b1b4d707412e?auto=format&fit=crop&w=900&q=80",
-    "category": "menswear",
-    "description": "Longline wool overcoat with peak lapels, clean shoulder structure, and tonal horn buttons."
+    "department": "menswear",
+    "category": "clothing",
+    "description": "Longline wool overcoat with peak lapels, clean shoulder structure, and tonal horn buttons.",
+    "addedAt": "2024-02-26",
+    "badge": "New Season"
   },
   {
     "id": "ms-3",
@@ -32,8 +173,10 @@
     "brand": "Balenciaga",
     "price": 890,
     "image": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=900&q=80",
-    "category": "menswear",
-    "description": "Heavyweight brushed-cotton hoodie featuring oversized fit and subtle logo treatment."
+    "department": "menswear",
+    "category": "clothing",
+    "description": "Heavyweight brushed-cotton hoodie featuring oversized fit and subtle logo treatment.",
+    "addedAt": "2024-02-25"
   },
   {
     "id": "ms-4",
@@ -41,8 +184,10 @@
     "brand": "Prada",
     "price": 760,
     "image": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=900&q=80",
-    "category": "menswear",
-    "description": "Streamlined wool trousers with pressed crease and refined slim-leg profile."
+    "department": "menswear",
+    "category": "clothing",
+    "description": "Streamlined wool trousers with pressed crease and refined slim-leg profile.",
+    "addedAt": "2024-02-24"
   },
   {
     "id": "ms-5",
@@ -50,8 +195,10 @@
     "brand": "Alexander McQueen",
     "price": 980,
     "image": "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?auto=format&fit=crop&w=900&q=80",
-    "category": "menswear",
-    "description": "Polished leather boots with elastic side panels, stacked sole, and tonal pull tabs."
+    "department": "menswear",
+    "category": "shoes",
+    "description": "Polished leather boots with elastic side panels, stacked sole, and tonal pull tabs.",
+    "addedAt": "2024-02-23"
   },
   {
     "id": "ms-6",
@@ -59,8 +206,11 @@
     "brand": "Stone Island",
     "price": 1040,
     "image": "https://images.unsplash.com/photo-1548883354-94bcfe321cbb?auto=format&fit=crop&w=900&q=80",
-    "category": "menswear",
-    "description": "Garment-dyed technical field jacket with signature arm patch and weather-ready finish."
+    "department": "menswear",
+    "category": "clothing",
+    "description": "Garment-dyed technical field jacket with signature arm patch and weather-ready finish.",
+    "addedAt": "2024-02-22",
+    "badge": "New Season"
   },
   {
     "id": "ms-7",
@@ -68,8 +218,10 @@
     "brand": "Louis Vuitton",
     "price": 2400,
     "image": "https://images.unsplash.com/photo-1491553895911-0055eca6402d?auto=format&fit=crop&w=900&q=80",
-    "category": "menswear",
-    "description": "Structured crossbody with coated-canvas monogram, zipper closure, and adjustable strap."
+    "department": "menswear",
+    "category": "bags",
+    "description": "Structured crossbody with coated-canvas monogram, zipper closure, and adjustable strap.",
+    "addedAt": "2024-02-21"
   },
   {
     "id": "ms-8",
@@ -77,8 +229,10 @@
     "brand": "Tom Ford",
     "price": 690,
     "image": "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=900&q=80",
-    "category": "menswear",
-    "description": "Fluid silk-cotton shirt with relaxed camp collar and tailored drape."
+    "department": "menswear",
+    "category": "clothing",
+    "description": "Fluid silk-cotton shirt with relaxed camp collar and tailored drape.",
+    "addedAt": "2024-02-20"
   },
   {
     "id": "ms-9",
@@ -86,8 +240,10 @@
     "brand": "AMIRI",
     "price": 1350,
     "image": "https://images.unsplash.com/photo-1516826957135-700dedea698c?auto=format&fit=crop&w=900&q=80",
-    "category": "menswear",
-    "description": "Washed denim jacket with artisan distressing and custom metal hardware details."
+    "department": "menswear",
+    "category": "clothing",
+    "description": "Washed denim jacket with artisan distressing and custom metal hardware details.",
+    "addedAt": "2024-02-19"
   },
   {
     "id": "ms-10",
@@ -95,8 +251,10 @@
     "brand": "Common Projects",
     "price": 540,
     "image": "https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=900&q=80",
-    "category": "menswear",
-    "description": "Modern low-top runner with premium leather panels and cushioned performance sole."
+    "department": "menswear",
+    "category": "shoes",
+    "description": "Modern low-top runner with premium leather panels and cushioned performance sole.",
+    "addedAt": "2024-02-18"
   },
   {
     "id": "ms-11",
@@ -104,8 +262,10 @@
     "brand": "Brunello Cucinelli",
     "price": 1290,
     "image": "https://images.unsplash.com/photo-1523398002811-999ca8dec234?auto=format&fit=crop&w=900&q=80",
-    "category": "menswear",
-    "description": "Ultrasoft cashmere knit with ribbed trims and refined regular fit."
+    "department": "menswear",
+    "category": "clothing",
+    "description": "Ultrasoft cashmere knit with ribbed trims and refined regular fit.",
+    "addedAt": "2024-02-17"
   },
   {
     "id": "kj-1",
@@ -113,8 +273,11 @@
     "brand": "Burberry Kids",
     "price": 680,
     "image": "https://images.unsplash.com/photo-1519238359922-989348752efb?auto=format&fit=crop&w=900&q=80",
-    "category": "kids",
-    "description": "A classic water-resistant trench with signature check lining and polished hardware."
+    "department": "kids",
+    "category": "clothing",
+    "description": "A classic water-resistant trench with signature check lining and polished hardware.",
+    "addedAt": "2024-02-16",
+    "badge": "New Season"
   },
   {
     "id": "kj-2",
@@ -122,8 +285,11 @@
     "brand": "Moncler Enfant",
     "price": 540,
     "image": "https://images.unsplash.com/photo-1503919545889-aef636e10ad4?auto=format&fit=crop&w=900&q=80",
-    "category": "kids",
-    "description": "Lightweight down-filled vest designed for layering through changing temperatures."
+    "department": "kids",
+    "category": "clothing",
+    "description": "Lightweight down-filled vest designed for layering through changing temperatures.",
+    "addedAt": "2024-02-15",
+    "badge": "New Season"
   },
   {
     "id": "kj-3",
@@ -131,8 +297,10 @@
     "brand": "Gucci Kids",
     "price": 690,
     "image": "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=900&q=80",
-    "category": "kids",
-    "description": "Structured canvas backpack with iconic monogram finish and adjustable shoulder straps."
+    "department": "kids",
+    "category": "bags",
+    "description": "Structured canvas backpack with iconic monogram finish and adjustable shoulder straps.",
+    "addedAt": "2024-02-14"
   },
   {
     "id": "kj-4",
@@ -140,8 +308,10 @@
     "brand": "Bonpoint",
     "price": 420,
     "image": "https://images.unsplash.com/photo-1519340241574-2cec6aef0c01?auto=format&fit=crop&w=900&q=80",
-    "category": "kids",
-    "description": "Soft cashmere sweater and jogger set crafted for elevated comfort and daily wear."
+    "department": "kids",
+    "category": "clothing",
+    "description": "Soft cashmere sweater and jogger set crafted for elevated comfort and daily wear.",
+    "addedAt": "2024-02-13"
   },
   {
     "id": "kj-5",
@@ -149,8 +319,10 @@
     "brand": "Stella McCartney Kids",
     "price": 210,
     "image": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80",
-    "category": "kids",
-    "description": "Organic cotton hoodie with playful all-over star motif and brushed fleece interior."
+    "department": "kids",
+    "category": "clothing",
+    "description": "Organic cotton hoodie with playful all-over star motif and brushed fleece interior.",
+    "addedAt": "2024-02-12"
   },
   {
     "id": "kj-6",
@@ -158,8 +330,10 @@
     "brand": "Dolce & Gabbana Kids",
     "price": 590,
     "image": "https://images.unsplash.com/photo-1514090458221-65bb69cf63e6?auto=format&fit=crop&w=900&q=80",
-    "category": "kids",
-    "description": "A-line cotton poplin dress finished with bold floral print and tonal waist ribbon."
+    "department": "kids",
+    "category": "clothing",
+    "description": "A-line cotton poplin dress finished with bold floral print and tonal waist ribbon.",
+    "addedAt": "2024-02-11"
   },
   {
     "id": "kj-7",
@@ -167,8 +341,10 @@
     "brand": "Fendi Kids",
     "price": 480,
     "image": "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=900&q=80",
-    "category": "kids",
-    "description": "Monogram jacquard sneakers with cushioned sole and flexible slip-on construction."
+    "department": "kids",
+    "category": "shoes",
+    "description": "Monogram jacquard sneakers with cushioned sole and flexible slip-on construction.",
+    "addedAt": "2024-02-10"
   },
   {
     "id": "kj-8",
@@ -176,8 +352,10 @@
     "brand": "Il Gufo",
     "price": 360,
     "image": "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=900&q=80",
-    "category": "kids",
-    "description": "Insulated jacket in matte technical fabric with hidden zip closure and storm cuffs."
+    "department": "kids",
+    "category": "clothing",
+    "description": "Insulated jacket in matte technical fabric with hidden zip closure and storm cuffs.",
+    "addedAt": "2024-02-09"
   },
   {
     "id": "kj-9",
@@ -185,8 +363,10 @@
     "brand": "Golden Goose Kids",
     "price": 325,
     "image": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=80",
-    "category": "kids",
-    "description": "Hand-finished sneakers featuring signature star applique and worn-in artisan texture."
+    "department": "kids",
+    "category": "shoes",
+    "description": "Hand-finished sneakers featuring signature star applique and worn-in artisan texture.",
+    "addedAt": "2024-02-08"
   },
   {
     "id": "kj-10",
@@ -194,7 +374,9 @@
     "brand": "Chloe Kids",
     "price": 295,
     "image": "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?auto=format&fit=crop&w=900&q=80",
-    "category": "kids",
-    "description": "Breathable pleated cotton dress with ruffled shoulder detail and lightweight lining."
+    "department": "kids",
+    "category": "clothing",
+    "description": "Breathable pleated cotton dress with ruffled shoulder detail and lightweight lining.",
+    "addedAt": "2024-02-07"
   }
 ]
