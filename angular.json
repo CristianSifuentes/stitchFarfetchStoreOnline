@@ -8,6 +8,29 @@
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
+      "i18n": {
+        "sourceLocale": {
+          "code": "en-US",
+          "subPath": ""
+        },
+        "locales": {
+          "es-419": {
+            "translation": "src/locale/messages.es-419.xlf"
+          },
+          "de": {
+            "translation": "src/locale/messages.de.xlf"
+          },
+          "fr": {
+            "translation": "src/locale/messages.fr.xlf"
+          },
+          "ru": {
+            "translation": "src/locale/messages.ru.xlf"
+          },
+          "zh-Hans": {
+            "translation": "src/locale/messages.zh-Hans.xlf"
+          }
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular/build:application",
@@ -15,7 +38,7 @@
             "outputPath": "dist/vestra",
             "index": "src/index.html",
             "browser": "src/main.ts",
-            "polyfills": [],
+            "polyfills": ["@angular/localize/init"],
             "tsConfig": "tsconfig.app.json",
             "assets": ["src/assets"],
             "styles": ["src/styles.css"],
@@ -26,7 +49,8 @@
             },
             "ssr": {
               "entry": "src/server.ts"
-            }
+            },
+            "i18nMissingTranslation": "error"
           },
           "configurations": {
             "production": {
@@ -35,11 +59,27 @@
                 "styles": { "minify": true, "inlineCritical": false },
                 "fonts": true
               },
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "localize": true
             },
             "development": {
               "optimization": false,
               "sourceMap": true
+            },
+            "es-419": {
+              "localize": ["es-419"]
+            },
+            "de": {
+              "localize": ["de"]
+            },
+            "fr": {
+              "localize": ["fr"]
+            },
+            "ru": {
+              "localize": ["ru"]
+            },
+            "zh-Hans": {
+              "localize": ["zh-Hans"]
             }
           },
           "defaultConfiguration": "production"
@@ -52,9 +92,30 @@
             },
             "development": {
               "buildTarget": "vestra:build:development"
+            },
+            "es-419": {
+              "buildTarget": "vestra:build:development,es-419"
+            },
+            "de": {
+              "buildTarget": "vestra:build:development,de"
+            },
+            "fr": {
+              "buildTarget": "vestra:build:development,fr"
+            },
+            "ru": {
+              "buildTarget": "vestra:build:development,ru"
+            },
+            "zh-Hans": {
+              "buildTarget": "vestra:build:development,zh-Hans"
             }
           },
           "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular/build:extract-i18n",
+          "options": {
+            "buildTarget": "vestra:build"
+          }
         }
       }
     }

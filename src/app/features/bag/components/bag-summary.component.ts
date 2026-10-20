@@ -3,6 +3,7 @@ import { BagSummary, DELIVERY_OPTIONS, DeliveryOption, FREE_DELIVERY_FROM } from
 import { LocaleService } from '../../../core/locale';
 import { PricePipe } from '../../../shared/pipes/price.pipe';
 import { PAYMENT_METHODS } from '../../../shared/data/payment-methods';
+import { itemCount } from '../../../shared/i18n/plurals';
 
 // Farfetch's "Summary" box: subtotal, delivery, the total with the currency
 // code, "Import duties included" and Continue. Delivery is chosen here; a
@@ -12,22 +13,22 @@ import { PAYMENT_METHODS } from '../../../shared/data/payment-methods';
   imports: [PricePipe],
   template: `
     <section class="border border-line p-6 sm:p-8" aria-labelledby="summary-heading">
-      <h2 id="summary-heading" class="label-caps">Summary</h2>
+      <h2 id="summary-heading" class="label-caps" i18n="@@summary.title">Summary</h2>
 
       <dl class="mt-6 space-y-3 text-sm">
         <div class="flex justify-between">
-          <dt class="text-muted">Subtotal <span class="text-xs">({{ summary().count }} {{ summary().count === 1 ? 'item' : 'items' }})</span></dt>
+          <dt class="text-muted"><ng-container i18n="@@summary.subtotal">Subtotal</ng-container>&ngsp;<span class="text-xs">({{ itemCount(summary().count) }})</span></dt>
           <dd>{{ summary().subtotal | price }}</dd>
         </div>
         <div class="flex justify-between">
-          <dt class="text-muted">Delivery</dt>
-          <dd>{{ !summary().count ? '—' : summary().delivery ? (summary().delivery | price) : 'Free' }}</dd>
+          <dt class="text-muted" i18n="@@summary.delivery">Delivery</dt>
+          <dd>{{ !summary().count ? '—' : summary().delivery ? (summary().delivery | price) : free }}</dd>
         </div>
       </dl>
 
       @if (summary().count) {
       <fieldset class="mt-6 space-y-2">
-        <legend class="label-caps mb-3 text-muted">Delivery</legend>
+        <legend class="label-caps mb-3 text-muted" i18n="@@summary.delivery">Delivery</legend>
         @for (option of options; track option.id) {
           <label
             class="flex cursor-pointer items-center justify-between gap-3 border px-4 py-3 text-sm transition-colors"
@@ -41,7 +42,7 @@ import { PAYMENT_METHODS } from '../../../shared/data/payment-methods';
                 <span class="block text-xs text-muted">{{ option.eta }}</span>
               </span>
             </span>
-            <span class="text-xs">{{ option.id === 'standard' && freeStandard() ? 'Free' : (option.fee | price) }}</span>
+            <span class="text-xs">{{ option.id === 'standard' && freeStandard() ? free : (option.fee | price) }}</span>
           </label>
         }
       </fieldset>
@@ -49,30 +50,30 @@ import { PAYMENT_METHODS } from '../../../shared/data/payment-methods';
 
       @if (summary().subtotal > 0 && summary().subtotal < freeFrom) {
         <div class="mt-5">
-          <p class="text-xs text-muted">Add {{ freeFrom - summary().subtotal | price }} more for free standard delivery.</p>
+          <p class="text-xs text-muted" i18n="@@summary.addMore">Add {{ freeFrom - summary().subtotal | price }} more for free standard delivery.</p>
           <div class="mt-2 h-px bg-line"><div class="h-px bg-ink transition-[width] duration-500" [style.width.%]="(summary().subtotal / freeFrom) * 100"></div></div>
         </div>
       }
 
       <div class="mt-6 flex items-baseline justify-between border-t border-line pt-6">
-        <span class="label-caps">Total</span>
+        <span class="label-caps" i18n="@@summary.total">Total</span>
         <span class="text-xl"><span class="mr-1 text-xs text-muted">{{ locale.region().currency }}</span>{{ summary().total | price }}</span>
       </div>
-      <p class="mt-1 text-right text-xs text-muted">Import duties included</p>
+      <p class="mt-1 text-right text-xs text-muted" i18n="@@product.duties">Import duties included</p>
 
       <button type="button" class="btn btn-primary mt-6 w-full" [disabled]="!summary().count || placing()" (click)="checkout.emit()">
         @if (placing()) {
           <span class="h-3.5 w-3.5 animate-spin rounded-full border border-canvas border-t-transparent" aria-hidden="true"></span>
-          Placing your order
+          <ng-container i18n="@@summary.placing">Placing your order</ng-container>
         } @else {
-          Continue
+          <ng-container i18n="@@summary.continue">Continue</ng-container>
         }
       </button>
       @if (problem()) {
         <p class="mt-3 text-xs text-error" role="alert">{{ problem() }}</p>
       }
 
-      <ul class="mt-6 flex flex-wrap gap-3 text-muted" aria-label="Accepted payment methods">
+      <ul class="mt-6 flex flex-wrap gap-3 text-muted" aria-label="Accepted payment methods" i18n-aria-label="@@footer.payment.label">
         @for (method of payments; track method.id) {
           <li [attr.title]="method.label">
             <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" role="img" [attr.aria-label]="method.label"><path [attr.d]="method.path" /></svg>
@@ -85,6 +86,8 @@ import { PAYMENT_METHODS } from '../../../shared/data/payment-methods';
 })
 export class BagSummaryComponent {
   protected readonly locale = inject(LocaleService);
+  protected readonly itemCount = itemCount;
+  protected readonly free = $localize`:@@summary.free:Free`;
 
   readonly summary = input.required<BagSummary>();
   readonly delivery = input.required<DeliveryOption>();

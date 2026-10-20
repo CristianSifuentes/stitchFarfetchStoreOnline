@@ -24,12 +24,12 @@ import { PriceTagComponent } from '../../../shared/ui/price-tag/price-tag.compon
           <a [routerLink]="['/product', item.id]" class="min-w-0">
             <p class="label-caps">{{ item.brand }}</p>
             <h3 class="mt-1 text-sm text-muted">{{ item.title }}</h3>
-            <p class="mt-1 text-xs text-muted">Item ID: {{ item.id.toUpperCase() }}</p>
+            <p class="mt-1 text-xs text-muted" i18n="@@product.itemIdLine">Item ID: {{ item.id.toUpperCase() }}</p>
           </a>
           <button
             type="button"
             class="-mr-2 -mt-2 flex h-10 w-10 shrink-0 items-center justify-center transition-colors hover:text-muted"
-            [attr.aria-label]="'Remove ' + item.brand + ' ' + item.title + ' from bag'"
+            [attr.aria-label]="removeLabel()"
             (click)="remove.emit()"
           >
             <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg>
@@ -39,16 +39,16 @@ import { PriceTagComponent } from '../../../shared/ui/price-tag/price-tag.compon
         <div class="mt-4">
           <app-price-tag [item]="item" />
           @if (!unavailable()) {
-            <p class="mt-1 text-xs text-muted">Import duties included</p>
+            <p class="mt-1 text-xs text-muted" i18n="@@product.duties">Import duties included</p>
           }
         </div>
 
         @if (unavailable()) {
-          <p class="mt-4 text-xs text-muted">This piece sold out after you added it. It won't be charged.</p>
+          <p class="mt-4 text-xs text-muted" i18n="@@bag.soldOutAfter">This piece sold out after you added it. It won't be charged.</p>
         } @else {
           <div class="mt-5 grid grid-cols-2 gap-4 sm:max-w-sm">
             <label class="block">
-              <span class="label-caps block text-muted">Size</span>
+              <span class="label-caps block text-muted" i18n="@@bag.size">Size</span>
               @if (sizes().length) {
                 <select
                   class="select-line mt-2 w-full border-b py-2"
@@ -57,18 +57,18 @@ import { PriceTagComponent } from '../../../shared/ui/price-tag/price-tag.compon
                   (change)="size.emit($any($event.target).value)"
                 >
                   @if (!entry().line.size) {
-                    <option value="" disabled selected>Select size</option>
+                    <option value="" disabled selected i18n="@@product.selectSize">Select size</option>
                   }
                   @for (option of sizes(); track option) {
                     <option [value]="option" [selected]="entry().line.size === option">{{ option }}</option>
                   }
                 </select>
               } @else {
-                <span class="mt-2 block py-2 text-xs font-semibold uppercase tracking-[0.12em]">One size</span>
+                <span class="mt-2 block py-2 text-xs font-semibold uppercase tracking-[0.12em]" i18n="@@product.oneSize">One size</span>
               }
             </label>
             <label class="block">
-              <span class="label-caps block text-muted">Quantity</span>
+              <span class="label-caps block text-muted" i18n="@@bag.quantity">Quantity</span>
               <select class="select-line mt-2 w-full border-b border-line py-2" (change)="quantity.emit(+$any($event.target).value)">
                 @for (n of quantities; track n) {
                   <option [value]="n" [selected]="entry().line.quantity === n">{{ n }}</option>
@@ -77,12 +77,12 @@ import { PriceTagComponent } from '../../../shared/ui/price-tag/price-tag.compon
             </label>
           </div>
           @if (!entry().line.size && sizes().length && flagMissing()) {
-            <p class="mt-2 text-xs text-error" role="alert">Choose a size to continue.</p>
+            <p class="mt-2 text-xs text-error" role="alert" i18n="@@bag.chooseSize">Choose a size to continue.</p>
           }
         }
 
         <div class="mt-auto flex flex-wrap items-end justify-between gap-4 pt-6">
-          <button type="button" class="text-xs underline underline-offset-4 transition-colors hover:text-muted" (click)="moveToWishlist.emit()">Move to wishlist</button>
+          <button type="button" class="text-xs underline underline-offset-4 transition-colors hover:text-muted" (click)="moveToWishlist.emit()" i18n="@@bag.moveToWishlist">Move to wishlist</button>
           @if (!unavailable() && entry().line.quantity > 1) {
             <p class="text-sm">{{ entry().lineTotal | price }}</p>
           }
@@ -106,4 +106,8 @@ export class BagLineComponent {
   protected readonly image = computed(() => sizedImage(this.entry().item.image, 400));
   protected readonly sizes = computed(() => sizesFor(this.entry().item));
   protected readonly unavailable = computed(() => !!this.entry().item.soldOut);
+  protected readonly removeLabel = computed(() => {
+    const { brand, title } = this.entry().item;
+    return $localize`:@@bag.removeNamed:Remove ${brand}:INTERPOLATION: ${title}:INTERPOLATION_1: from bag`;
+  });
 }

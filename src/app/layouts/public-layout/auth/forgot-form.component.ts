@@ -14,24 +14,24 @@ import { TextFieldComponent } from '../../../shared/ui/text-field/text-field.com
           <rect x="2.5" y="5" width="19" height="14" /><path d="m3 6 9 7 9-7" />
         </svg>
         <div>
-          <p class="text-title">Check your inbox</p>
-          <p class="mt-3 text-sm leading-relaxed text-muted">
+          <p class="text-title" i18n="@@auth.forgot.checkInbox">Check your inbox</p>
+          <p class="mt-3 text-sm leading-relaxed text-muted" i18n="@@auth.forgot.sent">
             If there's an account for <span class="text-ink">{{ email() }}</span>, you'll get a link to reset your password in the next few minutes.
           </p>
         </div>
-        <button type="button" class="btn btn-primary w-full" (click)="dialog.open('sign-in')">Back to sign in</button>
-        <button type="button" class="text-sm text-muted underline underline-offset-4 hover:text-ink" (click)="sent.set(false)">Didn't get it? Try again</button>
+        <button type="button" class="btn btn-primary w-full" (click)="dialog.open('sign-in')" i18n="@@auth.backToSignIn">Back to sign in</button>
+        <button type="button" class="text-sm text-muted underline underline-offset-4 hover:text-ink" (click)="sent.set(false)" i18n="@@auth.forgot.tryAgain">Didn't get it? Try again</button>
       </div>
     } @else {
       <form class="grid gap-6" novalidate (submit)="submit($event)">
-        <p class="text-sm leading-relaxed text-muted">Enter the email you registered with and we'll send you a link to reset your password.</p>
-        <app-text-field label="Email address" type="email" autocomplete="email" [autofocus]="true" [(value)]="email" [error]="emailProblem()" />
+        <p class="text-sm leading-relaxed text-muted" i18n="@@auth.forgot.intro">Enter the email you registered with and we'll send you a link to reset your password.</p>
+        <app-text-field label="Email address" i18n-label="@@auth.field.email" type="email" autocomplete="email" [autofocus]="true" [(value)]="email" [error]="emailProblem()" />
         <button type="submit" class="btn btn-primary w-full" [disabled]="pending()">
           @if (pending()) {
             <span class="h-3.5 w-3.5 animate-spin rounded-full border border-canvas border-t-transparent" aria-hidden="true"></span>
-            Sending link
+            <ng-container i18n="@@auth.forgot.sending">Sending link</ng-container>
           } @else {
-            Send reset link
+            <ng-container i18n="@@auth.forgot.send">Send reset link</ng-container>
           }
         </button>
       </form>

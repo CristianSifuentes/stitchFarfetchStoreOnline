@@ -12,7 +12,7 @@ export interface Crumb {
   selector: 'app-breadcrumb',
   imports: [RouterLink],
   template: `
-    <nav aria-label="Breadcrumb" class="py-6">
+    <nav aria-label="Breadcrumb" i18n-aria-label="@@breadcrumb" class="py-6">
       <ol class="flex flex-wrap items-center gap-2 text-xs text-muted">
         @for (crumb of items(); track crumb.label; let last = $last) {
           <li class="flex items-center gap-2">

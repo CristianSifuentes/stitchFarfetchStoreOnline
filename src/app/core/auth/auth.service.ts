@@ -46,13 +46,13 @@ export class AuthService {
     }
     const stored = readAccounts()[key];
     if (!stored) {
-      return failure("We couldn't find an account with that email. Check it, or register.");
+      return failure($localize`:@@auth.error.noAccount:We couldn't find an account with that email. Check it, or register.`);
     }
     if (stored.passwordHash === null) {
-      return failure('This account signs in without a password. Continue with a one-time code instead.');
+      return failure($localize`:@@auth.error.passwordless:This account signs in without a password. Continue with a one-time code instead.`);
     }
     if (stored.passwordHash !== (await hashPassword(key, password))) {
-      return failure('Incorrect password. Try again, or reset it.');
+      return failure($localize`:@@auth.error.wrongPassword:Incorrect password. Try again, or reset it.`);
     }
     return this.start({ name: stored.name, email: key, provider: 'email' });
   }
@@ -61,11 +61,11 @@ export class AuthService {
     await this.wait();
     const key = normalizeEmail(email);
     if (!name.trim() || !isEmail(key) || !isValidPassword(password)) {
-      return failure('Check the highlighted fields and try again.');
+      return failure($localize`:@@auth.error.checkFields:Check the highlighted fields and try again.`);
     }
     const accounts = readAccounts();
     if (accounts[key] || key === DEMO_ACCOUNT.email) {
-      return failure('An account already exists for this email. Sign in instead.');
+      return failure($localize`:@@auth.error.exists:An account already exists for this email. Sign in instead.`);
     }
     writeAccounts({ ...accounts, [key]: { name: name.trim(), passwordHash: await hashPassword(key, password) } });
     return this.start({ name: name.trim(), email: key, provider: 'email' });
@@ -84,10 +84,10 @@ export class AuthService {
     await this.wait();
     const pending = this.pendingCode;
     if (!pending || Date.now() > pending.expires) {
-      return failure('This code has expired. Send a new one.');
+      return failure($localize`:@@auth.error.codeExpired:This code has expired. Send a new one.`);
     }
     if (code !== pending.code) {
-      return failure("That code isn't right. Check it and try again.");
+      return failure($localize`:@@auth.error.codeWrong:That code isn't right. Check it and try again.`);
     }
     this.pendingCode = null;
     return this.start({ name: this.ensureAccount(pending.email, nameFromEmail(pending.email)), email: pending.email, provider: 'code' });

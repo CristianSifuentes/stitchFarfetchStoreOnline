@@ -10,7 +10,7 @@ interface ServiceLink {
 @Component({
   selector: 'app-service-links',
   template: `
-    <section class="border-t border-line" aria-label="Customer service">
+    <section class="border-t border-line" aria-label="Customer service" i18n-aria-label="@@service.label">
       <ul class="page-container grid gap-px py-10 sm:grid-cols-3">
         @for (link of links; track link.title) {
           <li>
@@ -36,8 +36,8 @@ interface ServiceLink {
 })
 export class ServiceLinksComponent {
   protected readonly links: ReadonlyArray<ServiceLink> = [
-    { title: 'How to shop', text: 'Your guide to placing an order', icon: 'bag' },
-    { title: 'FAQs', text: 'We have the answers to your questions', icon: 'question' },
-    { title: 'Need help?', text: 'Contact our Customer Service team', icon: 'chat' }
+    { title: $localize`:@@service.howToShop:How to shop`, text: $localize`:@@service.howToShopText:Your guide to placing an order`, icon: 'bag' },
+    { title: $localize`:@@footer.service.faqs:FAQs`, text: $localize`:@@service.faqsText:We have the answers to your questions`, icon: 'question' },
+    { title: $localize`:@@service.help:Need help?`, text: $localize`:@@service.helpText:Contact our Customer Service team`, icon: 'chat' }
   ];
 }

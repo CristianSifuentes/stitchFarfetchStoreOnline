@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { CatalogItem } from '../../../core/catalog/catalog.model';
+import { CatalogItem, badgeLabel } from '../../../core/catalog/catalog.model';
 import { sizedImage } from '../../../core/catalog/images';
 import { BagService } from '../../../core/bag/bag.service';
 import { PriceTagComponent } from '../price-tag/price-tag.component';
@@ -24,7 +24,7 @@ import { WishlistButtonComponent } from '../wishlist-button/wishlist-button.comp
             decoding="async"
           />
           @if (item().badge) {
-            <span class="absolute left-3 top-3 bg-canvas px-2 py-1 text-[9px] font-semibold uppercase tracking-[0.12em]">{{ item().badge }}</span>
+            <span class="absolute left-3 top-3 bg-canvas px-2 py-1 text-[9px] font-semibold uppercase tracking-[0.12em]">{{ badgeLabel(item().badge) }}</span>
           }
         </div>
         <div class="space-y-1 pt-4">
@@ -40,11 +40,10 @@ import { WishlistButtonComponent } from '../wishlist-button/wishlist-button.comp
         <button
           type="button"
           class="quick-add link-cta mt-3"
-          [attr.aria-label]="'Add ' + item().brand + ' ' + item().title + ' to bag'"
+          [attr.aria-label]="addLabel()"
           (click)="bag.add(item().id)"
-        >
-          Add to bag
-        </button>
+          i18n="@@product.addToBag"
+        >Add to bag</button>
       }
     </article>
   `,
@@ -52,6 +51,7 @@ import { WishlistButtonComponent } from '../wishlist-button/wishlist-button.comp
 })
 export class ProductCardComponent {
   protected readonly bag = inject(BagService);
+  protected readonly badgeLabel = badgeLabel;
 
   readonly item = input.required<CatalogItem>();
   // Above-the-fold cards load immediately.
@@ -59,4 +59,7 @@ export class ProductCardComponent {
 
   // Cards render at most ~360px wide; 600px covers 2x screens.
   protected readonly image = computed(() => sizedImage(this.item().image, 600));
+  protected readonly addLabel = computed(
+    () => $localize`:@@product.addNamed:Add ${this.item().brand}:INTERPOLATION: ${this.item().title}:INTERPOLATION_1: to bag`
+  );
 }

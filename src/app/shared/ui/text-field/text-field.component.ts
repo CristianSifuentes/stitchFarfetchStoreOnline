@@ -32,9 +32,9 @@ let nextId = 0;
           type="button"
           class="label-caps absolute bottom-3 right-0 text-muted transition-colors hover:text-ink"
           [attr.aria-pressed]="revealed()"
-          [attr.aria-label]="(revealed() ? 'Hide ' : 'Show ') + label().toLowerCase()"
+          [attr.aria-label]="revealed() ? hideLabel() : showLabel()"
           (click)="revealed.set(!revealed())"
-        >{{ revealed() ? 'Hide' : 'Show' }}</button>
+        >@if (revealed()) {<ng-container i18n="@@field.hide">Hide</ng-container>} @else {<ng-container i18n="@@field.show">Show</ng-container>}</button>
       }
     </div>
     @if (error()) {
@@ -57,4 +57,6 @@ export class TextFieldComponent {
   protected readonly id = `field-${nextId++}`;
   protected readonly revealed = signal(false);
   protected readonly inputType = computed(() => (this.revealable() && this.revealed() ? 'text' : this.type()));
+  protected readonly showLabel = computed(() => $localize`:@@field.showLabel:Show ${this.label().toLowerCase()}:field:`);
+  protected readonly hideLabel = computed(() => $localize`:@@field.hideLabel:Hide ${this.label().toLowerCase()}:field:`);
 }

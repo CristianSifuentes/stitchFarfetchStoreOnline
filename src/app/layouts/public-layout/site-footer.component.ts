@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { LocaleService } from '../../core/locale';
 import { ThemeService } from '../../core/theme';
 import { PAYMENT_METHODS } from '../../shared/data/payment-methods';
@@ -32,19 +32,19 @@ type Social = 'instagram' | 'facebook' | 'x' | 'tiktok' | 'youtube';
           }
 
           <div class="grid content-start gap-12">
-            <nav aria-label="Content and services">
-              <h2 class="label-caps mb-6">Content &amp; Services</h2>
+            <nav aria-label="Content and services" i18n-aria-label="@@footer.content.label">
+              <h2 class="label-caps mb-6" i18n="@@footer.content.title">Content &amp; Services</h2>
               <ul class="space-y-3 text-sm text-muted">
-                <li><a href="#" class="transition-colors hover:text-ink">Fashion Feed: Featured Stories</a></li>
+                <li><a href="#" class="transition-colors hover:text-ink" i18n="@@footer.content.feed">Fashion Feed: Featured Stories</a></li>
               </ul>
             </nav>
 
             <div>
-              <h2 class="label-caps mb-6">Follow us</h2>
+              <h2 class="label-caps mb-6" i18n="@@footer.follow">Follow us</h2>
               <ul class="flex flex-wrap gap-5">
                 @for (social of socials; track social.id) {
                   <li>
-                    <a href="#" class="block text-ink transition-colors hover:text-muted" [attr.aria-label]="'VESTRA on ' + social.label">
+                    <a href="#" class="block text-ink transition-colors hover:text-muted" [attr.aria-label]="socialLabel(social.label)">
                       <svg class="h-5 w-5" viewBox="0 0 24 24" aria-hidden="true">
                         @switch (social.id) {
                           @case ('instagram') {
@@ -75,8 +75,8 @@ type Social = 'instagram' | 'facebook' | 'x' | 'tiktok' | 'youtube';
         </div>
 
         <div class="mt-16 border-t border-line pt-10">
-          <h2 class="label-caps mb-5">Payment methods</h2>
-          <ul class="flex flex-wrap gap-2" aria-label="Accepted payment methods">
+          <h2 class="label-caps mb-5" i18n="@@footer.payment.title">Payment methods</h2>
+          <ul class="flex flex-wrap gap-2" aria-label="Accepted payment methods" i18n-aria-label="@@footer.payment.label">
             @for (method of paymentMethods; track method.id) {
               <li class="flex h-12 items-center gap-3 border border-line bg-canvas pl-3 pr-4">
                 <svg class="h-7 w-7 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path [attr.d]="method.path" /></svg>
@@ -90,26 +90,26 @@ type Social = 'instagram' | 'facebook' | 'x' | 'tiktok' | 'youtube';
       <div class="border-t border-line">
         <div class="page-container grid gap-8 py-8 lg:grid-cols-[1fr_auto] lg:items-end">
           <div class="max-w-3xl space-y-4">
-            <nav aria-label="Legal">
+            <nav aria-label="Legal" i18n-aria-label="@@footer.legal">
               <ul class="flex flex-wrap gap-x-6 gap-y-2 text-xs">
                 @for (link of legal; track link) {
                   <li><a href="#" class="transition-colors hover:text-muted">{{ link }}</a></li>
                 }
               </ul>
             </nav>
-            <address class="text-xs not-italic leading-relaxed text-muted">
+            <address class="text-xs not-italic leading-relaxed text-muted" i18n="@@footer.address">
               Ciudad de México, México
             </address>
-            <p class="text-xs leading-relaxed text-muted">
+            <p class="text-xs leading-relaxed text-muted" i18n="@@footer.trademark">
               VESTRA and the VESTRA logo are trade marks of VESTRA.
             </p>
-            <p class="text-xs text-muted">© Copyright {{ year }} VESTRA. All rights reserved.</p>
+            <p class="text-xs text-muted" i18n="@@footer.copyright">© Copyright {{ year }} VESTRA. All rights reserved.</p>
           </div>
           <div class="flex flex-col gap-6 lg:items-end">
             <button
               type="button"
               class="flex items-center gap-3 border border-line bg-canvas px-4 py-3 text-left text-xs transition-colors hover:border-ink"
-              [attr.aria-label]="'Change language and region. Now: ' + locale.region().name + ', ' + locale.region().currency + ', ' + locale.language().name"
+              [attr.aria-label]="localeLabel()"
               (click)="locale.openPicker()"
             >
               <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z" /></svg>
@@ -122,14 +122,15 @@ type Social = 'instagram' | 'facebook' | 'x' | 'tiktok' | 'youtube';
               type="button"
               class="flex items-center gap-3 border border-line bg-canvas px-4 py-3 text-left text-xs transition-colors hover:border-ink"
               aria-label="Dark theme"
+              i18n-aria-label="@@theme.dark"
               [attr.aria-pressed]="theme.dark()"
               (click)="theme.toggle()"
             >
               <svg class="h-5 w-5 dark:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z" /></svg>
               <svg class="hidden h-5 w-5 dark:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" /></svg>
               <span>
-                <span class="block">Theme</span>
-                <span class="block text-muted">{{ theme.dark() ? 'Dark' : 'Light' }}</span>
+                <span class="block" i18n="@@theme.title">Theme</span>
+                <span class="block text-muted">@if (theme.dark()) {<ng-container i18n="@@theme.darkShort">Dark</ng-container>} @else {<ng-container i18n="@@theme.light">Light</ng-container>}</span>
               </span>
             </button>
             <span class="select-none text-sm font-light uppercase tracking-[0.08em] text-muted" aria-hidden="true">Vestra</span>
@@ -143,29 +144,47 @@ type Social = 'instagram' | 'facebook' | 'x' | 'tiktok' | 'youtube';
 export class SiteFooterComponent {
   protected readonly locale = inject(LocaleService);
   protected readonly theme = inject(ThemeService);
+  protected readonly localeLabel = computed(() => {
+    const { name, currency } = this.locale.region();
+    return $localize`:@@footer.localeButton:Change language and region. Now: ${name}:INTERPOLATION:, ${currency}:INTERPOLATION_1:, ${this.locale.language().name}:INTERPOLATION_2:`;
+  });
 
   protected readonly columns: ReadonlyArray<FooterColumn> = [
     {
-      title: 'Customer Service',
+      title: $localize`:@@footer.service.title:Customer Service`,
       links: [
-        'Help & Contact Us',
-        'FAQs',
-        'Orders & Delivery',
-        'Import Limits',
-        'Returns & Refunds',
-        'Payments & Pricing',
-        'Crypto Payments',
-        'Promotion Terms & Conditions',
-        'VESTRA Customer Promise'
+        $localize`:@@footer.service.help:Help & Contact Us`,
+        $localize`:@@footer.service.faqs:FAQs`,
+        $localize`:@@footer.service.orders:Orders & Delivery`,
+        $localize`:@@footer.service.import:Import Limits`,
+        $localize`:@@footer.service.returns:Returns & Refunds`,
+        $localize`:@@footer.service.payments:Payments & Pricing`,
+        $localize`:@@footer.service.crypto:Crypto Payments`,
+        $localize`:@@footer.service.promotions:Promotion Terms & Conditions`,
+        $localize`:@@footer.service.promise:VESTRA Customer Promise`
       ]
     },
     {
-      title: 'About VESTRA',
-      links: ['About Us', 'Press', 'VESTRA Partners', 'Careers', 'Modern Slavery Statement', 'VESTRA Advertising', 'Sitemap']
+      title: $localize`:@@footer.about.title:About VESTRA`,
+      links: [
+        $localize`:@@footer.about.us:About Us`,
+        $localize`:@@footer.about.press:Press`,
+        $localize`:@@footer.about.partners:VESTRA Partners`,
+        $localize`:@@footer.about.careers:Careers`,
+        $localize`:@@footer.about.slavery:Modern Slavery Statement`,
+        $localize`:@@footer.about.advertising:VESTRA Advertising`,
+        $localize`:@@footer.about.sitemap:Sitemap`
+      ]
     },
     {
-      title: 'Discounts & Membership',
-      links: ['Affiliate Program', 'Refer a Friend', 'Loyalty Program', 'Student Beans & Graduates', 'Student & Youth Discount']
+      title: $localize`:@@footer.membership.title:Discounts & Membership`,
+      links: [
+        $localize`:@@footer.membership.affiliate:Affiliate Program`,
+        $localize`:@@footer.membership.refer:Refer a Friend`,
+        $localize`:@@footer.membership.loyalty:Loyalty Program`,
+        $localize`:@@footer.membership.studentBeans:Student Beans & Graduates`,
+        $localize`:@@footer.membership.student:Student & Youth Discount`
+      ]
     }
   ];
 
@@ -180,7 +199,16 @@ export class SiteFooterComponent {
   // Monochrome marks next to their names, in ink like the rest of the store.
   protected readonly paymentMethods = PAYMENT_METHODS;
 
-  protected readonly legal = ['Privacy Policy', 'Terms & Conditions', 'Accessibility', 'Intellectual Property Protection'] as const;
+  protected readonly legal = [
+    $localize`:@@footer.legal.privacy:Privacy Policy`,
+    $localize`:@@footer.legal.terms:Terms & Conditions`,
+    $localize`:@@footer.legal.accessibility:Accessibility`,
+    $localize`:@@footer.legal.ip:Intellectual Property Protection`
+  ];
 
   protected readonly year = new Date().getFullYear();
+
+  protected socialLabel(network: string): string {
+    return $localize`:@@footer.socialLink:VESTRA on ${network}:INTERPOLATION:`;
+  }
 }

@@ -29,7 +29,7 @@ const PROVIDERS: ReadonlyArray<{ readonly id: SocialProvider; readonly label: st
   template: `
     <div class="flex items-center gap-4 text-muted" aria-hidden="true">
       <span class="h-px flex-1 bg-line"></span>
-      <span class="label-caps">Or</span>
+      <span class="label-caps" i18n="@@auth.or">Or</span>
       <span class="h-px flex-1 bg-line"></span>
     </div>
     <ul class="mt-6 grid gap-3">
@@ -38,10 +38,10 @@ const PROVIDERS: ReadonlyArray<{ readonly id: SocialProvider; readonly label: st
           <button type="button" class="btn btn-secondary group relative w-full" [disabled]="pending() !== null || disabled()" (click)="continueWith(provider.id)">
             @if (pending() === provider.id) {
               <span class="h-3.5 w-3.5 animate-spin rounded-full border border-current border-t-transparent" aria-hidden="true"></span>
-              Connecting to {{ provider.label }}
+              <ng-container i18n="@@auth.social.connecting">Connecting to {{ provider.label }}</ng-container>
             } @else {
               <svg class="absolute left-5 h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path [attr.d]="provider.icon" /></svg>
-              Continue with {{ provider.label }}
+              <ng-container i18n="@@auth.social.continue">Continue with {{ provider.label }}</ng-container>
             }
           </button>
         </li>

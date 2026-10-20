@@ -17,7 +17,7 @@ export function sizedImage(url: string, width: number): string {
 // Full view plus two "detail shots": focal-point zooms on the upper and
 // lower part of the same photo, the close-ups a luxury product page shows.
 export function galleryFor(url: string, width = 1200): GalleryImage[] {
-  const full = { src: sizedImage(url, width), label: 'Full view' };
+  const full = { src: sizedImage(url, width), label: $localize`:@@product.image.full:Full view` };
   if (!isImgix(url)) {
     return [full];
   }
@@ -31,7 +31,7 @@ export function galleryFor(url: string, width = 1200): GalleryImage[] {
       'fp-y': String(y),
       'fp-z': String(zoom)
     });
-  return [full, { src: detail(0.32, 2.2), label: 'Detail' }, { src: detail(0.7, 2.6), label: 'Close-up' }];
+  return [full, { src: detail(0.32, 2.2), label: $localize`:@@product.image.detail:Detail` }, { src: detail(0.7, 2.6), label: $localize`:@@product.image.closeUp:Close-up` }];
 }
 
 function isImgix(url: string): boolean {

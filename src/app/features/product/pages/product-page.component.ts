@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, effect, inject, input, linkedSignal, untracked } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ageGroupInfo, categoryLabel, departmentInfo, galleryFor, sizesFor } from '../../../core/catalog';
+import { ageGroupInfo, badgeLabel, categoryLabel, departmentInfo, galleryFor, sizesFor } from '../../../core/catalog';
 import { BagService } from '../../../core/bag/bag.service';
 import { RecentlyViewedService } from '../../../core/services/recently-viewed.service';
 import { CatalogStore } from '../../../core/services/catalog.store';
@@ -28,7 +28,7 @@ const RELATED_COUNT = 4;
               <img class="h-full w-full object-cover" [src]="gallery()[activeImage()].src" [alt]="item.brand + ' ' + item.title + ', ' + gallery()[activeImage()].label" loading="eager" />
             </div>
             @if (gallery().length > 1) {
-              <div class="no-scrollbar flex gap-3 overflow-x-auto lg:w-20 lg:flex-col" role="group" aria-label="Product images">
+              <div class="no-scrollbar flex gap-3 overflow-x-auto lg:w-20 lg:flex-col" role="group" aria-label="Product images" i18n-aria-label="@@product.images">
                 @for (image of gallery(); track image.src; let i = $index) {
                   <button
                     type="button"
@@ -49,21 +49,21 @@ const RELATED_COUNT = 4;
           <div class="space-y-8 lg:col-span-5 lg:sticky lg:top-40 lg:self-start">
             <header>
               @if (item.badge) {
-                <p class="label-caps mb-3 text-muted">{{ item.badge }}</p>
+                <p class="label-caps mb-3 text-muted">{{ badgeLabel(item.badge) }}</p>
               }
               <h1>
                 <a class="text-title uppercase tracking-[0.04em] hover:text-muted" [routerLink]="departmentPath() + '/items'" [queryParams]="{ designer: item.brand }">{{ item.brand }}</a>
                 <span class="mt-2 block text-base text-muted">{{ item.title }}</span>
               </h1>
               <app-price-tag class="mt-6 block" [item]="item" size="lg" />
-              <p class="mt-1 text-xs text-muted">Import duties included</p>
+              <p class="mt-1 text-xs text-muted" i18n="@@product.duties">Import duties included</p>
             </header>
 
             @if (sizes().length) {
               <fieldset class="space-y-4">
                 <div class="flex items-center justify-between">
-                  <legend class="label-caps">Select size</legend>
-                  <a href="#" class="link-cta">Size guide</a>
+                  <legend class="label-caps" i18n="@@product.selectSize">Select size</legend>
+                  <a href="#" class="link-cta" i18n="@@product.sizeGuide">Size guide</a>
                 </div>
                 <div class="grid grid-cols-5 gap-2">
                   @for (size of sizes(); track size) {
@@ -84,31 +84,31 @@ const RELATED_COUNT = 4;
                 </div>
               </fieldset>
             } @else {
-              <p class="label-caps text-muted">One size</p>
+              <p class="label-caps text-muted" i18n="@@product.oneSize">One size</p>
             }
 
             <div class="space-y-3">
               @if (item.soldOut) {
-                <button type="button" class="btn btn-primary w-full" disabled>Sold out</button>
-                <p class="text-xs leading-relaxed text-muted">This piece is sold out. Save it to your wishlist to keep it close.</p>
+                <button type="button" class="btn btn-primary w-full" disabled i18n="@@product.soldOut">Sold out</button>
+                <p class="text-xs leading-relaxed text-muted" i18n="@@product.soldOutText">This piece is sold out. Save it to your wishlist to keep it close.</p>
               } @else {
                 <button type="button" class="btn btn-primary w-full" (click)="addToBag()">
-                  {{ added() ? 'Added to bag' : 'Add to bag' }}
+                  @if (added()) {<ng-container i18n="@@product.added">Added to bag</ng-container>} @else {<ng-container i18n="@@product.addToBag">Add to bag</ng-container>}
                 </button>
                 @if (added()) {
-                  <a routerLink="/bag" class="btn btn-secondary w-full motion-safe:animate-fade-in">View bag ({{ bagCount() }})</a>
+                  <a routerLink="/bag" class="btn btn-secondary w-full motion-safe:animate-fade-in" i18n="@@product.viewBag">View bag ({{ bagCount() }})</a>
                 }
               }
               @if (needsSize()) {
-                <p class="text-xs text-error" role="alert">Please select a size.</p>
+                <p class="text-xs text-error" role="alert" i18n="@@product.needSize">Please select a size.</p>
               }
               <button type="button" class="btn btn-secondary w-full" [attr.aria-pressed]="saved()" (click)="wishlist.toggle(item.id)">
                 <svg class="h-4 w-4" viewBox="0 0 24 24" [attr.fill]="saved() ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true">
                   <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
                 </svg>
-                {{ saved() ? 'Saved to wishlist' : 'Add to wishlist' }}
+                @if (saved()) {<ng-container i18n="@@product.saved">Saved to wishlist</ng-container>} @else {<ng-container i18n="@@product.addToWishlist">Add to wishlist</ng-container>}
               </button>
-              <p class="pt-2 text-center text-xs text-muted">Estimated delivery: 2–4 business days</p>
+              <p class="pt-2 text-center text-xs text-muted" i18n="@@product.estimatedDelivery">Estimated delivery: 2–4 business days</p>
             </div>
 
             <div class="border-t border-line">
@@ -133,8 +133,10 @@ const RELATED_COUNT = 4;
           <section class="section-y" aria-labelledby="related-heading">
             <app-section-header
               eyebrow="Complete the look"
+              i18n-eyebrow="@@product.completeLook"
               title="You may also like"
-              [actionLabel]="'Shop ' + item.brand"
+              i18n-title="@@product.mayAlsoLike"
+              [actionLabel]="shopBrandLabel()"
               [actionLink]="departmentPath() + '/items'"
               [actionQuery]="{ designer: item.brand }"
             />
@@ -152,10 +154,10 @@ const RELATED_COUNT = 4;
         </div>
       } @else {
         <div class="py-32 text-center">
-          <p class="label-caps text-muted">Error 404</p>
-          <h1 class="text-headline mt-4">This piece is no longer available</h1>
-          <p class="mt-3 text-sm text-muted">It may have sold out or moved. Discover what's new instead.</p>
-          <a routerLink="/search" class="btn btn-primary mt-8">Shop all products</a>
+          <p class="label-caps text-muted" i18n="@@notFound.eyebrow">Error 404</p>
+          <h1 class="text-headline mt-4" i18n="@@product.gone.title">This piece is no longer available</h1>
+          <p class="mt-3 text-sm text-muted" i18n="@@product.gone.text">It may have sold out or moved. Discover what's new instead.</p>
+          <a routerLink="/search" class="btn btn-primary mt-8" i18n="@@notFound.shopAll">Shop all products</a>
         </div>
       }
     </div>
@@ -173,6 +175,8 @@ export class ProductPageComponent {
   readonly id = input.required<string>();
 
   protected readonly product = computed(() => this.catalog.find(this.id()) ?? null);
+  protected readonly badgeLabel = badgeLabel;
+  protected readonly shopBrandLabel = computed(() => $localize`:@@product.shopBrand:Shop ${this.product()?.brand ?? ''}:brand:`);
   protected readonly sizes = computed(() => {
     const item = this.product();
     return item ? sizesFor(item) : [];
@@ -203,7 +207,7 @@ export class ProductPageComponent {
     }
     const department = departmentInfo(item.department);
     return [
-      { label: 'Home', link: '/' },
+      { label: $localize`:@@breadcrumb.home:Home`, link: '/' },
       { label: department.label, link: department.path },
       // Kidswear sits under its age group: Home / Kids / Baby / Clothing.
       ...(item.ageGroup
@@ -236,16 +240,25 @@ export class ProductPageComponent {
       return [];
     }
     return [
-      { title: 'The details', lines: [item.description, `${item.brand} · ${categoryLabel(item.category)}`, `Item ID: ${item.id.toUpperCase()}`] },
       {
-        title: 'Size & fit',
-        lines: this.sizes().length
-          ? ['Fits true to size. If you are between sizes, we recommend taking the larger one.', 'See the size guide for exact measurements.']
-          : ['One size.']
+        title: $localize`:@@product.details:The details`,
+        lines: [item.description, `${item.brand} · ${categoryLabel(item.category)}`, $localize`:@@product.itemId:Item ID: ${item.id.toUpperCase()}:id:`]
       },
       {
-        title: 'Shipping & returns',
-        lines: ['Standard delivery in 2–4 business days; express delivery available at checkout.', 'Free returns within 14 days of delivery.']
+        title: $localize`:@@product.sizeFit:Size & fit`,
+        lines: this.sizes().length
+          ? [
+              $localize`:@@product.fit.trueToSize:Fits true to size. If you are between sizes, we recommend taking the larger one.`,
+              $localize`:@@product.fit.guide:See the size guide for exact measurements.`
+            ]
+          : [$localize`:@@product.fit.oneSize:One size.`]
+      },
+      {
+        title: $localize`:@@product.shipping:Shipping & returns`,
+        lines: [
+          $localize`:@@product.shipping.delivery:Standard delivery in 2–4 business days; express delivery available at checkout.`,
+          $localize`:@@product.shipping.returns:Free returns within 14 days of delivery.`
+        ]
       }
     ];
   });

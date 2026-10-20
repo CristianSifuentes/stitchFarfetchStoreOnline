@@ -24,33 +24,46 @@ interface AsideCopy {
   readonly benefits: readonly string[];
 }
 
-const MEMBER_BENEFITS = ['Your wishlist, saved on every device', 'Early access to Sale and private events', 'Faster checkout and order tracking'];
+const WISHLIST_BENEFIT = $localize`:@@auth.benefit.wishlist:Your wishlist, saved on every device`;
+const EARLY_ACCESS_BENEFIT = $localize`:@@auth.benefit.earlyAccess:Early access to Sale and private events`;
+const MEMBER_BENEFITS = [WISHLIST_BENEFIT, EARLY_ACCESS_BENEFIT, $localize`:@@auth.benefit.checkout:Faster checkout and order tracking`];
+const MEMBERS = $localize`:@@auth.aside.members:Members`;
+const MEMBERS_TITLE = $localize`:@@auth.aside.membersTitle:Your world of luxury, in one place`;
+const WELCOME_TITLE = $localize`:@@auth.title.welcome:Welcome to VESTRA`;
 
 const ASIDE: Record<AuthView, AsideCopy> = {
-  'sign-in': { eyebrow: 'Members', title: 'Your world of luxury, in one place', benefits: MEMBER_BENEFITS },
-  welcome: { eyebrow: 'Members', title: 'Your world of luxury, in one place', benefits: MEMBER_BENEFITS },
+  'sign-in': { eyebrow: MEMBERS, title: MEMBERS_TITLE, benefits: MEMBER_BENEFITS },
+  welcome: { eyebrow: MEMBERS, title: MEMBERS_TITLE, benefits: MEMBER_BENEFITS },
   register: {
-    eyebrow: 'Join VESTRA',
-    title: 'Be first to the new season',
-    benefits: ['Tailored new arrivals from the houses you love', 'Early access to Sale and private events', 'Your wishlist, saved on every device']
+    eyebrow: $localize`:@@auth.aside.join:Join VESTRA`,
+    title: $localize`:@@auth.aside.joinTitle:Be first to the new season`,
+    benefits: [$localize`:@@auth.benefit.arrivals:Tailored new arrivals from the houses you love`, EARLY_ACCESS_BENEFIT, WISHLIST_BENEFIT]
   },
   code: {
-    eyebrow: 'Secure sign-in',
-    title: 'No password? No problem.',
-    benefits: ['A 6-digit code, valid for 10 minutes', 'Nothing to remember', 'Works for new and existing accounts']
+    eyebrow: $localize`:@@auth.aside.secure:Secure sign-in`,
+    title: $localize`:@@auth.aside.secureTitle:No password? No problem.`,
+    benefits: [
+      $localize`:@@auth.benefit.codeValid:A 6-digit code, valid for 10 minutes`,
+      $localize`:@@auth.benefit.nothingToRemember:Nothing to remember`,
+      $localize`:@@auth.benefit.anyAccount:Works for new and existing accounts`
+    ]
   },
   forgot: {
-    eyebrow: 'Account help',
-    title: 'Back in, in a moment',
-    benefits: ['A reset link straight to your inbox', 'Your wishlist and bag stay as they are', 'Or skip it with a one-time code']
+    eyebrow: $localize`:@@auth.aside.help:Account help`,
+    title: $localize`:@@auth.aside.helpTitle:Back in, in a moment`,
+    benefits: [
+      $localize`:@@auth.benefit.resetLink:A reset link straight to your inbox`,
+      $localize`:@@auth.benefit.keepBag:Your wishlist and bag stay as they are`,
+      $localize`:@@auth.benefit.skipWithCode:Or skip it with a one-time code`
+    ]
   }
 };
 
 const TITLES: Record<AuthView, string> = {
-  'sign-in': 'Welcome to VESTRA',
-  register: 'Welcome to VESTRA',
-  code: 'Continue with a one-time code',
-  forgot: 'Forgot your password?',
+  'sign-in': WELCOME_TITLE,
+  register: WELCOME_TITLE,
+  code: $localize`:@@auth.title.code:Continue with a one-time code`,
+  forgot: $localize`:@@auth.title.forgot:Forgot your password?`,
   welcome: ''
 };
 
@@ -93,7 +106,7 @@ const TITLES: Record<AuthView, string> = {
           </aside>
 
           <div class="relative flex max-h-dvh flex-col overflow-y-auto px-6 pb-10 pt-16 sm:max-h-[min(54rem,calc(100dvh-4rem))] sm:px-12">
-            <button type="button" class="absolute right-4 top-4 flex h-10 w-10 items-center justify-center transition-colors hover:text-muted" aria-label="Close" (click)="state.close()">
+            <button type="button" class="absolute right-4 top-4 flex h-10 w-10 items-center justify-center transition-colors hover:text-muted" aria-label="Close" i18n-aria-label="@@common.close" (click)="state.close()">
               <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg>
             </button>
 
@@ -104,10 +117,10 @@ const TITLES: Record<AuthView, string> = {
                     <circle cx="26" cy="26" r="25" pathLength="1" class="[stroke-dasharray:1] motion-safe:animate-draw motion-safe:[stroke-dashoffset:1]" />
                     <path d="m16 27 7 7 13-15" transform="rotate(90 26 26)" pathLength="1" class="[stroke-dasharray:1] motion-safe:animate-draw motion-safe:[animation-delay:0.45s] motion-safe:[stroke-dashoffset:1]" />
                   </svg>
-                  <p class="label-caps mt-8 text-muted">{{ account.provider === 'email' || account.provider === 'code' ? 'Signed in' : 'Signed in with ' + account.provider }}</p>
-                  <h2 id="auth-title" class="text-headline mt-3">Welcome, {{ greeting() }}</h2>
+                  <p class="label-caps mt-8 text-muted" i18n="@@auth.welcome.provider">{account.provider, select, google {Signed in with Google} apple {Signed in with Apple} facebook {Signed in with Facebook} other {Signed in}}</p>
+                  <h2 id="auth-title" class="text-headline mt-3" i18n="@@auth.welcome.title">Welcome, {{ greeting() }}</h2>
                   <p class="mt-3 text-sm text-muted">{{ account.email }}</p>
-                  <button type="button" class="btn btn-primary mt-10" (click)="state.close()">Continue shopping</button>
+                  <button type="button" class="btn btn-primary mt-10" (click)="state.close()" i18n="@@common.continueShopping">Continue shopping</button>
                 </div>
               }
             } @else {
@@ -115,14 +128,14 @@ const TITLES: Record<AuthView, string> = {
                 @if (view === 'code' || view === 'forgot') {
                   <button type="button" class="label-caps mb-6 flex items-center gap-2 text-muted transition-colors hover:text-ink" (click)="state.open('sign-in')">
                     <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M19 12H5m6-6-6 6 6 6" /></svg>
-                    Back to sign in
+                    <ng-container i18n="@@auth.backToSignIn">Back to sign in</ng-container>
                   </button>
                 }
                 <h2 id="auth-title" class="text-headline">{{ title() }}</h2>
               </header>
 
               @if (view === 'sign-in' || view === 'register') {
-                <div class="mb-8 grid grid-cols-2 border-b border-line" role="tablist" aria-label="Sign in or register">
+                <div class="mb-8 grid grid-cols-2 border-b border-line" role="tablist" aria-label="Sign in or register" i18n-aria-label="@@auth.tabs">
                   @for (tab of tabs; track tab.id) {
                     <button
                       type="button"
@@ -168,8 +181,8 @@ export class AuthDialogComponent {
 
   protected readonly image = sizedImage('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&q=80', 900);
   protected readonly tabs: ReadonlyArray<{ readonly id: AuthView; readonly label: string }> = [
-    { id: 'sign-in', label: 'Sign in' },
-    { id: 'register', label: 'Register' }
+    { id: 'sign-in', label: $localize`:@@auth.signIn:Sign in` },
+    { id: 'register', label: $localize`:@@auth.register:Register` }
   ];
 
   protected readonly welcome = signal<Account | null>(null);

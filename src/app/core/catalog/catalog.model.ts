@@ -20,6 +20,7 @@ export interface CatalogItem {
   // ISO date; drives "Newest first" and the "New In" edits.
   addedAt: string;
   // A short merchandising label shown on the card, e.g. "New Season".
+  // Shown on the card; translated when it's one the UI knows (badgeLabel).
   badge?: string;
   edits: ProductEdit[];
   // Kids only.
@@ -28,6 +29,12 @@ export interface CatalogItem {
   salePrice?: number;
   // Can't be bought right now; it can still be saved to the wishlist.
   soldOut?: boolean;
+}
+
+// The card badge in the reader's language; badges the UI doesn't know
+// show as the catalog has them.
+export function badgeLabel(badge: string | undefined): string {
+  return badge === 'New Season' ? $localize`:@@product.badge.newSeason:New Season` : (badge ?? '');
 }
 
 // What the customer pays.

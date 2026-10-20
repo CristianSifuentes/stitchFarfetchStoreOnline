@@ -3,9 +3,9 @@ import { AgeGroup, CatalogItem, Department, ProductCategory, ProductEdit, effect
 export type ListingSort = 'newest' | 'price-asc' | 'price-desc';
 
 export const LISTING_SORTS: ReadonlyArray<{ readonly id: ListingSort; readonly label: string }> = [
-  { id: 'newest', label: 'Newest first' },
-  { id: 'price-asc', label: 'Price: low to high' },
-  { id: 'price-desc', label: 'Price: high to low' }
+  { id: 'newest', label: $localize`:@@sort.newest:Newest first` },
+  { id: 'price-asc', label: $localize`:@@sort.priceAsc:Price: low to high` },
+  { id: 'price-desc', label: $localize`:@@sort.priceDesc:Price: high to low` }
 ];
 
 export interface ListingQuery {

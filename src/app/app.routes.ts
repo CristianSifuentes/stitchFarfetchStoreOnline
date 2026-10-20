@@ -13,13 +13,18 @@ const listing = () =>
 function departmentRoutes(path: string, id: Department): Routes {
   return [
     { path, loadComponent: department, data: { department: id }, title: titleFor(id) },
-    { path: `${path}/items`, loadComponent: listing, data: { department: id }, title: `${titleFor(id)} · Shop all` },
-    { path: `${path}/brands`, loadComponent: brands, data: { department: id }, title: `${titleFor(id)} · Brands` }
+    { path: `${path}/items`, loadComponent: listing, data: { department: id }, title: $localize`:@@title.departmentItems:${titleFor(id)}:department: · Shop all` },
+    { path: `${path}/brands`, loadComponent: brands, data: { department: id }, title: $localize`:@@title.departmentBrands:${titleFor(id)}:department: · Brands` }
   ];
 }
 
 function titleFor(id: Department): string {
-  return { womenswear: 'Womenswear', menswear: 'Menswear', kids: 'Kidswear' }[id] + ' | VESTRA';
+  const names: Record<Department, string> = {
+    womenswear: $localize`:@@title.womenswear:Womenswear`,
+    menswear: $localize`:@@title.menswear:Menswear`,
+    kids: $localize`:@@title.kidswear:Kidswear`
+  };
+  return `${names[id]} | VESTRA`;
 }
 
 export const routes: Routes = [
@@ -29,31 +34,31 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        title: 'VESTRA | Luxury Fashion',
+        title: $localize`:@@title.home:VESTRA | Luxury Fashion`,
         loadComponent: () => import('./features/home/pages/home-page.component').then((m) => m.HomePageComponent)
       },
       ...departmentRoutes('womenswear', 'womenswear'),
       ...departmentRoutes('menswear', 'menswear'),
       ...departmentRoutes('kids', 'kids'),
-      { path: 'search', loadComponent: listing, data: { department: null }, title: 'Shop all | VESTRA' },
+      { path: 'search', loadComponent: listing, data: { department: null }, title: $localize`:@@title.search:Shop all | VESTRA` },
       {
         path: 'bag',
-        title: 'Shopping bag | VESTRA',
+        title: $localize`:@@title.bag:Shopping bag | VESTRA`,
         loadComponent: () => import('./features/bag/pages/bag-page.component').then((m) => m.BagPageComponent)
       },
       {
         path: 'wishlist',
-        title: 'Wishlist | VESTRA',
+        title: $localize`:@@title.wishlist:Wishlist | VESTRA`,
         loadComponent: () => import('./features/wishlist/pages/wishlist-page.component').then((m) => m.WishlistPageComponent)
       },
       {
         path: 'product/:id',
-        title: 'Product | VESTRA',
+        title: $localize`:@@title.product:Product | VESTRA`,
         loadComponent: () => import('./features/product/pages/product-page.component').then((m) => m.ProductPageComponent)
       },
       {
         path: '**',
-        title: 'Page not found | VESTRA',
+        title: $localize`:@@title.notFound:Page not found | VESTRA`,
         loadComponent: () => import('./features/not-found/pages/not-found-page.component').then((m) => m.NotFoundPageComponent)
       }
     ]

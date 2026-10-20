@@ -10,11 +10,11 @@ import { PricePipe } from '../../pipes/price.pipe';
   imports: [PricePipe],
   template: `
     @if (item().soldOut) {
-      <p class="text-muted" [class.text-sm]="size() === 'sm'" [class.text-xl]="size() === 'lg'">Sold out</p>
+      <p class="text-muted" [class.text-sm]="size() === 'sm'" [class.text-xl]="size() === 'lg'" i18n="@@product.soldOut">Sold out</p>
     } @else if (item().salePrice; as sale) {
       <p class="flex flex-wrap items-baseline gap-x-2" [class.text-sm]="size() === 'sm'" [class.text-xl]="size() === 'lg'">
         <span class="text-error">{{ sale | price }}</span>
-        <s class="text-muted"><span class="sr-only">Was </span>{{ item().price | price }}</s>
+        <s class="text-muted"><span class="sr-only" i18n="@@price.was">Was</span> {{ item().price | price }}</s>
         <span class="text-xs text-error">-{{ discount() }}%</span>
       </p>
     } @else {

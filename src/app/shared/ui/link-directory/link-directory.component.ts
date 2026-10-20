@@ -35,5 +35,5 @@ export interface DirectoryColumn {
 })
 export class LinkDirectoryComponent {
   readonly columns = input.required<ReadonlyArray<DirectoryColumn>>();
-  readonly label = input('More to explore');
+  readonly label = input($localize`:@@section.moreToExplore:More to explore`);
 }

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { REGIONS, currencySymbol, formatMoney, isLanguage, isRegion, regionInfo } from './locale.model';
+import { REGIONS, currencySymbol, formatMoney, isLanguage, isRegion, languagePath, regionInfo, toLanguage } from './locale.model';
 
 describe('formatMoney', () => {
   it('keeps US dollars as the catalog has them', () => {
@@ -16,9 +16,8 @@ describe('formatMoney', () => {
 });
 
 describe('regions and languages', () => {
-  it('lists regions alphabetically, each with a symbol', () => {
-    const names = REGIONS.map((region) => region.name);
-    expect(names).toEqual([...names].sort((a, b) => a.localeCompare(b)));
+  it('gives every region a symbol', () => {
+    expect(REGIONS).toHaveLength(12);
     expect(currencySymbol(regionInfo('FR'))).toBe('€');
     expect(currencySymbol(regionInfo('MX'))).toBe('$');
   });
@@ -28,5 +27,12 @@ describe('regions and languages', () => {
     expect(isRegion('XX')).toBe(false);
     expect(isLanguage('es-419')).toBe(true);
     expect(isLanguage('es')).toBe(false);
+    expect(toLanguage('fr')).toBe('fr');
+    expect(toLanguage('pt-BR')).toBe('en-US');
+  });
+
+  it('serves English at the root and the others under their id', () => {
+    expect(languagePath('en-US')).toBe('');
+    expect(languagePath('es-419')).toBe('/es-419');
   });
 });

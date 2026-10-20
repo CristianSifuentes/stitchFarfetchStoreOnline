@@ -23,8 +23,8 @@ export const FREE_DELIVERY_FROM = 200;
 export const MAX_QUANTITY = 10;
 
 export const DELIVERY_OPTIONS: ReadonlyArray<DeliveryInfo> = [
-  { id: 'standard', label: 'Standard', eta: '2–4 business days', fee: 20 },
-  { id: 'express', label: 'Express', eta: '1–2 business days', fee: 35 }
+  { id: 'standard', label: $localize`:@@delivery.standard:Standard`, eta: $localize`:@@delivery.standard.eta:2–4 business days`, fee: 20 },
+  { id: 'express', label: $localize`:@@delivery.express:Express`, eta: $localize`:@@delivery.express.eta:1–2 business days`, fee: 35 }
 ];
 
 export function sameLine(line: BagLine, id: string, size: string | null): boolean {

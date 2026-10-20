@@ -15,10 +15,10 @@ const DEPARTMENT_IMAGES: Record<string, string> = {
 
 // One designer per department's headline house.
 const FEATURED_DESIGNERS = [
-  { name: 'Bottega Veneta', eyebrow: 'New Season' },
-  { name: 'Max Mara', eyebrow: 'Investment Piece' },
-  { name: 'Saint Laurent', eyebrow: 'Icons of the House' },
-  { name: 'Burberry Kids', eyebrow: 'Heritage for Kids' }
+  { name: 'Bottega Veneta', eyebrow: $localize`:@@product.badge.newSeason:New Season` },
+  { name: 'Max Mara', eyebrow: $localize`:@@home.designer.investment:Investment Piece` },
+  { name: 'Saint Laurent', eyebrow: $localize`:@@home.designer.icons:Icons of the House` },
+  { name: 'Burberry Kids', eyebrow: $localize`:@@home.designer.heritageKids:Heritage for Kids` }
 ] as const;
 
 const HOME_BRANDS = ['Prada', 'Gucci', 'Saint Laurent', 'Burberry', 'Loewe', 'Balenciaga'] as const;
@@ -29,8 +29,8 @@ const HOME_BRANDS = ['Prada', 'Gucci', 'Saint Laurent', 'Burberry', 'Loewe', 'Ba
   template: `
     <div class="page-container">
       <section class="pt-12" aria-labelledby="departments-heading">
-        <p class="label-caps mb-3 text-center text-muted">SS24 Collection</p>
-        <h1 id="departments-heading" class="text-headline mb-10 text-center">Choose your world</h1>
+        <p class="label-caps mb-3 text-center text-muted" i18n="@@home.collection">SS24 Collection</p>
+        <h1 id="departments-heading" class="text-headline mb-10 text-center" i18n="@@home.chooseWorld">Choose your world</h1>
         <div class="grid grid-cols-3 gap-2 md:gap-4">
           @for (department of departments; track department.id) {
             <a [routerLink]="department.path" class="group relative block aspect-[3/4] overflow-hidden bg-surface">
@@ -44,25 +44,25 @@ const HOME_BRANDS = ['Prada', 'Gucci', 'Saint Laurent', 'Burberry', 'Loewe', 'Ba
 
       <section class="section-y grid items-center gap-10 lg:grid-cols-2 lg:gap-16" aria-labelledby="editorial-heading">
         <div class="space-y-6">
-          <p class="label-caps text-muted">The Modern Muse</p>
-          <h2 id="editorial-heading" class="text-display">The new generation of style</h2>
-          <p class="max-w-md leading-relaxed text-muted">
+          <p class="label-caps text-muted" i18n="@@home.muse">The Modern Muse</p>
+          <h2 id="editorial-heading" class="text-display" i18n="@@home.newGeneration">The new generation of style</h2>
+          <p class="max-w-md leading-relaxed text-muted" i18n="@@home.curated">
             Curated pieces from the world’s most iconic designers, blending timeless craftsmanship with contemporary silhouettes.
           </p>
           <div class="flex flex-wrap gap-3 pt-2">
-            <a routerLink="/womenswear/items" [queryParams]="{ sort: 'newest' }" class="btn btn-primary">Shop women</a>
-            <a routerLink="/menswear/items" [queryParams]="{ sort: 'newest' }" class="btn btn-secondary">Shop men</a>
+            <a routerLink="/womenswear/items" [queryParams]="{ sort: 'newest' }" class="btn btn-primary" i18n="@@home.shopWomen">Shop women</a>
+            <a routerLink="/menswear/items" [queryParams]="{ sort: 'newest' }" class="btn btn-secondary" i18n="@@home.shopMen">Shop men</a>
           </div>
         </div>
         <div class="aspect-square overflow-hidden bg-surface">
-          <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1200&q=80" alt="Editorial fashion still life" class="h-full w-full object-cover" loading="lazy" />
+          <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1200&q=80" alt="Editorial fashion still life" i18n-alt="@@home.editorialAlt" class="h-full w-full object-cover" loading="lazy" />
         </div>
       </section>
 
       <app-brand-strip [brands]="brands" />
 
       <section class="section-y" aria-labelledby="designers-heading">
-        <app-section-header eyebrow="Curated for you" title="This season’s designers" actionLabel="Shop all" actionLink="/search" />
+        <app-section-header eyebrow="Curated for you" i18n-eyebrow="@@home.curatedForYou" title="This season’s designers" i18n-title="@@home.seasonDesigners" actionLabel="Shop all" i18n-actionLabel="@@common.shopAll" actionLink="/search" />
         <div class="grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-4">
           @for (designer of designers(); track designer.name) {
             <app-designer-card
@@ -80,9 +80,13 @@ const HOME_BRANDS = ['Prada', 'Gucci', 'Saint Laurent', 'Burberry', 'Loewe', 'Ba
       <section aria-labelledby="new-in-heading">
         <app-section-header
           eyebrow="Just landed"
+          i18n-eyebrow="@@section.justLanded"
           title="New In"
+          i18n-title="@@nav.newIn"
           description="The latest arrivals across womenswear, menswear and kidswear."
+          i18n-description="@@home.newInText"
           actionLabel="View all"
+          i18n-actionLabel="@@common.viewAll"
           actionLink="/search"
           [actionQuery]="{ sort: 'newest' }"
         />
