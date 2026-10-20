@@ -9,7 +9,8 @@
     "category": "bags",
     "description": "Intrecciato-woven leather tote with a slouchy, structured-free body and a single shoulder strap.",
     "addedAt": "2024-03-28",
-    "badge": "New Season"
+    "badge": "New Season",
+    "edits": []
   },
   {
     "id": "ww-2",
@@ -20,7 +21,10 @@
     "department": "womenswear",
     "category": "accessories",
     "description": "Oversized acetate frames with the Anagram logo at the temples and tinted lenses.",
-    "addedAt": "2024-03-27"
+    "addedAt": "2024-03-27",
+    "edits": [
+      "gifts"
+    ]
   },
   {
     "id": "ww-3",
@@ -31,7 +35,9 @@
     "department": "womenswear",
     "category": "clothing",
     "description": "Light cotton midi dress in an all-over floral print with a fitted bodice and a full skirt.",
-    "addedAt": "2024-03-26"
+    "addedAt": "2024-03-26",
+    "edits": [],
+    "salePrice": 520
   },
   {
     "id": "ww-4",
@@ -42,7 +48,8 @@
     "department": "womenswear",
     "category": "shoes",
     "description": "Square-toe mules on a sculpted 95mm heel in soft suede.",
-    "addedAt": "2024-03-25"
+    "addedAt": "2024-03-25",
+    "edits": []
   },
   {
     "id": "ww-5",
@@ -53,7 +60,10 @@
     "department": "womenswear",
     "category": "accessories",
     "description": "The rectangular Tank case in steel with a lacquered dial and a leather strap.",
-    "addedAt": "2024-03-24"
+    "addedAt": "2024-03-24",
+    "edits": [
+      "gifts"
+    ]
   },
   {
     "id": "ww-6",
@@ -64,7 +74,9 @@
     "department": "womenswear",
     "category": "clothing",
     "description": "Relaxed-fit jersey T-shirt with a discreet embroidered logo at the chest.",
-    "addedAt": "2024-03-23"
+    "addedAt": "2024-03-23",
+    "edits": [],
+    "salePrice": 390
   },
   {
     "id": "ww-7",
@@ -75,7 +87,10 @@
     "department": "womenswear",
     "category": "clothing",
     "description": "Fluid silk charmeuse shirt with a point collar and a concealed placket.",
-    "addedAt": "2024-03-22"
+    "addedAt": "2024-03-22",
+    "edits": [
+      "party"
+    ]
   },
   {
     "id": "ww-8",
@@ -86,7 +101,10 @@
     "department": "womenswear",
     "category": "clothing",
     "description": "Double-faced cashmere coat with a wrap front, notched lapels and a tie belt.",
-    "addedAt": "2024-03-21"
+    "addedAt": "2024-03-21",
+    "edits": [
+      "winter"
+    ]
   },
   {
     "id": "ww-9",
@@ -98,7 +116,8 @@
     "category": "bags",
     "description": "Structured Saffiano leather tote with the enamel triangle logo and a detachable strap.",
     "addedAt": "2024-03-20",
-    "badge": "New Season"
+    "badge": "New Season",
+    "edits": []
   },
   {
     "id": "ww-10",
@@ -109,7 +128,10 @@
     "department": "womenswear",
     "category": "clothing",
     "description": "Printed silk shirt dress with a self-tie belt and a midi-length skirt.",
-    "addedAt": "2024-03-19"
+    "addedAt": "2024-03-19",
+    "edits": [
+      "gifts"
+    ]
   },
   {
     "id": "ww-11",
@@ -120,7 +142,10 @@
     "department": "womenswear",
     "category": "shoes",
     "description": "Pointed-toe pumps in glossy leather on a 110mm stiletto heel.",
-    "addedAt": "2024-03-18"
+    "addedAt": "2024-03-18",
+    "edits": [
+      "party"
+    ]
   },
   {
     "id": "ww-12",
@@ -131,7 +156,11 @@
     "department": "womenswear",
     "category": "clothing",
     "description": "The double-breasted gabardine trench with storm flaps, epaulettes and a belted waist.",
-    "addedAt": "2024-03-17"
+    "addedAt": "2024-03-17",
+    "edits": [
+      "heritage",
+      "winter"
+    ]
   },
   {
     "id": "wb-1",
@@ -142,7 +171,10 @@
     "department": "womenswear",
     "category": "clothing",
     "description": "Precision tailoring in premium wool with a modern silhouette.",
-    "addedAt": "2024-02-28"
+    "addedAt": "2024-02-28",
+    "edits": [
+      "winter"
+    ]
   },
   {
     "id": "ms-1",
@@ -153,7 +185,10 @@
     "department": "menswear",
     "category": "clothing",
     "description": "Lambskin biker jacket with an asymmetric zip, quilted shoulders and a fitted waist.",
-    "addedAt": "2024-02-27"
+    "addedAt": "2024-02-27",
+    "edits": [
+      "winter"
+    ]
   },
   {
     "id": "ms-2",
@@ -165,7 +200,10 @@
     "category": "clothing",
     "description": "Lightly washed denim jacket with chest flap pockets and a boxy, cropped fit.",
     "addedAt": "2024-02-26",
-    "badge": "New Season"
+    "badge": "New Season",
+    "edits": [
+      "winter"
+    ]
   },
   {
     "id": "ms-3",
@@ -176,7 +214,11 @@
     "department": "menswear",
     "category": "clothing",
     "description": "Heavyweight brushed-cotton hoodie in heather grey with an oversized fit.",
-    "addedAt": "2024-02-25"
+    "addedAt": "2024-02-25",
+    "edits": [
+      "winter"
+    ],
+    "salePrice": 625
   },
   {
     "id": "ms-4",
@@ -187,7 +229,10 @@
     "department": "menswear",
     "category": "clothing",
     "description": "Slim-fit blazer in fine wool with notched lapels and a two-button front.",
-    "addedAt": "2024-02-24"
+    "addedAt": "2024-02-24",
+    "edits": [
+      "winter"
+    ]
   },
   {
     "id": "ms-5",
@@ -198,7 +243,12 @@
     "department": "menswear",
     "category": "shoes",
     "description": "Burnished leather lace-up boots on a lug rubber sole.",
-    "addedAt": "2024-02-23"
+    "addedAt": "2024-02-23",
+    "edits": [
+      "heritage",
+      "party",
+      "winter"
+    ]
   },
   {
     "id": "ms-6",
@@ -210,7 +260,10 @@
     "category": "clothing",
     "description": "Garment-dyed technical field jacket with signature arm patch and weather-ready finish.",
     "addedAt": "2024-02-22",
-    "badge": "New Season"
+    "badge": "New Season",
+    "edits": [
+      "winter"
+    ]
   },
   {
     "id": "ms-7",
@@ -221,7 +274,10 @@
     "department": "menswear",
     "category": "shoes",
     "description": "Sock-fit knit runners with a sculpted, lightweight rubber sole.",
-    "addedAt": "2024-02-21"
+    "addedAt": "2024-02-21",
+    "edits": [
+      "winter"
+    ]
   },
   {
     "id": "ms-8",
@@ -232,7 +288,9 @@
     "department": "menswear",
     "category": "clothing",
     "description": "Crisp cotton-poplin shirt with a point collar and mother-of-pearl buttons.",
-    "addedAt": "2024-02-20"
+    "addedAt": "2024-02-20",
+    "edits": [],
+    "salePrice": 415
   },
   {
     "id": "ms-9",
@@ -243,7 +301,9 @@
     "department": "menswear",
     "category": "clothing",
     "description": "Slim-fit jeans in washed stretch denim with hand-distressed knees.",
-    "addedAt": "2024-02-19"
+    "addedAt": "2024-02-19",
+    "edits": [],
+    "salePrice": 810
   },
   {
     "id": "ms-10",
@@ -254,7 +314,8 @@
     "department": "menswear",
     "category": "shoes",
     "description": "Minimal low-tops in white nappa leather with suede panels and gold serial numbers.",
-    "addedAt": "2024-02-18"
+    "addedAt": "2024-02-18",
+    "edits": []
   },
   {
     "id": "ms-11",
@@ -265,7 +326,10 @@
     "department": "menswear",
     "category": "clothing",
     "description": "Pure cashmere crewneck in ivory, knitted in Italy with ribbed trims.",
-    "addedAt": "2024-02-17"
+    "addedAt": "2024-02-17",
+    "edits": [
+      "winter"
+    ]
   },
   {
     "id": "kj-1",
@@ -277,7 +341,11 @@
     "category": "clothing",
     "description": "Fine-knit cotton cardigan with contrast tipping and a button front.",
     "addedAt": "2024-02-16",
-    "badge": "New Season"
+    "badge": "New Season",
+    "edits": [
+      "heritage",
+      "winter"
+    ]
   },
   {
     "id": "kj-2",
@@ -289,7 +357,10 @@
     "category": "clothing",
     "description": "Water-repellent hooded jacket in sunshine yellow with snap fastenings.",
     "addedAt": "2024-02-15",
-    "badge": "New Season"
+    "badge": "New Season",
+    "edits": [
+      "winter"
+    ]
   },
   {
     "id": "kj-3",
@@ -300,7 +371,10 @@
     "department": "kids",
     "category": "bags",
     "description": "Lightweight nylon backpack with padded straps and a front zip pocket.",
-    "addedAt": "2024-02-14"
+    "addedAt": "2024-02-14",
+    "edits": [
+      "gifts"
+    ]
   },
   {
     "id": "kj-4",
@@ -311,7 +385,10 @@
     "department": "kids",
     "category": "clothing",
     "description": "Cosy knitted romper with a teddy-ear hood and a snap-fastening front.",
-    "addedAt": "2024-02-13"
+    "addedAt": "2024-02-13",
+    "edits": [
+      "winter"
+    ]
   },
   {
     "id": "kj-5",
@@ -322,7 +399,11 @@
     "department": "kids",
     "category": "clothing",
     "description": "Zip-up track jacket in colour-blocked technical jersey.",
-    "addedAt": "2024-02-12"
+    "addedAt": "2024-02-12",
+    "edits": [
+      "winter"
+    ],
+    "salePrice": 145
   },
   {
     "id": "kj-6",
@@ -333,7 +414,10 @@
     "department": "kids",
     "category": "clothing",
     "description": "Soft cotton shirt in a classic gingham check with a button-down collar.",
-    "addedAt": "2024-02-11"
+    "addedAt": "2024-02-11",
+    "edits": [
+      "heritage"
+    ]
   },
   {
     "id": "kj-7",
@@ -344,7 +428,10 @@
     "department": "kids",
     "category": "shoes",
     "description": "Breathable knit-mesh runners with an easy pull-on fit.",
-    "addedAt": "2024-02-10"
+    "addedAt": "2024-02-10",
+    "edits": [
+      "winter"
+    ]
   },
   {
     "id": "kj-8",
@@ -355,7 +442,10 @@
     "department": "kids",
     "category": "clothing",
     "description": "Cotton blouse in a playful polka-dot print with puffed sleeves.",
-    "addedAt": "2024-02-09"
+    "addedAt": "2024-02-09",
+    "edits": [
+      "party"
+    ]
   },
   {
     "id": "kj-9",
@@ -366,7 +456,9 @@
     "department": "kids",
     "category": "shoes",
     "description": "Colour-blocked chunky sneakers with layered panels and contrast laces.",
-    "addedAt": "2024-02-08"
+    "addedAt": "2024-02-08",
+    "edits": [],
+    "salePrice": 225
   },
   {
     "id": "kj-10",
@@ -377,7 +469,11 @@
     "department": "kids",
     "category": "clothing",
     "description": "The classic polo in breathable cotton piqué with a ribbed collar.",
-    "addedAt": "2024-02-07"
+    "addedAt": "2024-02-07",
+    "edits": [
+      "heritage",
+      "party"
+    ]
   },
   {
     "id": "kj-11",
@@ -389,7 +485,10 @@
     "category": "accessories",
     "description": "Lightweight round metal frames with tinted lenses and full UV protection, sized for children.",
     "addedAt": "2024-02-15",
-    "badge": "New Season"
+    "badge": "New Season",
+    "edits": [
+      "gifts"
+    ]
   },
   {
     "id": "kj-12",
@@ -400,7 +499,11 @@
     "department": "kids",
     "category": "accessories",
     "description": "Structured cotton-twill trucker cap with a breathable mesh back and an adjustable snap strap.",
-    "addedAt": "2024-02-14"
+    "addedAt": "2024-02-14",
+    "edits": [
+      "gifts"
+    ],
+    "salePrice": 85
   },
   {
     "id": "kj-13",
@@ -411,7 +514,10 @@
     "department": "kids",
     "category": "accessories",
     "description": "Garment-washed cotton cap with a curved peak and tonal embroidered logo.",
-    "addedAt": "2024-02-13"
+    "addedAt": "2024-02-13",
+    "edits": [
+      "gifts"
+    ]
   },
   {
     "id": "kj-14",
@@ -422,7 +528,11 @@
     "department": "kids",
     "category": "jewelry",
     "description": "Strand of hand-knotted freshwater pearls with a sterling silver clasp; a first-communion classic.",
-    "addedAt": "2024-02-12"
+    "addedAt": "2024-02-12",
+    "edits": [
+      "gifts",
+      "party"
+    ]
   },
   {
     "id": "kj-15",
@@ -433,7 +543,11 @@
     "department": "kids",
     "category": "jewelry",
     "description": "Delicate gold-plated chain with a crescent-moon pendant set with tiny crystals.",
-    "addedAt": "2024-02-11"
+    "addedAt": "2024-02-11",
+    "edits": [
+      "gifts",
+      "party"
+    ]
   },
   {
     "id": "kj-16",
@@ -444,7 +558,10 @@
     "department": "kids",
     "category": "jewelry",
     "description": "Polished 18k gold-vermeil curb chain with an easy toggle fastening for small wrists.",
-    "addedAt": "2024-02-10"
+    "addedAt": "2024-02-10",
+    "edits": [
+      "gifts"
+    ]
   },
   {
     "id": "kj-17",
@@ -455,7 +572,10 @@
     "department": "kids",
     "category": "jewelry",
     "description": "Small twisted huggie hoops in 18k gold-plated recycled silver, light enough for everyday wear.",
-    "addedAt": "2024-02-09"
+    "addedAt": "2024-02-09",
+    "edits": [
+      "gifts"
+    ]
   },
   {
     "id": "ww-13",
@@ -466,7 +586,10 @@
     "department": "womenswear",
     "category": "clothing",
     "description": "Floor-length gown in red silk crêpe with a fluid, bias-cut skirt.",
-    "addedAt": "2024-03-29"
+    "addedAt": "2024-03-29",
+    "edits": [
+      "party"
+    ]
   },
   {
     "id": "ww-14",
@@ -477,7 +600,9 @@
     "department": "womenswear",
     "category": "clothing",
     "description": "Lightweight linen maxi dress with a plunging wrap front and a high slit.",
-    "addedAt": "2024-03-24"
+    "addedAt": "2024-03-24",
+    "edits": [],
+    "salePrice": 625
   },
   {
     "id": "ww-15",
@@ -488,7 +613,8 @@
     "department": "womenswear",
     "category": "clothing",
     "description": "Button-through chambray shirt dress with patch pockets and a flared skirt.",
-    "addedAt": "2024-03-18"
+    "addedAt": "2024-03-18",
+    "edits": []
   },
   {
     "id": "ww-16",
@@ -499,7 +625,11 @@
     "department": "womenswear",
     "category": "clothing",
     "description": "Long-sleeve guipure lace dress with waist cut-outs and a midi skirt.",
-    "addedAt": "2024-03-12"
+    "addedAt": "2024-03-12",
+    "edits": [
+      "party"
+    ],
+    "salePrice": 310
   },
   {
     "id": "ww-17",
@@ -510,7 +640,11 @@
     "department": "womenswear",
     "category": "shoes",
     "description": "Pointed-toe satin pumps in a tropical floral print on a 105mm heel.",
-    "addedAt": "2024-03-06"
+    "addedAt": "2024-03-06",
+    "edits": [
+      "party"
+    ],
+    "salePrice": 500
   },
   {
     "id": "ww-18",
@@ -521,7 +655,10 @@
     "department": "womenswear",
     "category": "shoes",
     "description": "The iconic pointed pump in navy suede on a slender 105mm heel.",
-    "addedAt": "2024-02-26"
+    "addedAt": "2024-02-26",
+    "edits": [
+      "party"
+    ]
   },
   {
     "id": "ww-19",
@@ -532,7 +669,10 @@
     "department": "womenswear",
     "category": "shoes",
     "description": "Smooth leather ankle boots with a chunky block heel and a side zip.",
-    "addedAt": "2024-02-19"
+    "addedAt": "2024-02-19",
+    "edits": [
+      "winter"
+    ]
   },
   {
     "id": "ww-20",
@@ -543,7 +683,8 @@
     "department": "womenswear",
     "category": "bags",
     "description": "Chevron-quilted leather shoulder bag with the Double G hardware and a chain strap.",
-    "addedAt": "2024-02-08"
+    "addedAt": "2024-02-08",
+    "edits": []
   },
   {
     "id": "ww-21",
@@ -554,7 +695,10 @@
     "department": "womenswear",
     "category": "bags",
     "description": "Hand-woven raffia basket with a leather flap and a top handle.",
-    "addedAt": "2024-01-30"
+    "addedAt": "2024-01-30",
+    "edits": [
+      "gifts"
+    ]
   },
   {
     "id": "ww-22",
@@ -565,7 +709,8 @@
     "department": "womenswear",
     "category": "bags",
     "description": "Structured grey leather bag with the signature Rockstud trims and a chain strap.",
-    "addedAt": "2024-01-22"
+    "addedAt": "2024-01-22",
+    "edits": []
   },
   {
     "id": "ww-23",
@@ -576,7 +721,10 @@
     "department": "womenswear",
     "category": "bags",
     "description": "Chevron-quilted red leather shoulder bag with the Cassandre logo and a tassel chain.",
-    "addedAt": "2024-03-29"
+    "addedAt": "2024-03-29",
+    "edits": [
+      "party"
+    ]
   },
   {
     "id": "ww-24",
@@ -587,7 +735,8 @@
     "department": "womenswear",
     "category": "bags",
     "description": "Oversized Intrecciato-woven leather tote with a gold-tone chain strap.",
-    "addedAt": "2024-03-24"
+    "addedAt": "2024-03-24",
+    "edits": []
   },
   {
     "id": "ww-25",
@@ -598,7 +747,10 @@
     "department": "womenswear",
     "category": "accessories",
     "description": "Oversized clear acetate frames with gradient brown lenses.",
-    "addedAt": "2024-03-18"
+    "addedAt": "2024-03-18",
+    "edits": [
+      "gifts"
+    ]
   },
   {
     "id": "ww-26",
@@ -609,7 +761,11 @@
     "department": "womenswear",
     "category": "accessories",
     "description": "Cat-eye metal frames in rose gold with gradient lenses.",
-    "addedAt": "2024-03-12"
+    "addedAt": "2024-03-12",
+    "edits": [
+      "gifts"
+    ],
+    "salePrice": 365
   },
   {
     "id": "ww-27",
@@ -620,7 +776,11 @@
     "department": "womenswear",
     "category": "jewelry",
     "description": "Cushion-cut centre stone in a pavé halo on a split 18k gold band.",
-    "addedAt": "2024-03-06"
+    "addedAt": "2024-03-06",
+    "edits": [
+      "gifts",
+      "party"
+    ]
   },
   {
     "id": "ww-28",
@@ -631,7 +791,11 @@
     "department": "womenswear",
     "category": "jewelry",
     "description": "Emerald-cut pink sapphire framed with diamonds on an 18k rose-gold band.",
-    "addedAt": "2024-02-26"
+    "addedAt": "2024-02-26",
+    "edits": [
+      "gifts",
+      "party"
+    ]
   },
   {
     "id": "ww-29",
@@ -642,7 +806,11 @@
     "department": "womenswear",
     "category": "jewelry",
     "description": "Open heart pendant set with round brilliant diamonds on a fine chain.",
-    "addedAt": "2024-02-19"
+    "addedAt": "2024-02-19",
+    "edits": [
+      "gifts",
+      "party"
+    ]
   },
   {
     "id": "ww-30",
@@ -653,7 +821,11 @@
     "department": "womenswear",
     "category": "jewelry",
     "description": "Sapphire-blue crystal hearts on gold-tone hooks.",
-    "addedAt": "2024-02-08"
+    "addedAt": "2024-02-08",
+    "edits": [
+      "gifts",
+      "party"
+    ]
   },
   {
     "id": "ww-31",
@@ -664,7 +836,11 @@
     "department": "womenswear",
     "category": "jewelry",
     "description": "Set of lacquered and metal bangles to wear stacked.",
-    "addedAt": "2024-01-30"
+    "addedAt": "2024-01-30",
+    "edits": [
+      "gifts",
+      "party"
+    ]
   },
   {
     "id": "ww-32",
@@ -675,7 +851,11 @@
     "department": "womenswear",
     "category": "jewelry",
     "description": "Gold-plated twisted chains and textured bangles, designed to layer.",
-    "addedAt": "2024-01-22"
+    "addedAt": "2024-01-22",
+    "edits": [
+      "gifts",
+      "party"
+    ]
   },
   {
     "id": "ms-12",
@@ -686,7 +866,11 @@
     "department": "menswear",
     "category": "clothing",
     "description": "Three-piece suit in a blue windowpane-check wool with a peak-lapel jacket.",
-    "addedAt": "2024-03-29"
+    "addedAt": "2024-03-29",
+    "edits": [
+      "heritage",
+      "party"
+    ]
   },
   {
     "id": "ms-13",
@@ -697,7 +881,11 @@
     "department": "menswear",
     "category": "clothing",
     "description": "Lightweight rust nylon bomber with ribbed trims and a zip front.",
-    "addedAt": "2024-03-24"
+    "addedAt": "2024-03-24",
+    "edits": [
+      "winter"
+    ],
+    "salePrice": 345
   },
   {
     "id": "ms-14",
@@ -708,7 +896,11 @@
     "department": "menswear",
     "category": "shoes",
     "description": "Hand-finished wingtip brogues in chestnut calf leather.",
-    "addedAt": "2024-03-18"
+    "addedAt": "2024-03-18",
+    "edits": [
+      "heritage",
+      "party"
+    ]
   },
   {
     "id": "ms-15",
@@ -719,7 +911,11 @@
     "department": "menswear",
     "category": "shoes",
     "description": "Polished calf-leather derbies with a rounded toe and a leather sole.",
-    "addedAt": "2024-03-12"
+    "addedAt": "2024-03-12",
+    "edits": [
+      "heritage",
+      "party"
+    ]
   },
   {
     "id": "ms-16",
@@ -730,7 +926,11 @@
     "department": "menswear",
     "category": "shoes",
     "description": "Wingtip oxfords in sage-green suede, hand-patinated in Paris.",
-    "addedAt": "2024-03-06"
+    "addedAt": "2024-03-06",
+    "edits": [
+      "heritage",
+      "party"
+    ]
   },
   {
     "id": "ms-17",
@@ -741,7 +941,8 @@
     "department": "menswear",
     "category": "bags",
     "description": "Structured backpack in grained leather with a zip-around opening.",
-    "addedAt": "2024-02-26"
+    "addedAt": "2024-02-26",
+    "edits": []
   },
   {
     "id": "ms-18",
@@ -752,7 +953,12 @@
     "department": "menswear",
     "category": "bags",
     "description": "Waxed-canvas rucksack with leather straps and buckle fastenings.",
-    "addedAt": "2024-02-19"
+    "addedAt": "2024-02-19",
+    "edits": [
+      "gifts",
+      "heritage"
+    ],
+    "salePrice": 625
   },
   {
     "id": "ms-19",
@@ -763,7 +969,10 @@
     "department": "menswear",
     "category": "bags",
     "description": "Slim briefcase in grey calf leather with a top handle and a shoulder strap.",
-    "addedAt": "2024-02-08"
+    "addedAt": "2024-02-08",
+    "edits": [
+      "heritage"
+    ]
   },
   {
     "id": "ms-20",
@@ -774,7 +983,8 @@
     "department": "menswear",
     "category": "bags",
     "description": "Technical nylon backpack with tan leather trims and front pockets.",
-    "addedAt": "2024-01-30"
+    "addedAt": "2024-01-30",
+    "edits": []
   },
   {
     "id": "ms-21",
@@ -785,7 +995,10 @@
     "department": "menswear",
     "category": "accessories",
     "description": "Steel chronograph with a cream dial and a brown leather strap.",
-    "addedAt": "2024-01-22"
+    "addedAt": "2024-01-22",
+    "edits": [
+      "gifts"
+    ]
   },
   {
     "id": "ms-22",
@@ -796,7 +1009,10 @@
     "department": "menswear",
     "category": "accessories",
     "description": "Black-dial automatic watch on a steel bracelet, inspired by vintage instruments.",
-    "addedAt": "2024-03-29"
+    "addedAt": "2024-03-29",
+    "edits": [
+      "gifts"
+    ]
   },
   {
     "id": "ms-23",
@@ -807,7 +1023,10 @@
     "department": "menswear",
     "category": "accessories",
     "description": "Bifold wallet in smooth brown leather with eight card slots.",
-    "addedAt": "2024-03-24"
+    "addedAt": "2024-03-24",
+    "edits": [
+      "gifts"
+    ]
   },
   {
     "id": "ms-24",
@@ -818,7 +1037,11 @@
     "department": "menswear",
     "category": "accessories",
     "description": "Reversible calf-leather belt with a polished buckle.",
-    "addedAt": "2024-03-18"
+    "addedAt": "2024-03-18",
+    "edits": [
+      "gifts"
+    ],
+    "salePrice": 415
   },
   {
     "id": "ms-25",
@@ -829,7 +1052,11 @@
     "department": "menswear",
     "category": "jewelry",
     "description": "Classic 9k gold band with a high-polish finish.",
-    "addedAt": "2024-03-12"
+    "addedAt": "2024-03-12",
+    "edits": [
+      "gifts",
+      "party"
+    ]
   },
   {
     "id": "kj-18",
@@ -840,7 +1067,11 @@
     "department": "kids",
     "category": "clothing",
     "description": "Sunny cotton dress in a polka-dot print with a twirly skirt.",
-    "addedAt": "2024-03-06"
+    "addedAt": "2024-03-06",
+    "edits": [
+      "party"
+    ],
+    "salePrice": 170
   },
   {
     "id": "kj-19",
@@ -851,7 +1082,8 @@
     "department": "kids",
     "category": "clothing",
     "description": "Washed denim dungarees with adjustable straps and a bib pocket.",
-    "addedAt": "2024-02-26"
+    "addedAt": "2024-02-26",
+    "edits": []
   },
   {
     "id": "kj-20",
@@ -862,7 +1094,9 @@
     "department": "kids",
     "category": "clothing",
     "description": "Soft cotton T-shirt with a playful front graphic.",
-    "addedAt": "2024-02-19"
+    "addedAt": "2024-02-19",
+    "edits": [],
+    "salePrice": 70
   },
   {
     "id": "kj-21",
@@ -873,7 +1107,8 @@
     "department": "kids",
     "category": "clothing",
     "description": "Short-sleeve organic cotton bodysuit with easy snap fastenings.",
-    "addedAt": "2024-02-08"
+    "addedAt": "2024-02-08",
+    "edits": []
   },
   {
     "id": "kj-22",
@@ -884,7 +1119,10 @@
     "department": "kids",
     "category": "shoes",
     "description": "Canvas high-tops with the signature heart appliqué.",
-    "addedAt": "2024-01-30"
+    "addedAt": "2024-01-30",
+    "edits": [
+      "party"
+    ]
   },
   {
     "id": "kj-23",
@@ -895,7 +1133,10 @@
     "department": "kids",
     "category": "bags",
     "description": "Recycled-nylon backpack with padded straps, sized for school.",
-    "addedAt": "2024-01-22"
+    "addedAt": "2024-01-22",
+    "edits": [
+      "gifts"
+    ]
   },
   {
     "id": "kj-24",
@@ -906,6 +1147,9 @@
     "department": "kids",
     "category": "accessories",
     "description": "Flexible, unbreakable frames with full UV protection for babies.",
-    "addedAt": "2024-03-29"
+    "addedAt": "2024-03-29",
+    "edits": [
+      "gifts"
+    ]
   }
 ]
