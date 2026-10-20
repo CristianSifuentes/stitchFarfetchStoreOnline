@@ -10,6 +10,7 @@ The header's category bar follows Farfetch: Gifts & Party, New In, Brands, the f
 In Kids it is browsed by age instead: Gifts, New In, Brands, Baby (0–36 months), Kids (2–12 years),
 Teens (13–16 years), Sale.
 Above the footer, on every page: service links (How to shop, FAQs, Need help?) and the newsletter band.
+The header's person icon opens the sign-in dialog (Farfetch's pop-up); signed in, it becomes an account menu.
 
 
 | Route | Component | What it is |
@@ -33,14 +34,16 @@ bookmarked and restored with the back button.
 ```text
 src/app
   core/
+    auth/         AuthService (session), AuthDialogService (which screen is open), validation rules
     catalog/      CatalogItem model, DEPARTMENTS / CATEGORIES taxonomy, size runs
     services/     CatalogStore (the only product source), WishlistService, CartService
   shared/
-    ui/           ProductCard, WishlistButton, SectionHeader, Breadcrumb, PageHero, DesignerCard, BrandStrip
+    ui/           ProductCard, WishlistButton, SectionHeader, Breadcrumb, PageHero, DesignerCard, BrandStrip, TextField, …
     pipes/        price
     utils/        formatPrice
   layouts/
     public-layout/  SiteHeader, SiteFooter, the shell
+      auth/         AuthDialog (@defer) + one component per screen: sign in, register, code, forgot, social
   features/
     home/ department/ listing/ product/ not-found/
 ```
@@ -56,6 +59,9 @@ Rules:
    `features/department/data/department-content.ts`. Structure lives in one template.
 4. **Tile images come from the catalog.** Category and designer tiles show their newest piece, so an image
    always matches what the link leads to.
+
+5. **Auth goes through `AuthService` only.** Forms call it and render its `AuthResult`; nothing else reads the
+   session keys in `localStorage`. To open the dialog, call `AuthDialogService.open(view)`.
 
 ## Catalog model
 
@@ -123,6 +129,7 @@ can't drift. `rounded-full` remains for functional circles only (the wishlist bu
 | `input-line` | Text inputs (bottom border only) |
 | `select-line` | Filter and sort selects |
 | `quick-add` | A card action revealed on hover (always visible on touch) |
+| `animate-fade-in` / `-dialog-in` / `-shake` / `-draw` / `-ken-burns` | Motion; always behind `motion-safe:` |
 
 ### Components: one of each
 
@@ -142,6 +149,8 @@ can't drift. `rounded-full` remains for functional circles only (the wishlist bu
 | "Trending brands" tiles | `<app-brand-tiles [brands]>` |
 | Closing link lists | `<app-link-directory [columns]>` |
 | A price | `{{ value \| price }}`: `$2,950`, always whole dollars |
+| A form field | `<app-text-field label [(value)] type autocomplete error revealable>` (floating label, Show/Hide) |
+| A sign-in prompt | `AuthDialogService.open('sign-in' \| 'register' \| 'code' \| 'forgot')` |
 
 ## Adding things
 
@@ -154,4 +163,5 @@ can't drift. `rounded-full` remains for functional circles only (the wishlist bu
 ## Tests
 
 `npm test` (Vitest): `formatPrice`, `queryCatalog` / `designersIn` (the listing's filter, search and sort
-logic, including age groups), `sizesFor`, `sizedImage` / `galleryFor` and `featureDesigner`.
+logic, including age groups), `sizesFor`, `AuthService` (sign in, register, codes, social, persistence), the
+auth validation rules, `sizedImage` / `galleryFor` and `featureDesigner`.

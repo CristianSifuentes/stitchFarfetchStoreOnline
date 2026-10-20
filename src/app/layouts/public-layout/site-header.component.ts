@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, computed, inject, signal, viewChild } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Params, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { filter, map } from 'rxjs';
+import { AuthDialogService, AuthService } from '../../core/auth';
 import { AGE_GROUPS, CATEGORIES, DEPARTMENTS, Department, isDepartment } from '../../core/catalog';
 import { CartService } from '../../core/services/cart.service';
 import { CatalogStore } from '../../core/services/catalog.store';
@@ -76,9 +77,32 @@ interface NavLink {
               <span class="absolute -right-2 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-ink px-1 text-[9px] font-semibold text-canvas" aria-live="polite">{{ cart.total() }}</span>
             }
           </button>
-          <button type="button" class="hidden md:block" aria-label="Account">
-            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
-          </button>
+          <div #accountMenu class="relative hidden md:block">
+            @if (auth.account(); as account) {
+              <button
+                type="button"
+                class="flex h-6 w-6 items-center justify-center rounded-full bg-ink text-[10px] font-semibold text-canvas"
+                [attr.aria-label]="'Account, ' + account.name"
+                aria-haspopup="menu"
+                [attr.aria-expanded]="accountOpen()"
+                (click)="accountOpen.set(!accountOpen())"
+              >{{ initial() }}</button>
+              @if (accountOpen()) {
+                <div class="absolute right-0 top-full z-50 mt-4 w-72 border border-line bg-canvas p-6 motion-safe:animate-fade-in" role="menu">
+                  <p class="label-caps text-muted">Signed in as</p>
+                  <p class="mt-2 text-sm">{{ account.name }}</p>
+                  <p class="truncate text-xs text-muted">{{ account.email }}</p>
+                  <div class="my-5 h-px bg-line"></div>
+                  <p class="text-xs text-muted">{{ wishlist.count() }} {{ wishlist.count() === 1 ? 'piece' : 'pieces' }} in your wishlist · {{ cart.total() }} in your bag</p>
+                  <button type="button" role="menuitem" class="btn btn-secondary mt-5 w-full" (click)="signOut()">Sign out</button>
+                </div>
+              }
+            } @else {
+              <button type="button" class="block" aria-label="Sign in or register" (click)="authDialog.open('sign-in')">
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>
+              </button>
+            }
+          </div>
         </div>
       </div>
 
@@ -112,11 +136,23 @@ interface NavLink {
                 <li><a [routerLink]="item.link" [queryParams]="item.queryParams" [class.text-error]="item.sale">{{ item.label }}</a></li>
               }
             </ul>
+            <div class="border-t border-line pt-6">
+              @if (auth.account(); as account) {
+                <p class="text-sm">{{ account.name }} <span class="text-muted">· {{ account.email }}</span></p>
+                <button type="button" class="link-cta mt-4" (click)="signOut()">Sign out</button>
+              } @else {
+                <button type="button" class="btn btn-primary w-full" (click)="authDialog.open('sign-in')">Sign in or register</button>
+              }
+            </div>
           </div>
         </nav>
       }
     </header>
   `,
+  host: {
+    '(document:click)': 'closeAccountMenu($event)',
+    '(document:keydown.escape)': 'accountOpen.set(false)'
+  },
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiteHeaderComponent {
@@ -124,10 +160,16 @@ export class SiteHeaderComponent {
   private readonly catalog = inject(CatalogStore);
   protected readonly cart = inject(CartService);
   protected readonly wishlist = inject(WishlistService);
+  protected readonly auth = inject(AuthService);
+  protected readonly authDialog = inject(AuthDialogService);
 
   protected readonly departments = DEPARTMENTS;
   protected readonly categories = CATEGORIES;
   protected readonly menuOpen = signal(false);
+  protected readonly accountOpen = signal(false);
+  private readonly accountMenu = viewChild<ElementRef<HTMLElement>>('accountMenu');
+
+  protected readonly initial = computed(() => this.auth.account()?.name.trim().charAt(0).toUpperCase() ?? '');
 
   private readonly url = toSignal(
     this.router.events.pipe(
@@ -177,6 +219,18 @@ export class SiteHeaderComponent {
       { label: 'Sale', link: items, queryParams: { sale: 'true' }, sale: true }
     ];
   });
+
+  protected signOut(): void {
+    this.accountOpen.set(false);
+    this.auth.signOut();
+  }
+
+  // Clicks outside the account menu close it.
+  protected closeAccountMenu(event: Event): void {
+    if (this.accountOpen() && !this.accountMenu()?.nativeElement.contains(event.target as Node)) {
+      this.accountOpen.set(false);
+    }
+  }
 
   protected search(event: Event, query: string): void {
     event.preventDefault();

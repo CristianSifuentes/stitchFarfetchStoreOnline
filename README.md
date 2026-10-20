@@ -4,7 +4,7 @@
 
 ### A luxury-fashion storefront, hand-built with Angular 21: standalone, zoneless and signal-first
 
-*Three departments (Women, Men, Kids), 82 products from 65 designers, curated edits, sale prices, age groups for kidswear, a shared wishlist and a bag. Every page follows Farfetch's own structure and one strict design system, "Monochrome Absolute".*
+*Three departments (Women, Men, Kids), 82 products from 65 designers, curated edits, sale prices, age groups for kidswear, a shared wishlist, a bag and a sign-in dialog. Every page follows Farfetch's own structure and one strict design system, "Monochrome Absolute".*
 
 [![Angular](https://img.shields.io/badge/Angular-21.2-DD0031?logo=angular&logoColor=white)](https://angular.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
@@ -33,6 +33,7 @@
 6. [Core: Catalog, Taxonomy and State](#6-core-catalog-taxonomy-and-state)
 7. [Shared: The UI Kit](#7-shared-the-ui-kit)
 8. [Layout: The Storefront Shell](#8-layout-the-storefront-shell)
+   - [8.1 Sign in & register](#81-sign-in--register)
 9. [Pages: Every Feature in Depth](#9-pages-every-feature-in-depth)
 10. [The Catalog Data](#10-the-catalog-data)
 11. [Product Photography](#11-product-photography)
@@ -81,6 +82,7 @@ Three ideas run through every file:
 | `/search?q=` | **Search** | The same listing across all departments. Search is accent-insensitive (`chloe` finds *Chloé*). |
 | `/product/:id` | **Product** | Gallery (full view + two detail crops), size picker with the right size run, add to bag, wishlist, details, size & fit, shipping, and *You may also like*. |
 | `/anything-else` | **404** | A way back to the store. |
+| *any page* → account icon | **Sign in dialog** | Farfetch's pop-up: sign in, register, continue with a one-time code, reset a password, or continue with Google, Apple or Facebook. |
 
 **The header changes with the department you're in:**
 
@@ -99,6 +101,7 @@ Small touches, everywhere:
   bags, accessories and jewelry are one size and skip the picker.
 - **Quick add:** "Add to bag" appears on hover on desktop and is always visible on touch screens.
 - **Breadcrumbs everywhere:** `Home / Kids / Baby / Clothing / Teddy knit hooded romper`.
+- **An account:** the header's person icon opens the sign-in dialog; once signed in it becomes your initial, with a menu to sign out. The session survives a reload.
 
 ---
 
@@ -107,6 +110,7 @@ Small touches, everywhere:
 | Layer | Technology | Version | How it's used |
 | ----- | ---------- | ------- | ------------- |
 | Framework | **Angular** | 21.2 | Standalone components, signals, `linkedSignal`, `input()`, control flow, `withComponentInputBinding`, lazy `loadComponent` |
+| Dialogs | Native `<dialog>` | platform | `showModal()`: top layer, focus trap, Esc, inert page |
 | Change detection | **Zoneless** | built-in | `provideZonelessChangeDetection()`; every component is `OnPush` |
 | Language | **TypeScript** | 5.9 | `strict`, `strictTemplates`, `noImplicitOverride`, `noImplicitReturns`, `noPropertyAccessFromIndexSignature`, `noFallthroughCasesInSwitch` |
 | Async | **RxJS** | 7.8 | HTTP + `toSignal`; router events → URL signal in the header |
@@ -155,6 +159,7 @@ flowchart TD
       Header["SiteHeader"]
       Outlet["&lt;main&gt; router-outlet"]
       Below["ServiceLinks · NewsletterBand · SiteFooter"]
+      Auth["@defer AuthDialog<br/>(own chunk)"]
     end
 
     Outlet -->|loadComponent| Home["features/home"]
@@ -165,7 +170,7 @@ flowchart TD
     Outlet -->|"loadComponent (last)"| NotFound["features/not-found"]
 
     Shared["shared/ui · pipes · utils<br/>13 components · price pipe"]
-    Core["core/catalog · core/services<br/>model · taxonomy · sizing · images · designers<br/>CatalogStore · WishlistService · CartService"]
+    Core["core/catalog · core/services · core/auth<br/>model · taxonomy · sizing · images · designers<br/>CatalogStore · WishlistService · CartService<br/>AuthService · AuthDialogService"]
 
     Home --> Shared
     Dept --> Shared
@@ -245,6 +250,9 @@ flowchart LR
     URL[("URL query params<br/>?age ?category ?designer ?edit ?sale ?sort ?q")] <--> List
     Wish[("localStorage<br/>farfetch.wishlist.v1")] <--> WS["WishlistService"]
     WS --> Hearts["Every heart + header badge"]
+    Sess[("localStorage<br/>farfetch.session.v1 · farfetch.accounts.v1")] <--> AS["AuthService"]
+    AS --> Hdr2["Header account menu"]
+    AS --> Dlg["Sign-in dialog"]
 ```
 
 ### 4.5 Bootstrapping, step by step
@@ -287,6 +295,12 @@ stitchFarfetchStoreOnline/
 │       ├── app.routes.server.ts    Server render mode per route (all: RenderMode.Server)
 │       ├── app.routes.ts           departmentRoutes() + search, product, 404
 │       ├── core/
+│       │   ├── auth/
+│       │   │   ├── auth.model.ts         Account, AuthProvider, AuthResult, AuthView
+│       │   │   ├── auth.validation.ts    Email and password rules, strength, names (+ spec)
+│       │   │   ├── auth.service.ts       The session: sign in, register, one-time code, social, reset (+ spec)
+│       │   │   ├── auth-dialog.service.ts Which dialog screen is open, and the email typed so far
+│       │   │   └── index.ts
 │       │   ├── catalog/
 │       │   │   ├── catalog.model.ts      CatalogItem, Department, ProductCategory, ProductEdit, AgeGroup, prices
 │       │   │   ├── taxonomy.ts           DEPARTMENTS, CATEGORIES, EDITS, AGE_GROUPS + lookups/guards
@@ -301,10 +315,17 @@ stitchFarfetchStoreOnline/
 │       │       ├── cart.service.ts       Bag count
 │       │       └── global-error-handler.service.ts
 │       ├── shared/
-│       │   ├── ui/                 13 presentational components (see §7)
+│       │   ├── ui/                 14 presentational components (see §7)
 │       │   ├── pipes/price.pipe.ts
 │       │   └── utils/price.util.ts (+ spec)
 │       ├── layouts/public-layout/
+│       │   ├── auth/
+│       │   │   ├── auth-dialog.component.ts     The <dialog>: photo, tabs, screens, welcome
+│       │   │   ├── sign-in-form.component.ts
+│       │   │   ├── register-form.component.ts
+│       │   │   ├── code-form.component.ts       One-time code: 6 boxes, paste, resend
+│       │   │   ├── forgot-form.component.ts
+│       │   │   └── social-sign-in.component.ts  Google · Apple · Facebook
 │       │   ├── public-layout.component.ts
 │       │   ├── site-header.component.ts
 │       │   ├── service-links.component.ts
@@ -428,6 +449,40 @@ set) and guarded with `typeof localStorage` so it is safe during SSR and in priv
 
 A signal of added ids and a `total` count shown on the bag icon. Intentionally minimal: there is no checkout.
 
+### `AuthService`: the session
+
+The customer's account, as signals: `account()` (or `null`) and `signedIn()`. There is **no backend**: accounts
+live in this browser's `localStorage` and every call waits ~700 ms, like a request would. Every method returns
+an `AuthResult` (`{ ok: true, account }` or `{ ok: false, error }`), so the dialog never needs to know how the
+answer was produced and a real API can replace the class without touching the UI.
+
+| Method | Behaviour |
+| ------ | --------- |
+| `signIn(email, password)` | Case-insensitive email; distinct messages for an unknown email, a wrong password and a passwordless account |
+| `register(name, email, password)` | Re-validates on the "server" side; refuses duplicates |
+| `requestCode(email)` / `verifyCode(code)` | A random 6-digit code valid for 10 minutes and usable once; creates a passwordless account for new emails |
+| `continueWith('google' \| 'apple' \| 'facebook')` | Stands in for the OAuth redirect: returns the provider's profile after a pause |
+| `requestPasswordReset(email)` | Always succeeds, so the form never reveals which emails have accounts |
+| `signOut()` | Ends the session |
+
+- **Demo account:** `demo@farfetch.com` / `Farfetch2026`, always available (the dialog offers to fill it in).
+- **Storage:** `farfetch.session.v1` (the signed-in account) and `farfetch.accounts.v1` (name + SHA-256 hash per
+  email, never the password). Both are validated on read and guarded for SSR and blocked storage.
+- **Demo-grade on purpose:** real password hashing belongs on a server, with a slow algorithm (Argon2, bcrypt)
+  and a random salt; codes would be emailed, not returned.
+
+### `AuthDialogService`
+
+`view()` is the open screen (`'sign-in' | 'register' | 'code' | 'forgot' | 'welcome'`) or `null` when closed;
+`open(view)` and `close()` change it from anywhere. It also holds the `email` typed so far, so moving from
+*Sign in* to *Forgot your password?* or *one-time code* keeps it.
+
+### `auth.validation.ts`
+
+`emailError`, `passwordChecks` (8+ characters, a letter, a number), `isValidPassword`, `passwordStrength`
+(0–4: Weak, Fair, Good, Strong), `nameFromEmail` (`alex.morgan@…` → "Alex") and `firstName`. Shared by the forms
+and the service, so the UI and the "server" never disagree.
+
 ### `GlobalErrorHandler`
 
 Registered as Angular's `ErrorHandler`; the single place to plug in error reporting.
@@ -453,6 +508,7 @@ Every component is standalone, `OnPush`, and takes signal `input()`s. Rule: **on
 | A designer tile | `<app-designer-card>` | `name`, `eyebrow`, `image`, `from`, `link` | "From $X" entry price |
 | A row of house names | `<app-brand-strip>` | `brands` | Quiet divider between sections |
 | Closing link lists | `<app-link-directory>` | `columns`, `label` | Gifts / Party Season / Holiday Styles |
+| A form field | `<app-text-field>` | `label`, `[(value)]`, `type`, `autocomplete`, `error`, `revealable`, `autofocus` | Floating label that rises into label caps; Show/Hide for passwords; error in red with `aria-invalid` / `aria-describedby`. Two-way binding through `model()` |
 
 Plus:
 
@@ -471,6 +527,9 @@ Plus:
 <app-service-links />      <!-- How to shop · FAQs · Need help? -->
 <app-newsletter-band />    <!-- "Never miss a thing": Email / SMS -->
 <app-site-footer />        <!-- four link columns + legal line -->
+@defer (when authDialog.view(); prefetch on idle) {
+  <app-auth-dialog />      <!-- sign in / register, in its own chunk -->
+}
 ```
 
 ### `SiteHeader`
@@ -486,10 +545,65 @@ Plus:
 - **Mobile:** a menu button opens the departments and the same category links; the badges show wishlist and
   bag counts (`aria-live` on the bag).
 
+- **Account:** signed out, the person icon opens the sign-in dialog; signed in, it becomes the customer's initial
+  and opens a menu (name, email, wishlist and bag counts, *Sign out*) that closes on an outside click or Esc.
+  The mobile menu has the same entry.
+
 ### `NewsletterBand`
 
 A channel choice (Email / SMS) and an input validated for the chosen channel, all with signals
 (`channel`, `contact`, `subscribed`, `valid`).
+
+### 8.1 Sign in & register
+
+Farfetch's sign-in pop-up, rebuilt on the design system.
+
+```text
+┌──────────────────────────┬─────────────────────────────────┐
+│ FARFETCH                 │                               ✕ │
+│                          │ Welcome to FARFETCH             │
+│     (editorial photo,    │  SIGN IN  │  REGISTER           │
+│      slow Ken Burns)     │ ───────────                     │
+│                          │ Email address                   │
+│ MEMBERS                  │ Password                  SHOW  │
+│ Your world of luxury,    │ Forgot your password?           │
+│ in one place             │ [        SIGN IN        ]       │
+│ ✓ Your wishlist, saved…  │ [ CONTINUE WITH A ONE-TIME CODE ]│
+│ ✓ Early access to Sale…  │ ──────────── OR ────────────    │
+│ ✓ Faster checkout…       │ [ G  CONTINUE WITH GOOGLE   ]   │
+│                          │ [   CONTINUE WITH APPLE     ]   │
+│                          │ [ f  CONTINUE WITH FACEBOOK ]   │
+│                          │ First time on FARFETCH? Register│
+└──────────────────────────┴─────────────────────────────────┘
+```
+
+| Screen | What it does |
+| ------ | ------------ |
+| **Sign in** | Email + password (Show/Hide), *Forgot your password?*, *Continue with a one-time code*, the social providers and *Register*. A demo-account hint fills the form in one click. |
+| **Register** | Name, email, password with a 4-step strength meter and a live checklist, newsletter opt-in, legal line. |
+| **One-time code** | Email → *Send code* → six boxes that advance as you type, go back on Backspace, move with the arrows, accept a pasted code, verify themselves when full and shake on a wrong code. *Resend* unlocks after a 30 s countdown. In demo mode the code is shown (and fills the boxes on click). |
+| **Forgot password** | Email → *Check your inbox*, worded so it never confirms whether an account exists. |
+| **Welcome** | A check mark drawn stroke by stroke, "Welcome, Cristian", the email and *Continue shopping*; it closes itself after ~2.6 s. |
+
+How it is built:
+
+- **Native `<dialog>` + `showModal()`:** top layer, `::backdrop`, focus trapped inside, Esc closes, the page
+  behind becomes inert, and `autofocus` lands on the first field. A click on the backdrop closes it too.
+  `html:has(dialog[open])` stops the page from scrolling.
+- **State drives the element:** `AuthDialogService.view()` is the truth; an `afterRenderEffect` calls
+  `showModal()` / `close()` to follow it (browser-only, so SSR never touches the DOM API). The native `close`
+  event writes back, so Esc and the ✕ button stay in sync.
+- **Lazy:** the dialog and its forms are a separate chunk (~8 kB gzipped), prefetched when the browser is idle
+  and created the first time someone opens it (`@defer (when …; prefetch on idle)`).
+- **Responsive:** a full-screen sheet on phones, a centered card from `sm`, and the photo panel from `lg`. The
+  panel's eyebrow, title and three benefits change with the screen (members, joining, passwordless, help).
+- **One component per screen** (`SignInForm`, `RegisterForm`, `CodeForm`, `ForgotForm`, `SocialSignIn`), each
+  with its own signals: values, `submitted`, `pending`, `failure`. Field errors appear after the first submit and
+  then follow the typing; server errors show in a red-ruled `role="alert"` line.
+- **Monochrome providers:** Google, Apple and Facebook glyphs are single-color SVGs on outlined buttons, so they
+  sit inside the design system.
+- **Motion** (all behind `motion-safe:`): `animate-dialog-in`, `animate-fade-in` between screens,
+  `animate-shake` on errors, `animate-draw` for the welcome check, `animate-ken-burns` on the photo.
 
 ---
 
@@ -643,7 +757,19 @@ The reference is `prototypes/woman_/woman8/DESIGN.md`, **"Monochrome Absolute"**
 | | `quick-add` | Card action revealed on hover; always visible where there's no hover |
 | | `no-scrollbar` | Carousels and thumbnail rails |
 
-### 12.3 Patterns
+### 12.3 Motion (`@theme` keyframes)
+
+| Utility | Use for |
+| ------- | ------- |
+| `animate-fade-in` | Content swaps (dialog screens, account menu) |
+| `animate-dialog-in` | A dialog rising into place |
+| `animate-shake` | A rejected code or password |
+| `animate-draw` | SVG strokes drawn in (`pathLength="1"`, `stroke-dasharray: 1`) |
+| `animate-ken-burns` | A slow zoom on editorial photography |
+
+Always used behind `motion-safe:`, so `prefers-reduced-motion` turns every one of them off.
+
+### 12.4 Patterns
 
 - **Photo tiles:** `aspect-[3/4]` (products, ages, departments) or `aspect-square` (categories), `overflow-hidden`,
   `group-hover:scale-105` over 700ms, `bg-surface` while loading.
@@ -691,10 +817,15 @@ piece of the app.
 | Route inputs | `department`, `id` | `input.required()` via `withComponentInputBinding` |
 | Derived views | every page | `computed` |
 | Local state that resets with a source | listing `limit`, PDP size/image/added | `linkedSignal({ source, computation })` |
-| Local UI state | header menu, newsletter form | `signal` |
+| Session | `AuthService` | `signal` + `computed`, persisted in `localStorage` |
+| Which dialog screen is open | `AuthDialogService` | `signal` (null = closed) |
+| Form fields | auth forms, `TextField` | `signal` + `model()` two-way binding |
+| DOM that must follow state | `AuthDialog` | `afterRenderEffect` → `showModal()` / `close()` |
+| Local UI state | header menus, newsletter form, code countdown | `signal` |
 
 There is no `effect()` that writes state and no manual subscription: zoneless change detection is driven
-entirely by signals and template events.
+entirely by signals and template events. The one effect, `afterRenderEffect` in the dialog, only *reads* state
+to drive a DOM API.
 
 ---
 
@@ -708,6 +839,10 @@ entirely by signals and template events.
 - Every icon-only button has an `aria-label` ("Wishlist, 3 items"); decorative SVGs are `aria-hidden`.
 - Real `<select>`, `<input type="checkbox">` and `<details>` elements: keyboard support for free.
 - Visible focus ring on every interactive element; quick add appears on `:focus-visible` too.
+- **Sign-in dialog:** native modal semantics (`aria-labelledby` its heading, focus trap, Esc), tabs with
+  `role="tablist"` / `aria-selected`, real `<label>`s, `autocomplete` (`email`, `current-password`,
+  `new-password`, `name`, `one-time-code`), `inputmode="numeric"` on the code boxes (each labelled "Digit n"),
+  errors linked with `aria-describedby`, `role="alert"` for failures and `role="status"` for progress and success.
 
 ---
 
@@ -730,6 +865,9 @@ entirely by signals and template events.
 - **Headers:** `X-Content-Type-Options: nosniff` and `X-Frame-Options: DENY` on every response.
 - **CSP** (in `index.html`): `default-src 'self'`; scripts only from self; images from https; fonts from Google
   Fonts.
+- **Auth (demo):** no plaintext passwords stored (SHA-256 of email + password); the reset form doesn't reveal
+  which emails exist; one-time codes expire after 10 minutes and work once. A production version would move all
+  of this to a server (see §24).
 - **XSS:** no `innerHTML` and no `bypassSecurityTrust*`; all content goes through Angular bindings. URL params are
   validated with type guards before use.
 
@@ -737,7 +875,7 @@ entirely by signals and template events.
 
 ## 17. Testing
 
-Tests run with **Vitest** in a Node environment (`npm test`): **24 tests across 6 files**, all green.
+Tests run with **Vitest** in a Node environment (`npm test`): **34 tests across 8 files**, all green.
 
 | Spec | What it proves |
 | ---- | -------------- |
@@ -745,6 +883,8 @@ Tests run with **Vitest** in a Node environment (`npm test`): **24 tests across 
 | `images.spec.ts` (4) | `sizedImage` sets the width on imgix and leaves other hosts alone; `galleryFor` builds full + two focal-point crops, one image for non-imgix |
 | `designers.spec.ts` (3) | `featureDesigner` prefers clothing, then newest; returns the lowest price; `null` for unknown houses |
 | `sizing.spec.ts` (3) | Kids sizes follow the age group (3M… for baby clothing, 36 EU… for teen shoes); adult runs unchanged; one-size categories return `[]` |
+| `auth.service.spec.ts` (6) | Demo sign-in; register → sign out → sign in, and the session surviving a new instance (a reload); no plaintext password in storage; duplicates, unknown emails and weak passwords refused; one-time code (wrong code, single use, passwordless account); social sign-in |
+| `auth.validation.spec.ts` (4) | Email messages; password rules and strength from Weak to Strong; names from emails |
 | `catalog.model.spec.ts` (2) | `effectivePrice` and `discountPercent` |
 | `price.util.spec.ts` (2) | `$2,950` formatting and rounding |
 
@@ -752,7 +892,11 @@ Tests run with **Vitest** in a Node environment (`npm test`): **24 tests across 
 photo pictures a designer) lives in plain functions extracted from components. They are tested without
 rendering anything, run in ~100ms, and pages stay thin.
 
-**Visual QA:** layout changes are verified with headless Chrome screenshots at 1440px and 600px.
+**Techniques worth studying:** `vi.stubGlobal('localStorage', new MemoryStorage())` gives each test a clean
+storage; a subclass (`InstantAuthService`, `latencyMs = 0`) removes the simulated network delay without fake timers.
+
+**Visual QA:** layout changes are verified with headless Chrome screenshots at 1440px and 390–600px; flows that
+need clicks (the sign-in dialog) are driven through the Chrome DevTools Protocol.
 
 ---
 
@@ -789,6 +933,14 @@ rendering anything, run in ~100ms, and pages stay thin.
 | `input()`, `input.required()` | every shared component |
 | `viewChild`, `afterNextRender` | `product-carousel.component.ts` |
 | Content projection | `editorial-story.component.ts` |
+| `model()` two-way binding | `text-field.component.ts`, used as `[(value)]` |
+| `afterRenderEffect` (DOM follows state) | `auth-dialog.component.ts` |
+| `@defer (when …; prefetch on idle)` | `public-layout.component.ts` |
+| `@let`, `@switch` | `auth-dialog.component.ts` |
+| `viewChildren` (focus management) | `code-form.component.ts` |
+| `host` listeners (`document:click`, `keydown.escape`) | `site-header.component.ts` |
+| `output()` | auth forms (`done`) |
+| Subclassing a service in tests | `auth.service.spec.ts` |
 | `@if`, `@for … track`, `@else if`, `@empty` | listing, home |
 | Pure pipe | `price.pipe.ts` |
 | Custom `ErrorHandler` | `global-error-handler.service.ts` |
@@ -814,7 +966,12 @@ rendering anything, run in ~100ms, and pages stay thin.
 | `aspect-ratio`, `object-fit` | tiles and cards |
 | imgix URL API (resize, focal-point crop) | `images.ts` |
 | `<details>` accordions | `product-page` |
-| `localStorage` with validation | `wishlist.service.ts` |
+| `localStorage` with validation | `wishlist.service.ts`, `auth.service.ts` |
+| Native `<dialog>`, `showModal()`, `::backdrop` | `auth-dialog.component.ts` |
+| `:has()` (`html:has(dialog[open])`) | `styles.css` |
+| Web Crypto (`crypto.subtle.digest`, `getRandomValues`) | `auth.service.ts` |
+| SVG stroke drawing (`pathLength`) | the welcome check |
+| `peer-[…]` floating labels | `text-field.component.ts` |
 
 ---
 
@@ -831,6 +988,7 @@ Work happens on feature branches merged with `--no-ff` into `develop`, then fast
 | **Farfetch hub** | `features/improvement2` | Edits and sale prices; page hero, carousels, trending tiles, editorial story, brand tiles, link directory; service links and newsletter band; the A–Z brands page |
 | **Kids by age** | `features/improvement3` | `AgeGroup`, Kids nav (Baby / Kids / Teens), `?age=` filter, age-based sizes, PDP breadcrumb, *Shop by age* |
 | **Documentation & SSR** | `features/improvement4` | This README; working SSR with `AngularNodeAppEngine`, server routes and allowed hosts; `zone.js` removed |
+| **Sign in** | `features/improvement6` | Farfetch's sign-in pop-up: `AuthService`, `AuthDialogService`, `TextField`, the dialog with sign in, register, one-time code, forgot password and social providers; header account menu; motion tokens |
 
 ---
 
@@ -847,6 +1005,9 @@ Work happens on feature branches merged with `--no-ff` into `develop`, then fast
 | **Removing Tailwind's radius/shadow scales** | The flat, sharp look can't be broken by accident | Needs `rounded-full` as the one explicit exception |
 | **Zoneless + OnPush + signals** | Predictable, minimal change detection; no zone.js patching | Every state change must go through a signal or an event |
 | **`localStorage` wishlist** | Works without an account | Per device and browser |
+| **Simulated auth behind `AuthResult`** | The whole sign-in experience works with no backend, and the UI is already shaped for one | Not real security: accounts are per browser, hashing is demo-grade |
+| **Native `<dialog>` instead of a custom overlay** | Focus trap, Esc, inert page and top layer for free, correct for screen readers | Styling `::backdrop` and entry animations needs care |
+| **Dialog behind `@defer`** | ~8 kB gzipped stays out of the initial bundle | The first open waits for the chunk if it wasn't prefetched yet |
 
 ---
 
@@ -879,6 +1040,9 @@ npm start            # → http://localhost:4200
 5. Visit **Women → Sale** and sort *Price: low to high*.
 6. Search for `chloe` (no accent).
 7. Open **Men → Brands** and pick a house from the A–Z list.
+8. Click the person icon: *Fill in* the demo account and sign in; then sign out from your initial.
+9. Open it again → *Continue with a one-time code*, and click the code shown to sign in.
+10. Try *Register* and watch the strength meter while typing a password.
 
 ---
 
@@ -919,6 +1083,8 @@ Header links, filters, titles and tiles pick it up; tiles only appear where prod
 
 ## 24. Roadmap & Known Gaps
 
+- [ ] A real auth backend behind `AuthService` (sessions in HttpOnly cookies, server-side hashing, emailed codes, OAuth redirects) and an account page.
+- [ ] Sync the wishlist to the signed-in account.
 - [ ] Bag drawer and checkout flow (`CartService` currently counts items).
 - [ ] Wishlist page listing saved pieces.
 - [ ] Component tests for the listing and product pages; E2E (Playwright) for filters and the Kids nav.
