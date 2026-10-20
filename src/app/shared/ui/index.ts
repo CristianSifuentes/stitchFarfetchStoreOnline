@@ -10,4 +10,5 @@ export * from './price-tag/price-tag.component';
 export * from './product-card/product-card.component';
 export * from './product-carousel/product-carousel.component';
 export * from './section-header/section-header.component';
+export * from './text-field/text-field.component';
 export * from './wishlist-button/wishlist-button.component';
