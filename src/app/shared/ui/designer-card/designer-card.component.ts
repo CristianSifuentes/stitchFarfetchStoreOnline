@@ -11,7 +11,7 @@ import { PricePipe } from '../../pipes/price.pipe';
     <a class="group relative block aspect-[4/5] overflow-hidden bg-surface" [routerLink]="link()" [queryParams]="queryParams()">
       <img [src]="image()" [alt]="name()" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
       <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"></div>
-      <div class="absolute inset-x-0 bottom-0 p-8 text-canvas">
+      <div class="absolute inset-x-0 bottom-0 p-8 text-white">
         <p class="label-caps mb-2 opacity-80">{{ eyebrow() }}</p>
         <p class="text-title">{{ name() }}</p>
         @if (from() !== null) {

@@ -186,7 +186,7 @@ flowchart TD
     Outlet -->|"loadComponent (last)"| NotFound["features/not-found"]
 
     Shared["shared/ui · pipes · utils<br/>13 components · price pipe"]
-    Core["core/catalog · core/services · core/auth · core/locale<br/>model · taxonomy · sizing · images · designers<br/>CatalogStore · WishlistService · BagService · RecentlyViewed<br/>AuthService · AuthDialogService · LocaleService"]
+    Core["core/catalog · core/services · core/auth · core/locale · core/theme<br/>model · taxonomy · sizing · images · designers<br/>CatalogStore · WishlistService · BagService · RecentlyViewed<br/>AuthService · AuthDialogService · LocaleService · ThemeService"]
 
     Home --> Shared
     Dept --> Shared
@@ -271,6 +271,8 @@ flowchart LR
     AS --> Dlg["Sign-in dialog"]
     Loc[("localStorage<br/>vestra.locale.v1")] <--> LS["LocaleService<br/>region → currency"]
     LS --> Prices["price pipe · every price"]
+    Thm[("localStorage<br/>vestra.theme.v1")] <--> TS["ThemeService<br/>light · dark · system"]
+    TS --> Html["&lt;html data-theme&gt; · every token"]
 ```
 
 ### 4.5 Bootstrapping, step by step
@@ -299,7 +301,7 @@ vestra/
 │   ├── men_/   (men_home, men1–men6)
 │   └── woman_/ (womahome_, woman1–woman8 · woman8/DESIGN.md = "Monochrome Absolute")
 ├── src/
-│   ├── index.html                  CSP meta, Inter font, <app-root>
+│   ├── index.html                  CSP meta, theme-init script, Inter font, <app-root>
 │   ├── main.ts                     Browser bootstrap
 │   ├── main.server.ts              Server bootstrap
 │   ├── server.ts                   Express + AngularNodeAppEngine SSR server
@@ -326,6 +328,10 @@ vestra/
 │       │   ├── locale/
 │       │   │   ├── locale.model.ts       LANGUAGES, REGIONS (currency, locale, rate), formatMoney (+ spec)
 │       │   │   ├── locale.service.ts     The visitor's language and region; opens the selector
+│       │   │   └── index.ts
+│       │   ├── theme/
+│       │   │   ├── theme.model.ts        Theme, ThemePreference, resolveTheme, storage key (+ spec)
+│       │   │   ├── theme.service.ts      Light or dark: data-theme on <html>, remembered, follows the system
 │       │   │   └── index.ts
 │       │   ├── catalog/
 │       │   │   ├── catalog.model.ts      CatalogItem, Department, ProductCategory, ProductEdit, AgeGroup, prices
@@ -567,6 +573,21 @@ Farfetch's *Language | Region* choice, as two signals remembered under `vestra.l
 The `price` pipe is **impure** and reads `LocaleService`: because the region is a signal, every view showing a
 price re-renders the moment it changes, with no event bus and no reload.
 
+### `ThemeService`: light and dark
+
+The store's two looks, as a `data-theme` attribute on `<html>`:
+
+- **Preference** is `light`, `dark` or `system` (the default). `resolveTheme()` (pure, in `theme.model.ts`) turns
+  it into the `theme()` shown, reading `prefers-color-scheme` through `matchMedia`; while nothing is saved, a
+  change of the system theme shows at once.
+- **`toggle()`** saves the opposite of what's showing under `vestra.theme.v1`; an `effect` writes the attribute.
+  Only in the browser: on the server the visitor's choice is unknown.
+- **No flash:** `src/assets/theme-init.js`, loaded in `<head>` before any CSS paints, reads the same key (or the
+  system theme) and sets `data-theme` first. It's a file, not an inline script, because the CSP allows only
+  `'self'` scripts.
+- **No per-component dark styles:** `styles.css` redefines the color tokens under `:root[data-theme="dark"]`
+  (§12.1), so every `text-ink`, `bg-canvas` and `border-line` switches by itself.
+
 ### `GlobalErrorHandler`
 
 Registered as Angular's `ErrorHandler`; the single place to plug in error reporting.
@@ -626,6 +647,9 @@ Plus:
   and Men, **age groups** for Kids. The active link is bold through `routerLinkActive` with
   `queryParams: 'subset'`, so `Baby (0–36 months)` stays active on `?age=baby&category=shoes`.
 - **Search** submits to `/search?q=…` and keeps the term in the box while you're on its results.
+- **Theme:** a moon (light) or sun (dark) button next to the globe toggles `ThemeService`; the mobile menu and the
+  footer have the same switch. Both icons are rendered and `dark:hidden` / `dark:block` pick one, so the
+  server-rendered header is right before hydration.
 - **Mobile:** a menu button opens the departments and the same category links; the badges show wishlist and
   bag counts (`aria-live` on the bag).
 
@@ -896,6 +920,21 @@ The reference is `prototypes/woman_/woman8/DESIGN.md`, **"Monochrome Absolute"**
 | `error` | `#ba1a1a` | `text-error` | Sale prices, Sale link, errors |
 | Font | Inter | `font-sans` | Everything |
 
+**Dark theme.** The same tokens, redefined under `:root[data-theme="dark"]` (set by `ThemeService`), with
+`color-scheme: dark` for native controls and scrollbars:
+
+| Token | Dark value |
+| ----- | ---------- |
+| `ink` | `#ffffff` |
+| `canvas` | `#000000` |
+| `surface` | `#121212` |
+| `line` | `#2b2b2b` |
+| `muted` | `#9b9b9b` |
+| `error` | `#ff8a80` |
+
+Anything on top of photography (hero copy, tiles, `btn-light`, `btn-outline-light`) uses `white` / `black`, which
+don't swap. `@custom-variant dark` ties `dark:` to the same attribute, for the rare exception (the promo bar).
+
 ```css
 --radius-*: initial;   /* rounded-lg doesn't exist */
 --shadow-*: initial;   /* shadow-md doesn't exist */
@@ -985,6 +1024,7 @@ piece of the app.
 | Derived views | every page | `computed` |
 | Local state that resets with a source | listing `limit`, PDP size/image/added | `linkedSignal({ source, computation })` |
 | Language & region | `LocaleService` | `signal` + `computed`, persisted; read by the impure `price` pipe |
+| Light / dark theme | `ThemeService` | `signal` + `computed` (with `matchMedia`), persisted; an `effect` writes `data-theme` |
 | Session | `AuthService` | `signal` + `computed`, persisted in `localStorage` |
 | Which dialog screen is open | `AuthDialogService` | `signal` (null = closed) |
 | Form fields | auth forms, `TextField` | `signal` + `model()` two-way binding |
@@ -1032,7 +1072,8 @@ to drive a DOM API.
   runs in `afterNextRender`.
 - **Headers:** `X-Content-Type-Options: nosniff` and `X-Frame-Options: DENY` on every response.
 - **CSP** (in `index.html`): `default-src 'self'`; scripts only from self; images from https; fonts from Google
-  Fonts.
+  Fonts. That is why the production build sets `inlineCritical: false`: critical-CSS inlining loads the full
+  stylesheet with an inline `onload` handler, which this CSP blocks, leaving only the critical rules.
 - **Auth (demo):** no plaintext passwords stored (SHA-256 of email + password); the reset form doesn't reveal
   which emails exist; one-time codes expire after 10 minutes and work once. A production version would move all
   of this to a server (see §24).
@@ -1077,7 +1118,7 @@ need clicks (the sign-in dialog) are driven through the Chrome DevTools Protocol
 
 | File | Notable settings |
 | ---- | ---------------- |
-| `angular.json` | `@angular/build:application`; `outputPath: dist/vestra`; `browser: src/main.ts`, `server: src/main.server.ts`, `ssr.entry: src/server.ts`, `outputMode: server`; `security.allowedHosts`; no polyfills (zoneless, no `zone.js` installed); styles `src/styles.css`; dev server defaults to `development` |
+| `angular.json` | `@angular/build:application`; `outputPath: dist/vestra`; `browser: src/main.ts`, `server: src/main.server.ts`, `ssr.entry: src/server.ts`, `outputMode: server`; `security.allowedHosts`; production `optimization.styles.inlineCritical: false` (CSP, §16); no polyfills (zoneless, no `zone.js` installed); styles `src/styles.css`; dev server defaults to `development` |
 | `tsconfig.json` | `ES2022`, `moduleResolution: bundler`, `strict`, `noImplicitOverride`, `noPropertyAccessFromIndexSignature`, `noImplicitReturns`, `noFallthroughCasesInSwitch`; Angular `strictTemplates` |
 | `postcss.config.json` | `@tailwindcss/postcss` |
 | `vitest.config.ts` | `environment: 'node'`, `include: src/**/*.spec.ts`, `vite-tsconfig-paths` |
@@ -1169,6 +1210,8 @@ Work happens on feature branches merged with `--no-ff` into `develop`, then fast
 | **Language & region** | `features/improvement8` | Farfetch's *Language \| Region* selector as a drawer; `LocaleService`; prices converted and formatted per region through the `price` pipe; globe in the header, mobile menu and footer |
 | **Wishlist** | `features/improvement9` | Farfetch's `/wishlist`: cards with size and Add to bag, remove with Undo, filters, recommendations; a wishlist per account merged on sign-in; sold-out pieces; Bronze tier in the account menu |
 | **Shopping bag** | `features/improvement10` | Farfetch's basket at `/bag`: `BagService` (lines with size and quantity, per account) and pure `bag.model.ts`; summary with delivery options; simulated checkout and order confirmation; recently viewed |
+| **Vestra** | `features/improvement11` | The project, package, build output and repository are renamed **vestra** |
+| **Dark theme** | `features/improvement12` | `ThemeService` and `theme-init.js`; dark values for the color tokens; theme switch in the header, mobile menu and footer; photography keeps white/black; critical-CSS inlining off so the full stylesheet loads under the CSP |
 
 ---
 

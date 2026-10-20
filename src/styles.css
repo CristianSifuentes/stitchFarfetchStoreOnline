@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+/* dark: utilities follow the store's theme (data-theme on <html>, set by
+   ThemeService), not the system setting. Rarely needed: the tokens below
+   already switch every color. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 /* ──────────────────────────────────────────────────────────────────────────
    Design system: "Monochrome Absolute" (prototypes/woman_/woman8/DESIGN.md)
    Monochrome palette, sharp 0px corners, no shadows, light display type,
@@ -53,6 +58,25 @@
   @keyframes ken-burns {
     from { transform: scale(1.12); }
     to { transform: scale(1); }
+  }
+}
+
+/* Dark theme: the same tokens, ink and canvas swapped. Components never
+   need dark: variants; anything on top of photography uses white/black,
+   which stay put in both themes. */
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --color-ink: #ffffff;
+    --color-canvas: #000000;
+    --color-surface: #121212;
+    --color-line: #2b2b2b;
+    --color-muted: #9b9b9b;
+    --color-error: #ff8a80;
   }
 }
 
@@ -202,27 +226,28 @@
   }
 }
 
-/* On top of photography: solid white, inverting to an outline. */
+/* On top of photography: solid white, inverting to an outline. White in
+   both themes, since the photo behind it doesn't change. */
 @utility btn-light {
-  background: var(--color-canvas);
-  border-color: var(--color-canvas);
-  color: var(--color-ink);
+  background: var(--color-white);
+  border-color: var(--color-white);
+  color: var(--color-black);
 
   &:not(:disabled):hover {
     background: transparent;
-    color: var(--color-canvas);
+    color: var(--color-white);
   }
 }
 
 /* On top of photography: white outline, filling on hover. */
 @utility btn-outline-light {
   background: transparent;
-  border-color: var(--color-canvas);
-  color: var(--color-canvas);
+  border-color: var(--color-white);
+  color: var(--color-white);
 
   &:not(:disabled):hover {
-    background: var(--color-canvas);
-    color: var(--color-ink);
+    background: var(--color-white);
+    color: var(--color-black);
   }
 }
 
@@ -278,6 +303,10 @@
   text-transform: uppercase;
   color: var(--color-ink);
   cursor: pointer;
+
+  @variant dark {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='1.5'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  }
 }
 
 @utility no-scrollbar {

@@ -23,11 +23,11 @@ export interface BrandTile {
       <ul class="grid gap-4 md:grid-cols-3 md:gap-6">
         @for (brand of brands(); track brand.name) {
           <li>
-            <a class="group relative block aspect-[4/5] overflow-hidden bg-ink" [routerLink]="brand.link" [queryParams]="brand.queryParams">
+            <a class="group relative block aspect-[4/5] overflow-hidden bg-black" [routerLink]="brand.link" [queryParams]="brand.queryParams">
               <img [src]="brand.image" alt="" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
               <!-- A flat scrim keeps the name legible on light and dark photos alike. -->
               <span class="absolute inset-0 bg-black/35 transition-colors duration-300 group-hover:bg-black/45" aria-hidden="true"></span>
-              <span class="absolute inset-0 flex items-center justify-center p-6 text-center text-2xl font-light uppercase tracking-[0.2em] text-canvas md:text-3xl">{{ brand.name }}</span>
+              <span class="absolute inset-0 flex items-center justify-center p-6 text-center text-2xl font-light uppercase tracking-[0.2em] text-white md:text-3xl">{{ brand.name }}</span>
             </a>
           </li>
         }

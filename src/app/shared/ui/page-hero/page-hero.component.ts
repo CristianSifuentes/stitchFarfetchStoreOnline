@@ -18,7 +18,7 @@ export interface HeroStat {
   selector: 'app-page-hero',
   imports: [RouterLink],
   template: `
-    <section class="relative flex min-h-[26rem] items-center overflow-hidden bg-ink text-canvas md:aspect-[21/9]">
+    <section class="relative flex min-h-[26rem] items-center overflow-hidden bg-black text-white md:aspect-[21/9]">
       <img [src]="image()" [alt]="alt()" class="absolute inset-0 h-full w-full object-cover" loading="eager" />
       <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent"></div>
       <div class="relative z-10 max-w-2xl px-6 py-12 md:px-16">

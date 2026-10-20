@@ -4,6 +4,7 @@ import { NavigationEnd, Params, Router, RouterLink, RouterLinkActive } from '@an
 import { filter, map } from 'rxjs';
 import { ACCESS_TIER, AuthDialogService, AuthService } from '../../core/auth';
 import { LocaleService } from '../../core/locale';
+import { ThemeService } from '../../core/theme';
 import { AGE_GROUPS, CATEGORIES, DEPARTMENTS, Department, isDepartment } from '../../core/catalog';
 import { BagService } from '../../core/bag/bag.service';
 import { CatalogStore } from '../../core/services/catalog.store';
@@ -23,7 +24,7 @@ interface NavLink {
   selector: 'app-site-header',
   imports: [RouterLink, RouterLinkActive],
   template: `
-    <p class="label-caps bg-ink px-4 py-2.5 text-center text-canvas">Free shipping on orders over $200</p>
+    <p class="label-caps bg-ink px-4 py-2.5 text-center text-canvas dark:border-b dark:border-line dark:bg-surface dark:text-ink">Free shipping on orders over $200</p>
 
     <header class="sticky top-0 z-50 border-b border-line bg-canvas">
       <div class="page-container grid grid-cols-[1fr_auto_1fr] items-center gap-4 py-5">
@@ -53,6 +54,18 @@ interface NavLink {
         <a routerLink="/" class="select-none text-2xl font-light uppercase tracking-[0.08em] md:text-4xl" aria-label="Vestra home">Vestra</a>
 
         <div class="flex items-center justify-end gap-5">
+          <!-- Both icons are rendered and the theme picks one in CSS, so the
+               server-rendered header is right before Angular hydrates. -->
+          <button
+            type="button"
+            class="hidden transition-colors hover:text-muted lg:block"
+            aria-label="Dark theme"
+            [attr.aria-pressed]="theme.dark()"
+            (click)="theme.toggle()"
+          >
+            <svg class="h-5 w-5 dark:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z" /></svg>
+            <svg class="hidden h-5 w-5 dark:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" /></svg>
+          </button>
           <button
             type="button"
             class="hidden items-center gap-2 transition-colors hover:text-muted lg:flex"
@@ -160,6 +173,12 @@ interface NavLink {
               <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z" /></svg>
               <span>{{ locale.region().name }} · {{ locale.region().currency }} · {{ locale.language().nativeName }}</span>
             </button>
+            <button type="button" class="-mt-4 flex items-center gap-3 text-left text-sm" [attr.aria-pressed]="theme.dark()" (click)="$event.stopPropagation(); theme.toggle()">
+              <svg class="h-5 w-5 dark:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z" /></svg>
+              <svg class="hidden h-5 w-5 dark:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" /></svg>
+              <span>Dark theme</span>
+              <span class="ml-auto text-muted">{{ theme.dark() ? 'On' : 'Off' }}</span>
+            </button>
             <div class="border-t border-line pt-6">
               @if (auth.account(); as account) {
                 <p class="text-sm">{{ account.name }} <span class="text-muted">· {{ account.email }}</span></p>
@@ -187,6 +206,7 @@ export class SiteHeaderComponent {
   protected readonly auth = inject(AuthService);
   protected readonly authDialog = inject(AuthDialogService);
   protected readonly locale = inject(LocaleService);
+  protected readonly theme = inject(ThemeService);
 
   protected readonly departments = DEPARTMENTS;
   protected readonly categories = CATEGORIES;
