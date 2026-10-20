@@ -306,6 +306,7 @@ vestra/
 │   ├── index.html                  CSP meta, theme-init script, Inter font, <app-root>
 │   ├── locale/                     messages.xlf (extracted source) + messages.<lang>.xlf per language
 │   ├── test-setup.ts               Installs $localize for the specs
+├── scripts/dev-i18n.mjs            npm start: every language, watch build + SSR server
 │   ├── main.ts                     Browser bootstrap
 │   ├── main.server.ts              Server bootstrap
 │   ├── server.ts                   Express + AngularNodeAppEngine SSR server
@@ -1100,8 +1101,9 @@ to drive a DOM API.
     concatenations, so Spanish says *Bolsas para mujer* and Chinese *女士包袋*.
   - **Not translated:** product names and descriptions from `catalog.json`, designer names and sizes, like Farfetch.
   - **Workflow:** `npm run extract-i18n` writes `src/locale/messages.xlf`; copy each new `<trans-unit>` into every
-    `messages.<lang>.xlf` and add its `<target>`. `ng serve --configuration=es-419` (or `de`, `fr`, `ru`, `zh-Hans`)
-    serves one language; plain `npm start` serves English.
+    `messages.<lang>.xlf` and add its `<target>`. `npm start` runs every language (`scripts/dev-i18n.mjs`), since
+    `ng serve` can only serve one: `ng serve --configuration=es-419` (or `de`, `fr`, `ru`, `zh-Hans`) for one
+    language with hot reload, `npm run start:en` for English.
   - The translations were written for this project and should be reviewed by native speakers before real use.
 - **SSR-safe code:** browser-only APIs are guarded (`typeof localStorage`), and DOM measurement in the carousel
   runs in `afterNextRender`.
@@ -1284,12 +1286,13 @@ Work happens on feature branches merged with `--no-ff` into `develop`, then fast
 git clone https://github.com/CristianSifuentes/vestra.git
 cd vestra
 npm install
-npm start            # → http://localhost:4200
+npm start            # → http://localhost:4200, every language (/es-419/, /de/, /fr/, /ru/, /zh-Hans/)
 ```
 
 | Script | Command | Purpose |
 | ------ | ------- | ------- |
-| `npm start` | `ng serve` | Dev server with live reload |
+| `npm start` | `node scripts/dev-i18n.mjs` | The store in **every language** on port 4200: builds all locales in watch mode and runs the SSR server, restarted after each rebuild (refresh the browser to see changes) |
+| `npm run start:en` | `ng serve` | Faster dev server with hot reload, **English only**: the language picker leads to a 404 there |
 | `npm run build` | `ng build` | Production build, one app per language → `dist/vestra/{browser,server}` (English at the root, the rest under `es-419/`, `de/`, `fr/`, `ru/`, `zh-Hans/`) |
 | `npm run extract-i18n` | `ng extract-i18n --output-path src/locale` | Writes every marked message to `src/locale/messages.xlf` |
 | — | `ng serve --configuration=es-419` | Dev server in one language (`de`, `fr`, `ru`, `zh-Hans` too) |
