@@ -1,4 +1,4 @@
-import { CatalogItem, Department, ProductCategory, ProductEdit, effectivePrice } from '../../core/catalog/catalog.model';
+import { AgeGroup, CatalogItem, Department, ProductCategory, ProductEdit, effectivePrice } from '../../core/catalog/catalog.model';
 
 export type ListingSort = 'newest' | 'price-asc' | 'price-desc';
 
@@ -13,6 +13,8 @@ export interface ListingQuery {
   readonly category: ProductCategory | null;
   readonly designer: string | null;
   readonly edit: ProductEdit | null;
+  // Kids only: Baby, Kids or Teens.
+  readonly age: AgeGroup | null;
   readonly sale: boolean;
   readonly search: string;
   readonly sort: ListingSort;
@@ -33,6 +35,7 @@ export function queryCatalog(items: readonly CatalogItem[], query: ListingQuery)
       (query.category === null || item.category === query.category) &&
       (query.designer === null || item.brand === query.designer) &&
       (query.edit === null || item.edits.includes(query.edit)) &&
+      (query.age === null || item.ageGroup === query.age) &&
       (!query.sale || item.salePrice !== undefined) &&
       (!needle || normalize(`${item.brand} ${item.title} ${item.category}`).includes(needle))
   );

@@ -1,4 +1,4 @@
-import { Department, ProductCategory, ProductEdit } from './catalog.model';
+import { AgeGroup, Department, ProductCategory, ProductEdit } from './catalog.model';
 
 export interface DepartmentInfo {
   readonly id: Department;
@@ -22,6 +22,20 @@ export const CATEGORIES: ReadonlyArray<{ readonly id: ProductCategory; readonly 
   { id: 'bags', label: 'Bags' },
   { id: 'accessories', label: 'Accessories' },
   { id: 'jewelry', label: 'Jewelry' }
+];
+
+export interface AgeGroupInfo {
+  readonly id: AgeGroup;
+  readonly label: string;
+  // "0–36 months", shown next to the label.
+  readonly range: string;
+  readonly description: string;
+}
+
+export const AGE_GROUPS: ReadonlyArray<AgeGroupInfo> = [
+  { id: 'baby', label: 'Baby', range: '0–36 months', description: 'Soft knits, bodysuits and first layers for the littlest ones, in the gentlest fabrics.' },
+  { id: 'kids', label: 'Kids', range: '2–12 years', description: 'Play-proof outerwear, everyday staples and party pieces for growing wardrobes.' },
+  { id: 'teens', label: 'Teens', range: '13–16 years', description: 'Sneakers, statement jewelry and streetwear staples for teens with a point of view.' }
 ];
 
 export interface EditInfo {
@@ -59,4 +73,12 @@ export function editInfo(id: ProductEdit): EditInfo {
 
 export function isEdit(value: unknown): value is ProductEdit {
   return EDITS.some((edit) => edit.id === value);
+}
+
+export function ageGroupInfo(id: AgeGroup): AgeGroupInfo {
+  return AGE_GROUPS.find((group) => group.id === id) ?? AGE_GROUPS[0];
+}
+
+export function isAgeGroup(value: unknown): value is AgeGroup {
+  return AGE_GROUPS.some((group) => group.id === value);
 }

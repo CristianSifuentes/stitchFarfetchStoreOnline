@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Params, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { filter, map } from 'rxjs';
-import { CATEGORIES, DEPARTMENTS, Department, isDepartment } from '../../core/catalog';
+import { AGE_GROUPS, CATEGORIES, DEPARTMENTS, Department, isDepartment } from '../../core/catalog';
 import { CartService } from '../../core/services/cart.service';
 import { CatalogStore } from '../../core/services/catalog.store';
 import { WishlistService } from '../../core/services/wishlist.service';
@@ -166,10 +166,14 @@ export class SiteHeaderComponent {
     const path = this.activeInfo().path;
     const items = `${path}/items`;
     return [
-      { label: 'Gifts & Party', link: items, queryParams: { edit: 'gifts' } },
+      { label: this.activeInfo().id === 'kids' ? 'Gifts' : 'Gifts & Party', link: items, queryParams: { edit: 'gifts' } },
       { label: 'New In', link: items, queryParams: { sort: 'newest' } },
       { label: 'Brands', link: `${path}/brands` },
-      ...this.categories.map((category) => ({ label: category.label, link: items, queryParams: { category: category.id } })),
+      // Kidswear is browsed by age (Farfetch: Baby, Kids, Teens); the other
+      // departments by category.
+      ...(this.activeInfo().id === 'kids'
+        ? AGE_GROUPS.map((group) => ({ label: `${group.label} (${group.range})`, link: items, queryParams: { age: group.id } }))
+        : this.categories.map((category) => ({ label: category.label, link: items, queryParams: { category: category.id } }))),
       { label: 'Sale', link: items, queryParams: { sale: 'true' }, sale: true }
     ];
   });
