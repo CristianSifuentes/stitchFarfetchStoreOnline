@@ -20,6 +20,7 @@ The globe (header, mobile menu, footer) opens *Language & region*: the region co
 | `/womenswear`, `/menswear`, `/kids` | `DepartmentPage` | The department hub (Farfetch's order): campaign, New in daily, Trending now, editorial + its pieces, shop by age (kids), categories, trending brands, more to explore. **One template for all three** |
 | `/womenswear/items`, `/menswear/items`, `/kids/items` | `ProductListingPage` | Farfetch's `items.aspx`: filters, sort, grid, load more |
 | `/womenswear/brands`, `/menswear/brands`, `/kids/brands` | `BrandsPage` | Trending brands + every designer A–Z with its piece count |
+| `/wishlist` | `WishlistPage` | Saved pieces (per account), remove with Undo, filters, size + Add to bag, recommendations |
 | `/search?q=` | `ProductListingPage` | The same listing across all departments |
 | `/product/:id` | `ProductPage` | One PDP for every department |
 | `**` | `NotFoundPage` | 404 |
@@ -48,7 +49,7 @@ src/app
       locale/       LocalePicker (@defer): the Language | Region drawer
       auth/         AuthDialog (@defer) + one component per screen: sign in, register, code, forgot, social
   features/
-    home/ department/ listing/ product/ not-found/
+    home/ department/ listing/ brands/ product/ wishlist/ not-found/
 ```
 
 Rules:

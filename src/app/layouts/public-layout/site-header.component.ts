@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, ElementRef, computed, inject, signa
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Params, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { filter, map } from 'rxjs';
-import { AuthDialogService, AuthService } from '../../core/auth';
+import { ACCESS_TIER, AuthDialogService, AuthService } from '../../core/auth';
 import { LocaleService } from '../../core/locale';
 import { AGE_GROUPS, CATEGORIES, DEPARTMENTS, Department, isDepartment } from '../../core/catalog';
 import { CartService } from '../../core/services/cart.service';
@@ -71,14 +71,14 @@ interface NavLink {
           <a routerLink="/search" class="md:hidden" aria-label="Search">
             <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" /></svg>
           </a>
-          <button type="button" class="relative" [attr.aria-label]="'Wishlist, ' + wishlist.count() + ' items'">
+          <a routerLink="/wishlist" routerLinkActive="text-muted" class="relative transition-colors hover:text-muted" [attr.aria-label]="'Wishlist, ' + wishlist.count() + ' items'">
             <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true">
               <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
             </svg>
             @if (wishlist.count()) {
               <span class="absolute -right-2 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-ink px-1 text-[9px] font-semibold text-canvas" aria-hidden="true">{{ wishlist.count() }}</span>
             }
-          </button>
+          </a>
           <button type="button" class="relative" [attr.aria-label]="'Shopping bag, ' + cart.total() + ' items'">
             <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true">
               <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" /><path d="M3 6h18M16 10a4 4 0 0 1-8 0" />
@@ -100,10 +100,20 @@ interface NavLink {
               @if (accountOpen()) {
                 <div class="absolute right-0 top-full z-50 mt-4 w-72 border border-line bg-canvas p-6 motion-safe:animate-fade-in" role="menu">
                   <p class="label-caps text-muted">Signed in as</p>
-                  <p class="mt-2 text-sm">{{ account.name }}</p>
+                  <p class="mt-2 flex items-center gap-2 text-sm">
+                    {{ account.name }}
+                    <span class="label-caps border border-ink px-1.5 py-0.5 text-[9px]">{{ tier }}</span>
+                  </p>
                   <p class="truncate text-xs text-muted">{{ account.email }}</p>
                   <div class="my-5 h-px bg-line"></div>
-                  <p class="text-xs text-muted">{{ wishlist.count() }} {{ wishlist.count() === 1 ? 'piece' : 'pieces' }} in your wishlist · {{ cart.total() }} in your bag</p>
+                  <a routerLink="/wishlist" role="menuitem" class="flex items-center justify-between text-sm transition-colors hover:text-muted" (click)="accountOpen.set(false)">
+                    Wishlist
+                    <span class="text-xs text-muted">{{ wishlist.count() }} {{ wishlist.count() === 1 ? 'item' : 'items' }}</span>
+                  </a>
+                  <p class="mt-3 flex items-center justify-between text-sm">
+                    Shopping bag
+                    <span class="text-xs text-muted">{{ cart.total() }} {{ cart.total() === 1 ? 'item' : 'items' }}</span>
+                  </p>
                   <button type="button" role="menuitem" class="btn btn-secondary mt-5 w-full" (click)="signOut()">Sign out</button>
                 </div>
               }
@@ -182,6 +192,7 @@ export class SiteHeaderComponent {
   protected readonly categories = CATEGORIES;
   protected readonly menuOpen = signal(false);
   protected readonly accountOpen = signal(false);
+  protected readonly tier = ACCESS_TIER;
   private readonly accountMenu = viewChild<ElementRef<HTMLElement>>('accountMenu');
 
   protected readonly initial = computed(() => this.auth.account()?.name.trim().charAt(0).toUpperCase() ?? '');

@@ -36,14 +36,16 @@ import { WishlistButtonComponent } from '../wishlist-button/wishlist-button.comp
 
       <app-wishlist-button class="absolute right-3 top-3" [productId]="item().id" [label]="item().brand + ' ' + item().title" />
 
-      <button
-        type="button"
-        class="quick-add link-cta mt-3"
-        [attr.aria-label]="'Add ' + item().brand + ' ' + item().title + ' to bag'"
-        (click)="cart.add(item().id)"
-      >
-        Add to bag
-      </button>
+      @if (!item().soldOut) {
+        <button
+          type="button"
+          class="quick-add link-cta mt-3"
+          [attr.aria-label]="'Add ' + item().brand + ' ' + item().title + ' to bag'"
+          (click)="cart.add(item().id)"
+        >
+          Add to bag
+        </button>
+      }
     </article>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
