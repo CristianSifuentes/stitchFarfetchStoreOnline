@@ -4,15 +4,17 @@ import { PublicLayoutComponent } from './layouts/public-layout/public-layout.com
 
 const department = () =>
   import('./features/department/pages/department-page.component').then((m) => m.DepartmentPageComponent);
+const brands = () => import('./features/brands/pages/brands-page.component').then((m) => m.BrandsPageComponent);
 const listing = () =>
   import('./features/listing/pages/product-listing-page.component').then((m) => m.ProductListingPageComponent);
 
-// Each department has the same two pages — a landing and a listing — so
-// their routes are generated from one shape (Farfetch: /women, /women/items).
+// Each department has the same three pages (hub, listing, brands A–Z),
+// so their routes are generated from one shape (Farfetch: /women, /women/items).
 function departmentRoutes(path: string, id: Department): Routes {
   return [
     { path, loadComponent: department, data: { department: id }, title: titleFor(id) },
-    { path: `${path}/items`, loadComponent: listing, data: { department: id }, title: `${titleFor(id)} · Shop all` }
+    { path: `${path}/items`, loadComponent: listing, data: { department: id }, title: `${titleFor(id)} · Shop all` },
+    { path: `${path}/brands`, loadComponent: brands, data: { department: id }, title: `${titleFor(id)} · Brands` }
   ];
 }
 

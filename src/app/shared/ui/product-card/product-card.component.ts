@@ -3,7 +3,7 @@ import { RouterLink } from '@angular/router';
 import { CatalogItem } from '../../../core/catalog/catalog.model';
 import { sizedImage } from '../../../core/catalog/images';
 import { CartService } from '../../../core/services/cart.service';
-import { PricePipe } from '../../pipes/price.pipe';
+import { PriceTagComponent } from '../price-tag/price-tag.component';
 import { WishlistButtonComponent } from '../wishlist-button/wishlist-button.component';
 
 // The one product card (DESIGN.md "Product Cards"): 3:4 image, no border,
@@ -11,7 +11,7 @@ import { WishlistButtonComponent } from '../wishlist-button/wishlist-button.comp
 // always available; "Add to bag" is a quiet text action revealed on hover.
 @Component({
   selector: 'app-product-card',
-  imports: [RouterLink, PricePipe, WishlistButtonComponent],
+  imports: [RouterLink, PriceTagComponent, WishlistButtonComponent],
   template: `
     <article class="group relative">
       <a [routerLink]="['/product', item().id]" class="block">
@@ -30,7 +30,7 @@ import { WishlistButtonComponent } from '../wishlist-button/wishlist-button.comp
         <div class="space-y-1 pt-4">
           <p class="label-caps">{{ item().brand }}</p>
           <h3 class="line-clamp-1 text-sm text-muted">{{ item().title }}</h3>
-          <p class="text-sm">{{ item().price | price }}</p>
+          <app-price-tag [item]="item()" />
         </div>
       </a>
 

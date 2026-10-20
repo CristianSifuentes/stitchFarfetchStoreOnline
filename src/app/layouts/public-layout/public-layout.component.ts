@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { NewsletterBandComponent } from './newsletter-band.component';
+import { ServiceLinksComponent } from './service-links.component';
 import { SiteFooterComponent } from './site-footer.component';
 import { SiteHeaderComponent } from './site-header.component';
 
@@ -7,13 +9,17 @@ import { SiteHeaderComponent } from './site-header.component';
 // full-bleed sections and framed content can mix.
 @Component({
   selector: 'app-public-layout',
-  imports: [RouterOutlet, SiteHeaderComponent, SiteFooterComponent],
+  imports: [RouterOutlet, SiteHeaderComponent, ServiceLinksComponent, NewsletterBandComponent, SiteFooterComponent],
   template: `
     <app-site-header />
     <main id="main">
       <router-outlet />
     </main>
-    <app-site-footer />
+    <div class="mt-24">
+      <app-service-links />
+      <app-newsletter-band />
+      <app-site-footer />
+    </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })

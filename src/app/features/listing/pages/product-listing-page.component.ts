@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, linkedSignal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CATEGORIES, Department, ProductCategory, categoryLabel, departmentInfo, isCategory } from '../../../core/catalog';
+import { CATEGORIES, Department, ProductCategory, ProductEdit, categoryLabel, departmentInfo, editInfo, isCategory, isEdit } from '../../../core/catalog';
 import { CatalogStore } from '../../../core/services/catalog.store';
 import { BreadcrumbComponent, Crumb } from '../../../shared/ui/breadcrumb/breadcrumb.component';
 import { ProductCardComponent } from '../../../shared/ui/product-card/product-card.component';
@@ -45,8 +45,12 @@ const PAGE_SIZE = 8;
               }
             </select>
           </label>
+          <label class="flex cursor-pointer items-center gap-2">
+            <input type="checkbox" class="h-3.5 w-3.5 accent-black" [checked]="sale()" (change)="update({ sale: $any($event.target).checked ? 'true' : null })" />
+            <span class="label-caps" [class.text-error]="sale()">Sale only</span>
+          </label>
           @if (hasFilters()) {
-            <button type="button" class="link-cta" (click)="update({ category: null, designer: null, q: null })">Clear all</button>
+            <button type="button" class="link-cta" (click)="clearAll()">Clear all</button>
           }
         </div>
         <label class="flex items-center gap-2">
@@ -89,7 +93,7 @@ const PAGE_SIZE = 8;
         <div class="py-24 text-center">
           <p class="text-headline">No items match your selection</p>
           <p class="mt-3 text-sm text-muted">Try another category or designer, or clear your filters.</p>
-          <button type="button" class="btn btn-secondary mt-8" (click)="update({ category: null, designer: null, q: null })">Clear all filters</button>
+          <button type="button" class="btn btn-secondary mt-8" (click)="clearAll()">Clear all filters</button>
         </div>
       }
     </div>
@@ -115,6 +119,11 @@ export class ProductListingPageComponent {
     return isCategory(value) ? value : null;
   });
   protected readonly designer = computed(() => this.params().get('designer'));
+  protected readonly edit = computed<ProductEdit | null>(() => {
+    const value = this.params().get('edit');
+    return isEdit(value) ? value : null;
+  });
+  protected readonly sale = computed(() => this.params().get('sale') === 'true');
   protected readonly search = computed(() => this.params().get('q') ?? '');
   protected readonly sort = computed<ListingSort>(() => {
     const value = this.params().get('sort');
@@ -123,11 +132,27 @@ export class ProductListingPageComponent {
 
   // Everything in this department (or search), before category/designer.
   private readonly pool = computed(() =>
-    queryCatalog(this.catalog.all(), { department: this.department(), category: null, designer: null, search: this.search(), sort: 'newest' })
+    queryCatalog(this.catalog.all(), {
+      department: this.department(),
+      category: null,
+      designer: null,
+      edit: this.edit(),
+      sale: this.sale(),
+      search: this.search(),
+      sort: 'newest'
+    })
   );
 
   protected readonly results = computed(() =>
-    queryCatalog(this.pool(), { department: null, category: this.category(), designer: this.designer(), search: '', sort: this.sort() })
+    queryCatalog(this.pool(), {
+      department: null,
+      category: this.category(),
+      designer: this.designer(),
+      edit: null,
+      sale: false,
+      search: '',
+      sort: this.sort()
+    })
   );
 
   // A new result set starts again at the first page.
@@ -142,16 +167,27 @@ export class ProductListingPageComponent {
     designersIn(this.category() ? this.pool().filter((item) => item.category === this.category()) : this.pool())
   );
 
-  protected readonly hasFilters = computed(() => !!this.category() || !!this.designer() || !!this.search());
+  protected readonly hasFilters = computed(
+    () => !!this.category() || !!this.designer() || !!this.search() || !!this.edit() || this.sale()
+  );
 
   protected readonly title = computed(() => {
     const department = this.department();
     const category = this.category();
     const designer = this.designer();
+    const edit = this.edit();
     if (!department) {
       return this.search() ? `Results for “${this.search()}”` : 'All products';
     }
-    const subject = category ? `${departmentInfo(department).possessive} ${categoryLabel(category)}` : `${departmentInfo(department).possessive} New In`;
+    const possessive = departmentInfo(department).possessive;
+    // The most specific selection names the page: an edit, then sale, then
+    // a category, then New In.
+    const base = edit
+      ? `${possessive} ${editInfo(edit).label}`
+      : this.sale()
+        ? `${possessive} Sale`
+        : `${possessive} ${category ? categoryLabel(category) : 'New In'}`;
+    const subject = edit || this.sale() ? (category ? `${base}: ${categoryLabel(category)}` : base) : base;
     return designer ? `${designer} · ${subject}` : subject;
   });
 
@@ -161,6 +197,13 @@ export class ProductListingPageComponent {
       return 'Every piece across womenswear, menswear and kidswear, from the world’s leading luxury houses.';
     }
     const category = this.category();
+    const edit = this.edit();
+    if (edit) {
+      return editInfo(edit).description;
+    }
+    if (this.sale()) {
+      return 'Up to 50% off a selection of pieces from the season’s collections, while stocks last.';
+    }
     return category ? CATEGORY_DESCRIPTIONS[category] : DESCRIPTIONS[department];
   });
 
@@ -175,9 +218,20 @@ export class ProductListingPageComponent {
       { label: 'Home', link: '/' },
       { label: info.label, link: info.path }
     ];
-    crumbs.push(category ? { label: categoryLabel(category) } : { label: 'New In' });
+    const edit = this.edit();
+    const section = edit ? editInfo(edit).label : this.sale() ? 'Sale' : null;
+    if (section) {
+      crumbs.push(category ? { label: section, link: `${info.path}/items`, queryParams: edit ? { edit } : { sale: 'true' } } : { label: section });
+    }
+    if (category || !section) {
+      crumbs.push({ label: category ? categoryLabel(category) : 'New In' });
+    }
     return crumbs;
   });
+
+  protected clearAll(): void {
+    this.update({ category: null, designer: null, q: null, edit: null, sale: null });
+  }
 
   protected update(params: Record<string, string | null>): void {
     this.router.navigate([], { relativeTo: this.route, queryParams: params, queryParamsHandling: 'merge' });

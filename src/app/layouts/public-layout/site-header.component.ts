@@ -1,11 +1,18 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { NavigationEnd, Params, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { filter, map } from 'rxjs';
 import { CATEGORIES, DEPARTMENTS, Department, isDepartment } from '../../core/catalog';
 import { CartService } from '../../core/services/cart.service';
 import { CatalogStore } from '../../core/services/catalog.store';
 import { WishlistService } from '../../core/services/wishlist.service';
+
+interface NavLink {
+  readonly label: string;
+  readonly link: string;
+  readonly queryParams?: Params;
+  readonly sale?: boolean;
+}
 
 // Farfetch's header: departments on the left, the wordmark centered, search
 // and the account/wishlist/bag icons on the right; under it, the category
@@ -76,16 +83,17 @@ import { WishlistService } from '../../core/services/wishlist.service';
       </div>
 
       <nav class="hidden border-t border-line lg:block" [attr.aria-label]="activeInfo().label + ' categories'">
-        <ul class="page-container flex justify-center gap-10 py-3.5 text-sm">
-          <li><a [routerLink]="activeInfo().path + '/items'" [queryParams]="{ sort: 'newest' }" class="transition-colors hover:text-muted">New In</a></li>
-          @for (category of categories; track category.id) {
+        <ul class="page-container flex justify-center gap-8 py-3.5 text-sm">
+          @for (item of navLinks(); track item.label) {
             <li>
               <a
-                [routerLink]="activeInfo().path + '/items'"
-                [queryParams]="{ category: category.id }"
+                [routerLink]="item.link"
+                [queryParams]="item.queryParams"
                 routerLinkActive="font-semibold"
+                [routerLinkActiveOptions]="{ paths: 'exact', queryParams: 'subset', fragment: 'ignored', matrixParams: 'ignored' }"
                 class="transition-colors hover:text-muted"
-              >{{ category.label }}</a>
+                [class.text-error]="item.sale"
+              >{{ item.label }}</a>
             </li>
           }
         </ul>
@@ -100,9 +108,8 @@ import { WishlistService } from '../../core/services/wishlist.service';
               }
             </ul>
             <ul class="grid gap-4 text-base">
-              <li><a [routerLink]="activeInfo().path + '/items'" [queryParams]="{ sort: 'newest' }">New In</a></li>
-              @for (category of categories; track category.id) {
-                <li><a [routerLink]="activeInfo().path + '/items'" [queryParams]="{ category: category.id }">{{ category.label }}</a></li>
+              @for (item of navLinks(); track item.label) {
+                <li><a [routerLink]="item.link" [queryParams]="item.queryParams" [class.text-error]="item.sale">{{ item.label }}</a></li>
               }
             </ul>
           </div>
@@ -152,6 +159,19 @@ export class SiteHeaderComponent {
   protected readonly searchTerm = computed(() => {
     const url = this.url();
     return url.startsWith('/search') ? new URLSearchParams(url.split('?')[1] ?? '').get('q') ?? '' : '';
+  });
+
+  // Farfetch's category bar for the active department.
+  protected readonly navLinks = computed<NavLink[]>(() => {
+    const path = this.activeInfo().path;
+    const items = `${path}/items`;
+    return [
+      { label: 'Gifts & Party', link: items, queryParams: { edit: 'gifts' } },
+      { label: 'New In', link: items, queryParams: { sort: 'newest' } },
+      { label: 'Brands', link: `${path}/brands` },
+      ...this.categories.map((category) => ({ label: category.label, link: items, queryParams: { category: category.id } })),
+      { label: 'Sale', link: items, queryParams: { sale: 'true' }, sale: true }
+    ];
   });
 
   protected search(event: Event, query: string): void {

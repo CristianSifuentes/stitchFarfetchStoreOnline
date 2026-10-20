@@ -12,6 +12,7 @@ const item = (overrides: Partial<CatalogItem>): CatalogItem => ({
   category: 'clothing',
   description: '',
   addedAt: '2024-01-01',
+  edits: [],
   ...overrides
 });
 

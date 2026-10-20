@@ -12,6 +12,7 @@ const item = (overrides: Partial<CatalogItem>): CatalogItem => ({
   category: 'clothing',
   description: '',
   addedAt: '2024-01-01',
+  edits: [],
   ...overrides
 });
 
@@ -22,7 +23,7 @@ const items = [
   item({ id: 'd', brand: 'Chloé', title: 'Cotton dress', department: 'kids', price: 295, addedAt: '2024-01-15' })
 ];
 
-const base = { department: null, category: null, designer: null, search: '', sort: 'newest' } as const;
+const base = { department: null, category: null, designer: null, edit: null, sale: false, search: '', sort: 'newest' } as const;
 
 describe('queryCatalog', () => {
   it('returns everything, newest first, without filters', () => {
@@ -50,6 +51,26 @@ describe('queryCatalog', () => {
     const copy = [...items];
     queryCatalog(items, { ...base, sort: 'price-asc' });
     expect(items).toEqual(copy);
+  });
+});
+
+describe('queryCatalog: edits and sale', () => {
+  const pool = [
+    item({ id: 'gift', edits: ['gifts'], price: 500, salePrice: 250, addedAt: '2024-03-01' }),
+    item({ id: 'party', edits: ['party', 'gifts'], price: 400, addedAt: '2024-02-01' }),
+    item({ id: 'plain', price: 300, addedAt: '2024-01-01' })
+  ];
+
+  it('filters by edit', () => {
+    expect(queryCatalog(pool, { ...base, edit: 'gifts' }).map((i) => i.id)).toEqual(['gift', 'party']);
+  });
+
+  it('keeps only discounted pieces on sale', () => {
+    expect(queryCatalog(pool, { ...base, sale: true }).map((i) => i.id)).toEqual(['gift']);
+  });
+
+  it('sorts by the price actually paid', () => {
+    expect(queryCatalog(pool, { ...base, sort: 'price-asc' }).map((i) => i.id)).toEqual(['gift', 'plain', 'party']);
   });
 });
 

@@ -4,7 +4,7 @@ import { categoryLabel, departmentInfo, galleryFor, sizesFor } from '../../../co
 import { CartService } from '../../../core/services/cart.service';
 import { CatalogStore } from '../../../core/services/catalog.store';
 import { WishlistService } from '../../../core/services/wishlist.service';
-import { PricePipe } from '../../../shared/pipes/price.pipe';
+import { PriceTagComponent } from '../../../shared/ui/price-tag/price-tag.component';
 import { BreadcrumbComponent, Crumb } from '../../../shared/ui/breadcrumb/breadcrumb.component';
 import { ProductCardComponent } from '../../../shared/ui/product-card/product-card.component';
 import { SectionHeaderComponent } from '../../../shared/ui/section-header/section-header.component';
@@ -15,7 +15,7 @@ const RELATED_COUNT = 4;
 // run, the breadcrumb, the recommendations) is derived from the product.
 @Component({
   selector: 'app-product-page',
-  imports: [RouterLink, PricePipe, BreadcrumbComponent, ProductCardComponent, SectionHeaderComponent],
+  imports: [RouterLink, PriceTagComponent, BreadcrumbComponent, ProductCardComponent, SectionHeaderComponent],
   template: `
     <div class="page-container">
       @if (product(); as item) {
@@ -54,7 +54,7 @@ const RELATED_COUNT = 4;
                 <a class="text-title uppercase tracking-[0.04em] hover:text-muted" [routerLink]="departmentPath() + '/items'" [queryParams]="{ designer: item.brand }">{{ item.brand }}</a>
                 <span class="mt-2 block text-base text-muted">{{ item.title }}</span>
               </h1>
-              <p class="mt-6 text-xl">{{ item.price | price }}</p>
+              <app-price-tag class="mt-6 block" [item]="item" size="lg" />
               <p class="mt-1 text-xs text-muted">Import duties included</p>
             </header>
 
