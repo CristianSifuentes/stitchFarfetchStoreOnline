@@ -1,35 +1,39 @@
+import {
+  AngularNodeAppEngine,
+  createNodeRequestHandler,
+  isMainModule,
+  writeResponseToNodeResponse
+} from '@angular/ssr/node';
 import express from 'express';
-import { dirname, join, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import bootstrap from './main.server';
-import { CommonEngine } from '@angular/ssr/node';
+import { join } from 'node:path';
+
+const browserDistFolder = join(import.meta.dirname, '../browser');
 
 const app = express();
-const distFolder = dirname(fileURLToPath(import.meta.url));
-const browserFolder = resolve(distFolder, '../browser');
-const indexHtml = join(browserFolder, 'index.html');
-const engine = new CommonEngine();
+const angularApp = new AngularNodeAppEngine();
 
-app.use(express.static(browserFolder, {
-  maxAge: '1y',
-  immutable: true
-}));
-
-app.get('*', async (req, res, next) => {
-  try {
-    const html = await engine.render({
-      bootstrap,
-      documentFilePath: indexHtml,
-      url: `${req.protocol}://${req.get('host')}${req.originalUrl}`
-    });
-
-    res.setHeader('X-Content-Type-Options', 'nosniff');
-    res.setHeader('X-Frame-Options', 'DENY');
-    res.send(html);
-  } catch (err) {
-    next(err);
-  }
+// Hardening headers on every response.
+app.use((_req, res, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  next();
 });
 
-const port = Number(process.env['PORT'] ?? 4000);
-app.listen(port, () => console.log(`SSR server listening on ${port}`));
+// Hashed bundles and assets, cached for a year.
+app.use(express.static(browserDistFolder, { maxAge: '1y', index: false, redirect: false }));
+
+// Everything else is rendered by Angular (see app.routes.server.ts).
+app.use((req, res, next) => {
+  angularApp
+    .handle(req)
+    .then((response) => (response ? writeResponseToNodeResponse(response, res) : next()))
+    .catch(next);
+});
+
+if (isMainModule(import.meta.url)) {
+  const port = Number(process.env['PORT'] ?? 4000);
+  app.listen(port, () => console.log(`SSR server listening on http://localhost:${port}`));
+}
+
+// Used by the Angular CLI dev server and build (and by serverless hosts).
+export const reqHandler = createNodeRequestHandler(app);

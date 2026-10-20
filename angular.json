@@ -12,7 +12,7 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
-            "outputPath": "dist/stitch-farfetch-store-online/browser",
+            "outputPath": "dist/stitch-farfetch-store-online",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [],
@@ -20,6 +20,10 @@
             "assets": ["src/assets"],
             "styles": ["src/styles.css"],
             "server": "src/main.server.ts",
+            "outputMode": "server",
+            "security": {
+              "allowedHosts": ["localhost", "127.0.0.1"]
+            },
             "ssr": {
               "entry": "src/server.ts"
             }
