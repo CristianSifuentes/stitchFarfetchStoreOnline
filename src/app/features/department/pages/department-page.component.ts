@@ -1,17 +1,18 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { CATEGORIES, Department, departmentInfo, featureDesigner } from '../../../core/catalog';
+import { CATEGORIES, Department, ProductCategory, departmentInfo, editInfo, featureDesigner, isCategory, isEdit } from '../../../core/catalog';
 import { CatalogStore, byNewest } from '../../../core/services/catalog.store';
-import { BrandStripComponent } from '../../../shared/ui/brand-strip/brand-strip.component';
+import { BrandTile, BrandTilesComponent } from '../../../shared/ui/brand-tiles/brand-tiles.component';
 import { BreadcrumbComponent } from '../../../shared/ui/breadcrumb/breadcrumb.component';
-import { DesignerCardComponent } from '../../../shared/ui/designer-card/designer-card.component';
+import { EditTile, EditTilesComponent } from '../../../shared/ui/edit-tiles/edit-tiles.component';
+import { EditorialStoryComponent } from '../../../shared/ui/editorial-story/editorial-story.component';
+import { DirectoryColumn, LinkDirectoryComponent } from '../../../shared/ui/link-directory/link-directory.component';
 import { PageHeroComponent } from '../../../shared/ui/page-hero/page-hero.component';
-import { ProductCardComponent } from '../../../shared/ui/product-card/product-card.component';
-import { SectionHeaderComponent } from '../../../shared/ui/section-header/section-header.component';
-import { designersIn } from '../../listing/listing.query';
+import { ProductCarouselComponent } from '../../../shared/ui/product-carousel/product-carousel.component';
+import { designersIn, isListingSort, queryCatalog } from '../../listing/listing.query';
 import { DEPARTMENT_CONTENT } from '../data/department-content';
 
-const NEW_IN_COUNT = 8;
+const NEW_IN_COUNT = 12;
 
 const CATEGORY_COLUMNS: Record<number, string> = {
   1: 'md:grid-cols-1',
@@ -21,38 +22,76 @@ const CATEGORY_COLUMNS: Record<number, string> = {
   5: 'md:grid-cols-3 lg:grid-cols-5'
 };
 
-// The landing page of a department (Women, Men, Kids). One template for all
-// three, so they can never drift apart: hero → categories → designers →
-// New In → brands → editorial stories. Content comes from
-// DEPARTMENT_CONTENT; products, counts and tile images from the catalog.
+const GIFT_RECIPIENT: Record<Department, string> = { womenswear: 'her', menswear: 'him', kids: 'kids' };
+
+// A department's hub (Women, Men, Kids), in the order of Farfetch's:
+// seasonal campaign → New in daily → Trending now → an editorial story with
+// its pieces → shop by category → trending brands → more to explore.
+// One template for all three; words and photography come from
+// DEPARTMENT_CONTENT, products, counts and tile images from the catalog.
 @Component({
   selector: 'app-department-page',
   imports: [
     RouterLink,
     BreadcrumbComponent,
     PageHeroComponent,
-    SectionHeaderComponent,
-    ProductCardComponent,
-    BrandStripComponent,
-    DesignerCardComponent
+    ProductCarouselComponent,
+    EditTilesComponent,
+    EditorialStoryComponent,
+    BrandTilesComponent,
+    LinkDirectoryComponent
   ],
   template: `
     <div class="page-container">
       <app-breadcrumb [items]="[{ label: 'Home', link: '/' }, { label: info().label }]" />
 
       <app-page-hero
-        [image]="content().hero.image"
-        [alt]="content().hero.alt"
-        [eyebrow]="content().hero.eyebrow"
-        [title]="content().hero.title"
-        [text]="content().hero.text"
-        [primary]="{ label: 'Shop New In', link: listingPath(), queryParams: { sort: 'newest' } }"
-        [secondary]="{ label: 'Shop all', link: listingPath() }"
+        [image]="content().campaign.image"
+        [alt]="content().campaign.alt"
+        [eyebrow]="content().campaign.eyebrow"
+        [title]="content().campaign.title"
+        [text]="content().campaign.text"
+        [primary]="{ label: 'Explore more', link: listingPath(), queryParams: { edit: content().campaign.edit } }"
+        [secondary]="{ label: 'Shop New In', link: listingPath(), queryParams: { sort: 'newest' } }"
         [stats]="stats()"
       />
 
-      <section class="section-y" aria-labelledby="categories-heading">
-        <h2 id="categories-heading" class="sr-only">Shop by category</h2>
+      <div class="section-y">
+        <app-product-carousel
+          eyebrow="Just landed"
+          title="New in daily from the best brands"
+          [items]="newIn()"
+          [actionLink]="listingPath()"
+          [actionQuery]="{ sort: 'newest' }"
+        />
+      </div>
+
+      <app-edit-tiles [tiles]="trends()" />
+
+      <div class="section-y">
+        <app-editorial-story
+          [eyebrow]="content().editorial.eyebrow"
+          [title]="content().editorial.title"
+          [text]="content().editorial.text"
+          [image]="content().editorial.image"
+          [alt]="content().editorial.alt"
+          [link]="listingPath()"
+          [queryParams]="{ edit: content().editorial.edit }"
+          [actionLabel]="'Shop ' + editLabel()"
+        >
+          @if (editorialItems().length) {
+            <app-product-carousel
+              [title]="editLabel()"
+              [items]="editorialItems()"
+              [actionLink]="listingPath()"
+              [actionQuery]="{ edit: content().editorial.edit }"
+            />
+          }
+        </app-editorial-story>
+      </div>
+
+      <section aria-labelledby="categories-heading">
+        <h2 id="categories-heading" class="text-headline mb-8">Shop by category</h2>
         <ul class="grid grid-cols-2 gap-4 md:gap-6" [class]="categoryColumns()">
           @for (tile of categoryTiles(); track tile.id) {
             <li>
@@ -68,62 +107,11 @@ const CATEGORY_COLUMNS: Record<number, string> = {
         </ul>
       </section>
 
-      <section aria-labelledby="designers-heading">
-        <app-section-header
-          eyebrow="Designer Spotlight"
-          title="The houses defining the season"
-          [actionLabel]="'View all ' + info().label.toLowerCase()"
-          [actionLink]="listingPath()"
-        />
-        <div class="grid gap-4 md:grid-cols-3 md:gap-6">
-          @for (designer of designers(); track designer.name) {
-            <app-designer-card
-              [name]="designer.name"
-              [eyebrow]="designer.eyebrow"
-              [image]="designer.image"
-              [from]="designer.from"
-              [link]="listingPath()"
-              [queryParams]="{ designer: designer.name }"
-            />
-          }
-        </div>
-      </section>
+      <div class="section-y">
+        <app-brand-tiles [brands]="brands()" [actionLink]="info().path + '/brands'" />
+      </div>
 
-      <section class="section-y" aria-labelledby="new-in-heading">
-        <app-section-header
-          eyebrow="Just Landed"
-          [title]="'New In: ' + info().label"
-          description="The latest arrivals, added this week."
-          actionLabel="View all"
-          [actionLink]="listingPath()"
-          [actionQuery]="{ sort: 'newest' }"
-        />
-        <div class="product-grid">
-          @for (item of newIn(); track item.id) {
-            <app-product-card [item]="item" />
-          } @empty {
-            @for (n of skeletons; track n) {
-              <div aria-hidden="true"><div class="aspect-[3/4] animate-pulse bg-surface"></div></div>
-            }
-          }
-        </div>
-      </section>
-
-      <app-brand-strip [brands]="brands()" />
-
-      <section class="section-y grid gap-px md:grid-cols-2" aria-label="Editorial">
-        @for (story of content().stories; track story.title) {
-          <a class="group relative block h-[32rem] overflow-hidden bg-ink" [routerLink]="listingPath()" [queryParams]="{ category: story.category }">
-            <img [src]="story.image" [alt]="story.title" class="h-full w-full object-cover opacity-90 transition-transform duration-[2000ms] group-hover:scale-105" loading="lazy" />
-            <div class="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/70 to-transparent p-10 text-canvas">
-              <p class="label-caps mb-3 opacity-80">{{ story.label }}</p>
-              <h3 class="text-headline max-w-sm">{{ story.title }}</h3>
-              <p class="mt-3 max-w-sm text-sm opacity-85">{{ story.description }}</p>
-              <span class="link-cta mt-6 self-start">Shop the edit</span>
-            </div>
-          </a>
-        }
-      </section>
+      <app-link-directory [columns]="directory()" [label]="'More to explore in ' + info().label" />
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -134,14 +122,17 @@ export class DepartmentPageComponent {
   // From the route's data (withComponentInputBinding).
   readonly department = input.required<Department>();
 
-  protected readonly skeletons = Array.from({ length: 4 }, (_, i) => i);
   protected readonly info = computed(() => departmentInfo(this.department()));
   protected readonly content = computed(() => DEPARTMENT_CONTENT[this.department()]);
   protected readonly listingPath = computed(() => `${this.info().path}/items`);
+  protected readonly editLabel = computed(() => editInfo(this.content().editorial.edit).label);
 
   private readonly items = computed(() => this.catalog.byDepartment(this.department()).sort(byNewest));
 
   protected readonly newIn = computed(() => this.items().slice(0, NEW_IN_COUNT));
+  protected readonly editorialItems = computed(() =>
+    this.items().filter((item) => item.edits.includes(this.content().editorial.edit))
+  );
 
   protected readonly stats = computed(() => {
     const items = this.items();
@@ -155,6 +146,35 @@ export class DepartmentPageComponent {
     ];
   });
 
+  // Each trend is pictured by the first piece its filters lead to, never
+  // repeating a photo already used by an earlier tile.
+  protected readonly trends = computed<EditTile[]>(() => {
+    const used = new Set<string>();
+    return this.content().trends.flatMap((trend) => {
+      const params = trend.queryParams;
+      const category: ProductCategory | null = isCategory(params['category']) ? params['category'] : null;
+      const matches = queryCatalog(this.items(), {
+        department: null,
+        category,
+        designer: typeof params['designer'] === 'string' ? params['designer'] : null,
+        edit: isEdit(params['edit']) ? params['edit'] : null,
+        sale: false,
+        search: '',
+        sort: isListingSort(params['sort']) ? params['sort'] : 'newest'
+      });
+      const pick = matches.find((item) => !used.has(item.image));
+      if (!pick) {
+        return [];
+      }
+      used.add(pick.image);
+      return [{ label: trend.label, image: pick.image, link: this.listingPath(), queryParams: params }];
+    });
+  });
+
+  protected readonly categoryColumns = computed(
+    () => CATEGORY_COLUMNS[this.categoryTiles().length] ?? 'md:grid-cols-3 lg:grid-cols-5'
+  );
+
   // One tile per category the department actually stocks, pictured by its
   // newest piece.
   protected readonly categoryTiles = computed(() =>
@@ -164,17 +184,44 @@ export class DepartmentPageComponent {
     })
   );
 
-  // One row on desktop whatever the count, so no tile is ever left alone.
-  protected readonly categoryColumns = computed(
-    () => CATEGORY_COLUMNS[this.categoryTiles().length] ?? 'md:grid-cols-3 lg:grid-cols-5'
-  );
-
-  protected readonly designers = computed(() =>
-    this.content().designers.flatMap((designer) => {
-      const feature = featureDesigner(this.items(), designer.name);
-      return feature ? [{ ...feature, eyebrow: designer.eyebrow }] : [];
+  protected readonly brands = computed<BrandTile[]>(() =>
+    this.content().brands.flatMap((name) => {
+      const feature = featureDesigner(this.items(), name);
+      return feature ? [{ name, image: feature.image, link: this.listingPath(), queryParams: { designer: name } }] : [];
     })
   );
 
-  protected readonly brands = computed(() => designersIn(this.items()).slice(0, 6));
+  // Farfetch's closing link lists, generated the same way for every department.
+  protected readonly directory = computed<DirectoryColumn[]>(() => {
+    const items = this.listingPath();
+    return [
+      {
+        title: 'Gifts',
+        links: [
+          { label: `Gifts for ${GIFT_RECIPIENT[this.department()]}`, link: items, queryParams: { edit: 'gifts' } },
+          { label: 'Jewelry & watches', link: items, queryParams: { category: 'jewelry' } },
+          { label: 'Accessories', link: items, queryParams: { category: 'accessories' } },
+          { label: 'Gifts by price', link: items, queryParams: { edit: 'gifts', sort: 'price-asc' } }
+        ]
+      },
+      {
+        title: 'Party Season',
+        links: [
+          { label: 'Party looks', link: items, queryParams: { edit: 'party' } },
+          { label: 'Evening shoes', link: items, queryParams: { edit: 'party', category: 'shoes' } },
+          { label: 'Brands of the moment', link: `${this.info().path}/brands` },
+          { label: 'New In', link: items, queryParams: { sort: 'newest' } }
+        ]
+      },
+      {
+        title: 'Holiday Styles',
+        links: [
+          { label: 'The Winter Edit', link: items, queryParams: { edit: 'winter' } },
+          { label: 'Modern Heritage', link: items, queryParams: { edit: 'heritage' } },
+          { label: 'Knitwear', link: items, queryParams: { q: 'knit' } },
+          { label: 'Sale', link: items, queryParams: { sale: 'true' } }
+        ]
+      }
+    ];
+  });
 }
