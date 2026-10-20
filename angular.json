@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "stitch-farfetch-store-online": {
+    "vestra": {
       "projectType": "application",
       "root": "",
       "sourceRoot": "src",
@@ -12,7 +12,7 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
-            "outputPath": "dist/stitch-farfetch-store-online",
+            "outputPath": "dist/vestra",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [],
@@ -44,10 +44,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "stitch-farfetch-store-online:build:production"
+              "buildTarget": "vestra:build:production"
             },
             "development": {
-              "buildTarget": "stitch-farfetch-store-online:build:development"
+              "buildTarget": "vestra:build:development"
             }
           },
           "defaultConfiguration": "development"
