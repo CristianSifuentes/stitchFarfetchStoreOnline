@@ -959,3 +959,8 @@ or endorsed by them. See the original site at <https://www.farfetch.com/>.
 - https://medium.com/@sanikapatil0213/folder-structures-that-scale-angular-architecture-for-big-teams-decb717e1f94
 - https://medium.com/@flaviusson/angular-20-to-21-transition-guide-breaking-changes-best-practices-and-migration-paths-2026-9a66338ac33e
 - https://khizaruddins.medium.com/modern-angular-enterprise-architecture-2026-beff3d0b928f
+
+### References
+
+file:///Users/cristian/Documents/workspace/angular/stitchFarfetchStoreOnline/prototypes/woman_/woman1/code.html
+https://www.youtube.com/watch?v=aSdAZHansJU
