@@ -25,7 +25,7 @@ describe('AuthService', () => {
 
   it('signs in the demo account', async () => {
     const auth = new InstantAuthService();
-    const result = await auth.signIn(' Demo@Farfetch.com ', DEMO_ACCOUNT.password);
+    const result = await auth.signIn(' Demo@Vestra.com ', DEMO_ACCOUNT.password);
     expect(result.ok).toBe(true);
     expect(auth.account()?.name).toBe(DEMO_ACCOUNT.name);
   });
@@ -45,7 +45,7 @@ describe('AuthService', () => {
 
   it('never stores the password itself', async () => {
     await new InstantAuthService().register('Sam Lee', 'sam@example.com', 'secret123');
-    expect(localStorage.getItem('farfetch.accounts.v1')).not.toContain('secret123');
+    expect(localStorage.getItem('vestra.accounts.v1')).not.toContain('secret123');
   });
 
   it('refuses duplicates, unknown emails and weak passwords', async () => {

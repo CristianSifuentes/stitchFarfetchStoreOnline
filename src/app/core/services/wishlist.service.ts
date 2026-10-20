@@ -1,6 +1,6 @@
 import { Injectable, computed, signal } from '@angular/core';
 
-const STORAGE_KEY = 'farfetch.wishlist.v1';
+const STORAGE_KEY = 'vestra.wishlist.v1';
 
 // App-wide wishlist: every heart reads and writes here, so the same product
 // is saved on every page and the header count stays in sync.

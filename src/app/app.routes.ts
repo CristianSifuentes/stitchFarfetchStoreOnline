@@ -19,7 +19,7 @@ function departmentRoutes(path: string, id: Department): Routes {
 }
 
 function titleFor(id: Department): string {
-  return { womenswear: 'Womenswear', menswear: 'Menswear', kids: 'Kidswear' }[id] + ' | FARFETCH';
+  return { womenswear: 'Womenswear', menswear: 'Menswear', kids: 'Kidswear' }[id] + ' | VESTRA';
 }
 
 export const routes: Routes = [
@@ -29,21 +29,21 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        title: 'FARFETCH | Luxury Fashion',
+        title: 'VESTRA | Luxury Fashion',
         loadComponent: () => import('./features/home/pages/home-page.component').then((m) => m.HomePageComponent)
       },
       ...departmentRoutes('womenswear', 'womenswear'),
       ...departmentRoutes('menswear', 'menswear'),
       ...departmentRoutes('kids', 'kids'),
-      { path: 'search', loadComponent: listing, data: { department: null }, title: 'Shop all | FARFETCH' },
+      { path: 'search', loadComponent: listing, data: { department: null }, title: 'Shop all | VESTRA' },
       {
         path: 'product/:id',
-        title: 'Product | FARFETCH',
+        title: 'Product | VESTRA',
         loadComponent: () => import('./features/product/pages/product-page.component').then((m) => m.ProductPageComponent)
       },
       {
         path: '**',
-        title: 'Page not found | FARFETCH',
+        title: 'Page not found | VESTRA',
         loadComponent: () => import('./features/not-found/pages/not-found-page.component').then((m) => m.NotFoundPageComponent)
       }
     ]
