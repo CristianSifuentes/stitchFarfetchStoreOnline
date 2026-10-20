@@ -1,6 +1,6 @@
 # Architecture & Design System
 
-How the storefront is organized, and the rules that keep every page consistent. The visual reference is
+How VESTRA, the storefront, is organized, and the rules that keep every page consistent. The visual reference is
 `prototypes/woman_/woman8` (screen + `DESIGN.md`, "Monochrome Absolute"), which reproduces Farfetch's
 listing pattern.
 

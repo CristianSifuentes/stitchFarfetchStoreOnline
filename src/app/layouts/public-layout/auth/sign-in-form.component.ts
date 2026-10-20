@@ -45,7 +45,7 @@ import { SocialSignInComponent } from './social-sign-in.component';
     </div>
 
     <p class="mt-8 text-center text-sm text-muted">
-      First time on FARFETCH?
+      First time on VESTRA?
       <button type="button" class="font-semibold text-ink underline underline-offset-4" (click)="dialog.open('register')">Register</button>
     </p>
   `,

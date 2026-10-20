@@ -49,7 +49,7 @@ interface NavLink {
           </nav>
         </div>
 
-        <a routerLink="/" class="select-none text-2xl font-light uppercase tracking-[0.08em] md:text-4xl" aria-label="Farfetch home">Farfetch</a>
+        <a routerLink="/" class="select-none text-2xl font-light uppercase tracking-[0.08em] md:text-4xl" aria-label="Vestra home">Vestra</a>
 
         <div class="flex items-center justify-end gap-5">
           <form class="relative hidden md:block" role="search" (submit)="search($event, query.value)">

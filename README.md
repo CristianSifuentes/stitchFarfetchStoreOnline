@@ -1,8 +1,12 @@
 <div align="center">
 
-# FARFETCH · Stitch Store Online
+# VESTRA
+
+#### Stitch Store Online
 
 ### A luxury-fashion storefront, hand-built with Angular 21: standalone, zoneless and signal-first
+
+*VESTRA, from the Latin* vestis *(garment): a minimal name for a minimal, monochrome store, modelled on Farfetch.*
 
 *Three departments (Women, Men, Kids), 82 products from 65 designers, curated edits, sale prices, age groups for kidswear, a shared wishlist, a bag and a sign-in dialog. Every page follows Farfetch's own structure and one strict design system, "Monochrome Absolute".*
 
@@ -248,9 +252,9 @@ flowchart LR
     Store --> Hdr["Header<br/>department of the product you view"]
 
     URL[("URL query params<br/>?age ?category ?designer ?edit ?sale ?sort ?q")] <--> List
-    Wish[("localStorage<br/>farfetch.wishlist.v1")] <--> WS["WishlistService"]
+    Wish[("localStorage<br/>vestra.wishlist.v1")] <--> WS["WishlistService"]
     WS --> Hearts["Every heart + header badge"]
-    Sess[("localStorage<br/>farfetch.session.v1 · farfetch.accounts.v1")] <--> AS["AuthService"]
+    Sess[("localStorage<br/>vestra.session.v1 · vestra.accounts.v1")] <--> AS["AuthService"]
     AS --> Hdr2["Header account menu"]
     AS --> Dlg["Sign-in dialog"]
 ```
@@ -442,7 +446,7 @@ export class CatalogStore {
 ### `WishlistService`
 
 A `signal<ReadonlySet<string>>` of product ids with `has()`, `toggle()` and `count`. It is persisted under
-`farfetch.wishlist.v1`, read defensively (non-arrays and non-strings are dropped, invalid JSON yields an empty
+`vestra.wishlist.v1`, read defensively (non-arrays and non-strings are dropped, invalid JSON yields an empty
 set) and guarded with `typeof localStorage` so it is safe during SSR and in private browsing.
 
 ### `CartService`
@@ -465,8 +469,8 @@ answer was produced and a real API can replace the class without touching the UI
 | `requestPasswordReset(email)` | Always succeeds, so the form never reveals which emails have accounts |
 | `signOut()` | Ends the session |
 
-- **Demo account:** `demo@farfetch.com` / `Farfetch2026`, always available (the dialog offers to fill it in).
-- **Storage:** `farfetch.session.v1` (the signed-in account) and `farfetch.accounts.v1` (name + SHA-256 hash per
+- **Demo account:** `demo@vestra.com` / `Vestra2026`, always available (the dialog offers to fill it in).
+- **Storage:** `vestra.session.v1` (the signed-in account) and `vestra.accounts.v1` (name + SHA-256 hash per
   email, never the password). Both are validated on read and guarded for SSR and blocked storage.
 - **Demo-grade on purpose:** real password hashing belongs on a server, with a slow algorithm (Argon2, bcrypt)
   and a random salt; codes would be emailed, not returned.
@@ -526,7 +530,7 @@ Plus:
 <main id="main"><router-outlet /></main>
 <app-service-links />      <!-- How to shop · FAQs · Need help? -->
 <app-newsletter-band />    <!-- "Never miss a thing": Email / SMS -->
-<app-site-footer />        <!-- four link columns + legal line -->
+<app-site-footer />        <!-- Farfetch's footer: link columns, social, payments, legal -->
 @defer (when authDialog.view(); prefetch on idle) {
   <app-auth-dialog />      <!-- sign in / register, in its own chunk -->
 }
@@ -535,7 +539,7 @@ Plus:
 ### `SiteHeader`
 
 - **Promo bar** ("Free shipping on orders over $200"), then a sticky header: departments on the left, the
-  FARFETCH wordmark centered, search, wishlist, bag and account on the right.
+  VESTRA wordmark centered, search, wishlist, bag and account on the right.
 - **The active department** is derived from the URL (`/kids/items` → Kids). On a product page it is the
   product's department (`/product/kj-4` → Kids), looked up in `CatalogStore`.
 - **The category bar** (`navLinks`, a `computed`) lists the active department's ways in: categories for Women
@@ -549,6 +553,21 @@ Plus:
   and opens a menu (name, email, wishlist and bag counts, *Sign out*) that closes on an outside click or Esc.
   The mobile menu has the same entry.
 
+### `SiteFooter`
+
+Farfetch's footer, in its order:
+
+| Block | Content |
+| ----- | ------- |
+| Customer Service | Help & Contact Us, FAQs, Orders & Delivery, Import Limits, Returns & Refunds, Payments & Pricing, Crypto Payments, Promotion Terms & Conditions, VESTRA Customer Promise |
+| About VESTRA | About Us, Press, VESTRA Partners, Careers, Modern Slavery Statement, VESTRA Advertising, Sitemap |
+| Discounts & Membership | Affiliate Program, Refer a Friend, Loyalty Program, Student Beans & Graduates, Student & Youth Discount |
+| Content & Services · Follow us | Fashion Feed; Instagram, Facebook, X, TikTok, YouTube (monochrome glyphs, labelled "VESTRA on …") |
+| Payment methods | Visa, Mastercard, American Express, PayPal, Apple Pay, Google Pay, Crypto: outlined tiles with each brand's monochrome mark (from [Simple Icons](https://simpleicons.org/), CC0, in `payment-methods.ts`) and its name |
+| Legal line | Privacy Policy, Terms & Conditions, Accessibility, Intellectual Property Protection; the city (`<address>`), the trademark notice and `© Copyright <current year> VESTRA` |
+
+Each column is a `<nav>` labelled with its title. The links are placeholders (`href="#"`) until those pages exist.
+
 ### `NewsletterBand`
 
 A channel choice (Email / SMS) and an input validated for the chosen channel, all with signals
@@ -560,8 +579,8 @@ Farfetch's sign-in pop-up, rebuilt on the design system.
 
 ```text
 ┌──────────────────────────┬─────────────────────────────────┐
-│ FARFETCH                 │                               ✕ │
-│                          │ Welcome to FARFETCH             │
+│ VESTRA                   │                               ✕ │
+│                          │ Welcome to VESTRA               │
 │     (editorial photo,    │  SIGN IN  │  REGISTER           │
 │      slow Ken Burns)     │ ───────────                     │
 │                          │ Email address                   │
@@ -573,7 +592,7 @@ Farfetch's sign-in pop-up, rebuilt on the design system.
 │ ✓ Faster checkout…       │ [ G  CONTINUE WITH GOOGLE   ]   │
 │                          │ [   CONTINUE WITH APPLE     ]   │
 │                          │ [ f  CONTINUE WITH FACEBOOK ]   │
-│                          │ First time on FARFETCH? Register│
+│                          │ First time on VESTRA? Register  │
 └──────────────────────────┴─────────────────────────────────┘
 ```
 
@@ -989,6 +1008,7 @@ Work happens on feature branches merged with `--no-ff` into `develop`, then fast
 | **Kids by age** | `features/improvement3` | `AgeGroup`, Kids nav (Baby / Kids / Teens), `?age=` filter, age-based sizes, PDP breadcrumb, *Shop by age* |
 | **Documentation & SSR** | `features/improvement4` | This README; working SSR with `AngularNodeAppEngine`, server routes and allowed hosts; `zone.js` removed |
 | **Sign in** | `features/improvement6` | Farfetch's sign-in pop-up: `AuthService`, `AuthDialogService`, `TextField`, the dialog with sign in, register, one-time code, forgot password and social providers; header account menu; motion tokens |
+| **Footer & name** | `features/improvement7` | Farfetch's full footer (customer service, about, discounts & membership, content, follow us, payment methods with monochrome marks, legal line); the store becomes **VESTRA** |
 
 ---
 
@@ -1112,11 +1132,12 @@ Header links, filters, titles and tiles pick it up; tiles only appear where prod
 
 - Product photography: [Unsplash](https://unsplash.com/) photographers, served through imgix.
 - Font: [Inter](https://rsms.me/inter/) via Google Fonts.
+- Payment and social marks: [Simple Icons](https://simpleicons.org/) (CC0); brand names and logos belong to their owners.
 - Visual prototypes: generated with Stitch (`prototypes/`).
 
-**Disclaimer:** an educational architecture project inspired by Farfetch's marketplace domain and UI patterns.
-FARFETCH and the designer names are trademarks of their respective owners; this project is not affiliated with
-or endorsed by them. See the original site at <https://www.farfetch.com/>.
+**Disclaimer:** VESTRA is a fictional store: an educational architecture project inspired by Farfetch's marketplace
+domain and UI patterns. FARFETCH and the designer names are trademarks of their respective owners; this project is
+not affiliated with or endorsed by them. See the original site at <https://www.farfetch.com/>.
 
 ### Further reading
 

@@ -30,7 +30,7 @@ const ASIDE: Record<AuthView, AsideCopy> = {
   'sign-in': { eyebrow: 'Members', title: 'Your world of luxury, in one place', benefits: MEMBER_BENEFITS },
   welcome: { eyebrow: 'Members', title: 'Your world of luxury, in one place', benefits: MEMBER_BENEFITS },
   register: {
-    eyebrow: 'Join FARFETCH',
+    eyebrow: 'Join VESTRA',
     title: 'Be first to the new season',
     benefits: ['Tailored new arrivals from the houses you love', 'Early access to Sale and private events', 'Your wishlist, saved on every device']
   },
@@ -47,8 +47,8 @@ const ASIDE: Record<AuthView, AsideCopy> = {
 };
 
 const TITLES: Record<AuthView, string> = {
-  'sign-in': 'Welcome to FARFETCH',
-  register: 'Welcome to FARFETCH',
+  'sign-in': 'Welcome to VESTRA',
+  register: 'Welcome to VESTRA',
   code: 'Continue with a one-time code',
   forgot: 'Forgot your password?',
   welcome: ''
@@ -75,7 +75,7 @@ const TITLES: Record<AuthView, string> = {
             <img [src]="image" alt="" class="absolute inset-0 h-full w-full object-cover motion-safe:animate-ken-burns" />
             <span class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/20"></span>
             <div class="relative flex h-full flex-col justify-between p-10">
-              <p class="text-xl font-light uppercase tracking-[0.08em]">Farfetch</p>
+              <p class="text-xl font-light uppercase tracking-[0.08em]">Vestra</p>
               @let copy = aside();
               <div class="motion-safe:animate-fade-in" [attr.data-view]="view">
                 <p class="label-caps opacity-80">{{ copy.eyebrow }}</p>

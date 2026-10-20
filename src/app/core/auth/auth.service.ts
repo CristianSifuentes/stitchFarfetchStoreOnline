@@ -2,12 +2,12 @@ import { Injectable, computed, signal } from '@angular/core';
 import { Account, AuthProvider, AuthResult } from './auth.model';
 import { isEmail, isValidPassword, nameFromEmail, normalizeEmail } from './auth.validation';
 
-const ACCOUNTS_KEY = 'farfetch.accounts.v1';
-const SESSION_KEY = 'farfetch.session.v1';
+const ACCOUNTS_KEY = 'vestra.accounts.v1';
+const SESSION_KEY = 'vestra.session.v1';
 const CODE_LIFETIME_MS = 10 * 60 * 1000;
 
 // Always there, so the store can be tried without registering first.
-export const DEMO_ACCOUNT = { name: 'Alex Morgan', email: 'demo@farfetch.com', password: 'Farfetch2026' } as const;
+export const DEMO_ACCOUNT = { name: 'Alex Morgan', email: 'demo@vestra.com', password: 'Vestra2026' } as const;
 
 // What a social provider would hand back after its consent screen.
 const SOCIAL_PROFILES: Record<'google' | 'apple' | 'facebook', { readonly name: string; readonly email: string }> = {
