@@ -74,6 +74,9 @@ const RELATED_COUNT = 4;
                       [class.text-canvas]="selectedSize() === size"
                       [class.border-line]="selectedSize() !== size"
                       [attr.aria-pressed]="selectedSize() === size"
+                      [disabled]="item.soldOut"
+                      [class.opacity-40]="item.soldOut"
+                      [class.line-through]="item.soldOut"
                       (click)="selectedSize.set(size)"
                     >{{ size }}</button>
                   }
@@ -84,9 +87,14 @@ const RELATED_COUNT = 4;
             }
 
             <div class="space-y-3">
-              <button type="button" class="btn btn-primary w-full" (click)="addToBag()">
-                {{ added() ? 'Added to bag' : 'Add to bag' }}
-              </button>
+              @if (item.soldOut) {
+                <button type="button" class="btn btn-primary w-full" disabled>Sold out</button>
+                <p class="text-xs leading-relaxed text-muted">This piece is sold out. Save it to your wishlist to keep it close.</p>
+              } @else {
+                <button type="button" class="btn btn-primary w-full" (click)="addToBag()">
+                  {{ added() ? 'Added to bag' : 'Add to bag' }}
+                </button>
+              }
               @if (needsSize()) {
                 <p class="text-xs text-error" role="alert">Please select a size.</p>
               }

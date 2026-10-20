@@ -63,7 +63,8 @@
     "addedAt": "2024-03-24",
     "edits": [
       "gifts"
-    ]
+    ],
+    "soldOut": true
   },
   {
     "id": "ww-6",
@@ -188,7 +189,8 @@
     "addedAt": "2024-02-27",
     "edits": [
       "winter"
-    ]
+    ],
+    "soldOut": true
   },
   {
     "id": "ms-2",
@@ -546,7 +548,8 @@
       "gifts",
       "party"
     ],
-    "ageGroup": "kids"
+    "ageGroup": "kids",
+    "soldOut": true
   },
   {
     "id": "kj-15",
@@ -715,7 +718,8 @@
     "addedAt": "2024-01-30",
     "edits": [
       "gifts"
-    ]
+    ],
+    "soldOut": true
   },
   {
     "id": "ww-22",
@@ -827,7 +831,8 @@
     "edits": [
       "gifts",
       "party"
-    ]
+    ],
+    "soldOut": true
   },
   {
     "id": "ww-30",
@@ -917,7 +922,8 @@
     "edits": [
       "heritage",
       "party"
-    ]
+    ],
+    "soldOut": true
   },
   {
     "id": "ms-15",
@@ -1015,7 +1021,8 @@
     "addedAt": "2024-01-22",
     "edits": [
       "gifts"
-    ]
+    ],
+    "soldOut": true
   },
   {
     "id": "ms-22",

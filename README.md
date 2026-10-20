@@ -84,6 +84,7 @@ Three ideas run through every file:
 | `/womenswear`, `/menswear`, `/kids` | **Department hub** | Farfetch's hub, in its order: seasonal campaign, *New in daily*, *Trending now*, an editorial story with its pieces, **Shop by age** (Kids only), *Shop by category*, *Trending brands* and *More to explore*. |
 | `/<department>/items` | **Listing** | Farfetch's `items.aspx`: filter by age (Kids), category, designer and sale; sort by newest or price; load more. Title, description and breadcrumb name exactly what you selected. |
 | `/<department>/brands` | **Brands** | Trending houses as large tiles, then every designer in the department from A to Z with its piece count. |
+| `/wishlist` | **Wishlist** | Everything you saved, most recent first: remove with **Undo**, filter *All · Available · On sale · Sold out*, pick a size and **Add to bag** right from the card, and *You may also like*. Signed in it shows your name and VESTRA Access tier (**Bronze**); signed out, a prompt to sign in and keep it. |
 | `/search?q=` | **Search** | The same listing across all departments. Search is accent-insensitive (`chloe` finds *Chloé*). |
 | `/product/:id` | **Product** | Gallery (full view + two detail crops), size picker with the right size run, add to bag, wishlist, details, size & fit, shipping, and *You may also like*. |
 | `/anything-else` | **404** | A way back to the store. |
@@ -99,8 +100,11 @@ Three ideas run through every file:
 
 Small touches, everywhere:
 
-- **Wishlist:** every heart in the app reads and writes the same store, persisted in `localStorage`; the header
-  badge counts saved pieces live.
+- **Wishlist:** every heart in the app reads and writes the same store; the header heart (with its live count)
+  opens `/wishlist`. Each account keeps its own list, and what you saved as a guest joins your account when you
+  sign in.
+- **Sold out:** some pieces can't be bought right now: "Sold out" replaces the price, the PDP disables the sizes and
+  the bag button, and they can still be saved.
 - **Sale:** marked-down pieces show the sale price in red, the original struck through and the discount
   (`$225 $325 -31%`), and sorting uses the price actually paid.
 - **Sizes that make sense:** a bodysuit offers `3M–24M`, a teen's sneaker `36–40 EU`, a womenswear coat `38–46 IT`;
@@ -357,6 +361,9 @@ stitchFarfetchStoreOnline/
 │           │   └── pages/product-listing-page.component.ts
 │           ├── brands/pages/brands-page.component.ts
 │           ├── product/pages/product-page.component.ts
+│           ├── wishlist/
+│           │   ├── components/wishlist-card.component.ts   Saved piece: remove, size, Add to bag
+│           │   └── pages/wishlist-page.component.ts
 │           └── not-found/pages/not-found-page.component.ts
 ├── angular.json · tsconfig*.json · vitest.config.ts · postcss.config.json
 └── LICENSE                         Apache 2.0
@@ -391,6 +398,7 @@ interface CatalogItem {
   edits: ProductEdit[];  // curated edits, across categories
   ageGroup?: AgeGroup;   // kids only
   salePrice?: number;    // present when on sale
+  soldOut?: boolean;     // can't be bought; can still be saved
 }
 ```
 
@@ -457,9 +465,19 @@ export class CatalogStore {
 
 ### `WishlistService`
 
-A `signal<ReadonlySet<string>>` of product ids with `has()`, `toggle()` and `count`. It is persisted under
-`vestra.wishlist.v1`, read defensively (non-arrays and non-strings are dropped, invalid JSON yields an empty
-set) and guarded with `typeof localStorage` so it is safe during SSR and in private browsing.
+An ordered list of product ids with `has()`, `toggle()`, `remove()`, `restore(id, index)` (Undo), `count` and
+`items` (most recent first). **It follows the session**: a `linkedSignal` whose source is the signed-in email
+re-reads the right list whenever the account changes:
+
+| Session | Storage key |
+| ------- | ----------- |
+| Guest | `vestra.wishlist.v1` |
+| Signed in | `vestra.wishlist.v1:<email>` |
+
+At the moment of signing in, the guest's pieces are merged into the account's (`mergeWishlists`: the account's
+first, then the guest's new ones) and the guest list is cleared, the way Farfetch keeps what you saved before
+logging in. Storage is read defensively (non-arrays, non-strings and duplicates dropped; invalid JSON yields an
+empty list) and guarded for SSR and private browsing.
 
 ### `CartService`
 
@@ -747,7 +765,20 @@ with its piece count and a link to its filtered listing.
 - **Details / Size & fit / Shipping & returns** as native `<details>` accordions.
 - **You may also like:** same department, same category first, newest first.
 
-### 9.6 Not found: `**`
+### 9.6 Wishlist: `/wishlist`
+
+Farfetch's wishlist page.
+
+| Part | Behaviour |
+| ---- | --------- |
+| Header | Breadcrumb, *your name* + **Bronze** tier badge (signed in), "Wishlist", the live item count, and filter tabs with counts (*All · Available · On sale · Sold out*; empty ones are disabled) |
+| Signed out | A band: "Keep your wishlist on every device" with *Sign in* / *Register* (opens the dialog) |
+| Cards (`WishlistCard`) | Photo with a ✕ remove button, brand, name, price or *Sold out* (photo dimmed and greyscale). Buyable pieces get a size `<select>` (or "One size") and **Add to bag**, which asks for a size first and confirms with a check |
+| Undo | Removing shows a black bar "Removed AMIRI Distressed slim-fit jeans · **Undo**" for 6 s; Undo puts the piece back in its place |
+| Empty | A heart, "Your wishlist is empty" and *Shop Women / Men / Kids* |
+| You may also like | Newest in-stock pieces from the departments you save from (the store's newest when empty) |
+
+### 9.7 Not found: `**`
 
 The last route; a message and a way back.
 
@@ -762,6 +793,7 @@ The last route; a message and a way back.
 | Womenswear / Menswear / Kids | 33 / 25 / 24 |
 | Clothing / Shoes / Bags / Accessories / Jewelry | 32 / 14 / 13 / 12 / 11 |
 | On sale | 17 |
+| Sold out | 7 (Cartier, Tiffany & Co., Loewe, Rick Owens, IWC, John Lobb, Dodo) |
 | Edits: Gifts / Party / Winter / Heritage | 28 / 25 / 18 / 11 |
 | Kids by age: Baby / Kids / Teens | 5 / 12 / 7 |
 
@@ -957,7 +989,7 @@ to drive a DOM API.
 
 ## 17. Testing
 
-Tests run with **Vitest** in a Node environment (`npm test`): **38 tests across 9 files**, all green.
+Tests run with **Vitest** in a Node environment (`npm test`): **42 tests across 10 files**, all green.
 
 | Spec | What it proves |
 | ---- | -------------- |
@@ -967,6 +999,7 @@ Tests run with **Vitest** in a Node environment (`npm test`): **38 tests across 
 | `sizing.spec.ts` (3) | Kids sizes follow the age group (3M… for baby clothing, 36 EU… for teen shoes); adult runs unchanged; one-size categories return `[]` |
 | `auth.service.spec.ts` (6) | Demo sign-in; register → sign out → sign in, and the session surviving a new instance (a reload); no plaintext password in storage; duplicates, unknown emails and weak passwords refused; one-time code (wrong code, single use, passwordless account); social sign-in |
 | `auth.validation.spec.ts` (4) | Email messages; password rules and strength from Weak to Strong; names from emails |
+| `wishlist.service.spec.ts` (4) | Most recent first; the guest list merged into the account on sign-in, cleared, and lists kept apart per account; Undo restores the original position; `mergeWishlists` order |
 | `locale.model.spec.ts` (4) | US dollars untouched; conversion and local formats (MXN, GBP, EUR in Germany, JPY); regions alphabetical with their symbols; guards for untrusted values |
 | `catalog.model.spec.ts` (2) | `effectivePrice` and `discountPercent` |
 | `price.util.spec.ts` (2) | `$2,950` formatting and rounding |
@@ -975,7 +1008,8 @@ Tests run with **Vitest** in a Node environment (`npm test`): **38 tests across 
 photo pictures a designer) lives in plain functions extracted from components. They are tested without
 rendering anything, run in ~100ms, and pages stay thin.
 
-**Techniques worth studying:** `vi.stubGlobal('localStorage', new MemoryStorage())` gives each test a clean
+**Techniques worth studying:** `Injector.create` with a fake `AuthService` (a plain `signal` for the account)
+tests the real `WishlistService`, including its `linkedSignal`, with no TestBed. `vi.stubGlobal('localStorage', new MemoryStorage())` gives each test a clean
 storage; a subclass (`InstantAuthService`, `latencyMs = 0`) removes the simulated network delay without fake timers.
 
 **Visual QA:** layout changes are verified with headless Chrome screenshots at 1440px and 390–600px; flows that
@@ -1012,7 +1046,7 @@ need clicks (the sign-in dialog) are driven through the Chrome DevTools Protocol
 | Router events → signal | `site-header.component.ts` (`toSignal(router.events…)`) |
 | `toSignal` over HTTP | `catalog.store.ts` |
 | `signal`, `computed` | everywhere |
-| `linkedSignal` | `product-listing-page` (`limit`), `product-page` (size, image, added) |
+| `linkedSignal` | `product-listing-page` (`limit`), `product-page` (size, image, added), `wishlist.service.ts` (list per account, merge on sign-in via `previous`) |
 | `input()`, `input.required()` | every shared component |
 | `viewChild`, `afterNextRender` | `product-carousel.component.ts` |
 | Content projection | `editorial-story.component.ts` |
@@ -1076,6 +1110,7 @@ Work happens on feature branches merged with `--no-ff` into `develop`, then fast
 | **Sign in** | `features/improvement6` | Farfetch's sign-in pop-up: `AuthService`, `AuthDialogService`, `TextField`, the dialog with sign in, register, one-time code, forgot password and social providers; header account menu; motion tokens |
 | **Footer & name** | `features/improvement7` | Farfetch's full footer (customer service, about, discounts & membership, content, follow us, payment methods with monochrome marks, legal line); the store becomes **VESTRA** |
 | **Language & region** | `features/improvement8` | Farfetch's *Language \| Region* selector as a drawer; `LocaleService`; prices converted and formatted per region through the `price` pipe; globe in the header, mobile menu and footer |
+| **Wishlist** | `features/improvement9` | Farfetch's `/wishlist`: cards with size and Add to bag, remove with Undo, filters, recommendations; a wishlist per account merged on sign-in; sold-out pieces; Bronze tier in the account menu |
 
 ---
 
@@ -1129,7 +1164,8 @@ npm start            # → http://localhost:4200
 5. Visit **Women → Sale** and sort *Price: low to high*.
 6. Search for `chloe` (no accent).
 7. Open **Men → Brands** and pick a house from the A–Z list.
-8. Click the person icon: *Fill in* the demo account and sign in; then sign out from your initial.
+8. Heart a few pieces as a guest, then click the person icon, *Fill in* the demo account and sign in: open the heart
+   in the header; your pieces came with you. Remove one and hit *Undo*.
 9. Open it again → *Continue with a one-time code*, and click the code shown to sign in.
 10. Try *Register* and watch the strength meter while typing a password.
 11. Click the globe (`US · EN`) → *Region* → *Mexico*: every price turns into pesos; try *Germany* for euros.
@@ -1174,7 +1210,8 @@ Header links, filters, titles and tiles pick it up; tiles only appear where prod
 ## 24. Roadmap & Known Gaps
 
 - [ ] A real auth backend behind `AuthService` (sessions in HttpOnly cookies, server-side hashing, emailed codes, OAuth redirects) and an account page.
-- [ ] Sync the wishlist to the signed-in account.
+- [ ] Sync the wishlist to a server account (it is per account, but only in this browser).
+- [ ] Real stock per size, and "notify me" for sold-out pieces.
 - [ ] Bag drawer and checkout flow (`CartService` currently counts items).
 - [ ] Wishlist page listing saved pieces.
 - [ ] Component tests for the listing and product pages; E2E (Playwright) for filters and the Kids nav.

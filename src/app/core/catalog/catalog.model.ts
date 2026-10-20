@@ -26,6 +26,8 @@ export interface CatalogItem {
   ageGroup?: AgeGroup;
   // Present when the piece is on sale; price stays the original.
   salePrice?: number;
+  // Can't be bought right now; it can still be saved to the wishlist.
+  soldOut?: boolean;
 }
 
 // What the customer pays.
