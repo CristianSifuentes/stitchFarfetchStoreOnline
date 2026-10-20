@@ -1,7 +1,9 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AuthDialogService } from '../../core/auth';
+import { LocaleService } from '../../core/locale';
 import { AuthDialogComponent } from './auth/auth-dialog.component';
+import { LocalePickerComponent } from './locale/locale-picker.component';
 import { NewsletterBandComponent } from './newsletter-band.component';
 import { ServiceLinksComponent } from './service-links.component';
 import { SiteFooterComponent } from './site-footer.component';
@@ -11,7 +13,7 @@ import { SiteHeaderComponent } from './site-header.component';
 // full-bleed sections and framed content can mix.
 @Component({
   selector: 'app-public-layout',
-  imports: [RouterOutlet, SiteHeaderComponent, ServiceLinksComponent, NewsletterBandComponent, SiteFooterComponent, AuthDialogComponent],
+  imports: [RouterOutlet, SiteHeaderComponent, ServiceLinksComponent, NewsletterBandComponent, SiteFooterComponent, AuthDialogComponent, LocalePickerComponent],
   template: `
     <app-site-header />
     <main id="main">
@@ -27,9 +29,13 @@ import { SiteHeaderComponent } from './site-header.component';
     @defer (when authDialog.view(); prefetch on idle) {
       <app-auth-dialog />
     }
+    @defer (when locale.pickerOpen(); prefetch on idle) {
+      <app-locale-picker />
+    }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PublicLayoutComponent {
   protected readonly authDialog = inject(AuthDialogService);
+  protected readonly locale = inject(LocaleService);
 }

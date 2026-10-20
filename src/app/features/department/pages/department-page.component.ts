@@ -12,6 +12,7 @@ import {
   isCategory,
   isEdit
 } from '../../../core/catalog';
+import { LocaleService } from '../../../core/locale';
 import { CatalogStore, byNewest } from '../../../core/services/catalog.store';
 import { BrandTile, BrandTilesComponent } from '../../../shared/ui/brand-tiles/brand-tiles.component';
 import { BreadcrumbComponent } from '../../../shared/ui/breadcrumb/breadcrumb.component';
@@ -151,6 +152,7 @@ const GIFT_RECIPIENT: Record<Department, string> = { womenswear: 'her', menswear
 })
 export class DepartmentPageComponent {
   private readonly catalog = inject(CatalogStore);
+  private readonly locale = inject(LocaleService);
 
   // From the route's data (withComponentInputBinding).
   readonly department = input.required<Department>();
@@ -174,7 +176,7 @@ export class DepartmentPageComponent {
     }
     return [
       { value: String(designersIn(items).length), label: 'Designers' },
-      { value: `$${Math.min(...items.map((item) => item.price)).toLocaleString('en-US')}`, label: 'Prices from' },
+      { value: this.locale.format(Math.min(...items.map((item) => item.price))), label: 'Prices from' },
       { value: String(items.length), label: 'Pieces' }
     ];
   });

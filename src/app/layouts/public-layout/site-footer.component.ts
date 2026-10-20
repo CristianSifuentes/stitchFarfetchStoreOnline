@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { LocaleService } from '../../core/locale';
 import { PAYMENT_METHODS } from './payment-methods';
 
 interface FooterColumn {
@@ -103,7 +104,21 @@ type Social = 'instagram' | 'facebook' | 'x' | 'tiktok' | 'youtube';
             </p>
             <p class="text-xs text-muted">© Copyright {{ year }} VESTRA. All rights reserved.</p>
           </div>
-          <span class="select-none text-sm font-light uppercase tracking-[0.08em] text-muted" aria-hidden="true">Vestra</span>
+          <div class="flex flex-col gap-6 lg:items-end">
+            <button
+              type="button"
+              class="flex items-center gap-3 border border-line bg-canvas px-4 py-3 text-left text-xs transition-colors hover:border-ink"
+              [attr.aria-label]="'Change language and region. Now: ' + locale.region().name + ', ' + locale.region().currency + ', ' + locale.language().name"
+              (click)="locale.openPicker()"
+            >
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z" /></svg>
+              <span>
+                <span class="block">{{ locale.region().name }} · {{ locale.region().currency }}</span>
+                <span class="block text-muted">{{ locale.language().nativeName }}</span>
+              </span>
+            </button>
+            <span class="select-none text-sm font-light uppercase tracking-[0.08em] text-muted" aria-hidden="true">Vestra</span>
+          </div>
         </div>
       </div>
     </footer>
@@ -111,6 +126,8 @@ type Social = 'instagram' | 'facebook' | 'x' | 'tiktok' | 'youtube';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SiteFooterComponent {
+  protected readonly locale = inject(LocaleService);
+
   protected readonly columns: ReadonlyArray<FooterColumn> = [
     {
       title: 'Customer Service',

@@ -3,6 +3,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Params, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { filter, map } from 'rxjs';
 import { AuthDialogService, AuthService } from '../../core/auth';
+import { LocaleService } from '../../core/locale';
 import { AGE_GROUPS, CATEGORIES, DEPARTMENTS, Department, isDepartment } from '../../core/catalog';
 import { CartService } from '../../core/services/cart.service';
 import { CatalogStore } from '../../core/services/catalog.store';
@@ -52,6 +53,15 @@ interface NavLink {
         <a routerLink="/" class="select-none text-2xl font-light uppercase tracking-[0.08em] md:text-4xl" aria-label="Vestra home">Vestra</a>
 
         <div class="flex items-center justify-end gap-5">
+          <button
+            type="button"
+            class="hidden items-center gap-2 transition-colors hover:text-muted lg:flex"
+            [attr.aria-label]="'Language and region: ' + locale.region().name + ', ' + locale.region().currency + ', ' + locale.language().name"
+            (click)="locale.openPicker()"
+          >
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z" /></svg>
+            <span class="label-caps">{{ locale.region().id }} · {{ locale.language().short }}</span>
+          </button>
           <form class="relative hidden md:block" role="search" (submit)="search($event, query.value)">
             <svg class="pointer-events-none absolute left-0 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
               <circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" />
@@ -136,6 +146,10 @@ interface NavLink {
                 <li><a [routerLink]="item.link" [queryParams]="item.queryParams" [class.text-error]="item.sale">{{ item.label }}</a></li>
               }
             </ul>
+            <button type="button" class="flex items-center gap-3 border-t border-line pt-6 text-left text-sm" (click)="locale.openPicker()">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z" /></svg>
+              <span>{{ locale.region().name }} · {{ locale.region().currency }} · {{ locale.language().nativeName }}</span>
+            </button>
             <div class="border-t border-line pt-6">
               @if (auth.account(); as account) {
                 <p class="text-sm">{{ account.name }} <span class="text-muted">· {{ account.email }}</span></p>
@@ -162,6 +176,7 @@ export class SiteHeaderComponent {
   protected readonly wishlist = inject(WishlistService);
   protected readonly auth = inject(AuthService);
   protected readonly authDialog = inject(AuthDialogService);
+  protected readonly locale = inject(LocaleService);
 
   protected readonly departments = DEPARTMENTS;
   protected readonly categories = CATEGORIES;
