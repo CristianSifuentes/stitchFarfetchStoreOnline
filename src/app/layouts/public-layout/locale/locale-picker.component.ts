@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, afterRenderEffect, computed, inject, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, LOCALE_ID, afterRenderEffect, computed, inject, signal, viewChild } from '@angular/core';
 import { LANGUAGES, LanguageId, LocaleService, REGIONS, RegionId, currencySymbol, formatMoney } from '../../../core/locale';
 
 type Tab = 'language' | 'region';
@@ -7,8 +7,9 @@ type Tab = 'language' | 'region';
 const SAMPLE_PRICE = 1250;
 
 // Farfetch's "Language | Region" selector as a drawer from the right, on
-// the native <dialog> (focus trap, Esc, inert page). Choices apply at once:
-// prices change currency behind the drawer as you pick a region.
+// the native <dialog> (focus trap, Esc, inert page). A region applies at
+// once: prices change currency behind the drawer. A language loads the
+// same page in that language's build.
 @Component({
   selector: 'app-locale-picker',
   template: `
@@ -23,13 +24,13 @@ const SAMPLE_PRICE = 1250;
         <div class="flex h-full flex-col">
           <header class="px-6 pt-6 sm:px-10">
             <div class="flex items-center justify-between">
-              <h2 id="locale-title" class="label-caps">Language &amp; region</h2>
-              <button type="button" class="-mr-2 flex h-10 w-10 items-center justify-center transition-colors hover:text-muted" aria-label="Close" (click)="locale.closePicker()">
+              <h2 id="locale-title" class="label-caps" i18n="@@locale.title">Language &amp; region</h2>
+              <button type="button" class="-mr-2 flex h-10 w-10 items-center justify-center transition-colors hover:text-muted" aria-label="Close" i18n-aria-label="@@common.close" (click)="locale.closePicker()">
                 <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg>
               </button>
             </div>
 
-            <div class="mt-6 grid grid-cols-2 border-b border-line" role="tablist" aria-label="Language or region">
+            <div class="mt-6 grid grid-cols-2 border-b border-line" role="tablist" aria-label="Language or region" i18n-aria-label="@@locale.tabs">
               @for (option of tabs; track option.id) {
                 <button
                   type="button"
@@ -48,8 +49,8 @@ const SAMPLE_PRICE = 1250;
           <div class="flex-1 overflow-y-auto px-6 pb-10 sm:px-10">
             @if (tab() === 'language') {
               <div class="motion-safe:animate-fade-in">
-                <p class="py-6 text-sm leading-relaxed text-muted">Choose the language you want to browse the site in.</p>
-                <ul class="border-t border-line" role="radiogroup" aria-label="Language">
+                <p class="py-6 text-sm leading-relaxed text-muted" i18n="@@locale.languageIntro">Choose the language you want to browse the site in.</p>
+                <ul class="border-t border-line" role="radiogroup" aria-label="Language" i18n-aria-label="@@locale.language">
                   @for (language of languages; track language.id) {
                     <li>
                       <button
@@ -63,7 +64,7 @@ const SAMPLE_PRICE = 1250;
                         <span>
                           <span class="block text-base transition-colors group-hover:text-muted" [class.font-medium]="language.id === locale.language().id">{{ language.nativeName }}</span>
                           @if (language.name !== language.nativeName) {
-                            <span class="mt-1 block text-xs text-muted" lang="en">{{ language.name }}</span>
+                            <span class="mt-1 block text-xs text-muted" [attr.lang]="locale.language().id">{{ language.name }}</span>
                           }
                         </span>
                         @if (language.id === locale.language().id) {
@@ -73,19 +74,19 @@ const SAMPLE_PRICE = 1250;
                     </li>
                   }
                 </ul>
-                <p class="mt-6 bg-surface px-4 py-3 text-xs leading-relaxed text-muted">
-                  VESTRA is available in English for now. We'll remember your choice for when more languages arrive.
+                <p class="mt-6 bg-surface px-4 py-3 text-xs leading-relaxed text-muted" i18n="@@locale.languageNote">
+                  The page reloads in the language you choose. Your region, bag and wishlist stay as they are.
                 </p>
               </div>
             } @else {
               <div class="motion-safe:animate-fade-in">
-                <p class="py-6 text-sm leading-relaxed text-muted">Choose where you're shopping from. Prices are shown in that region's currency.</p>
+                <p class="py-6 text-sm leading-relaxed text-muted" i18n="@@locale.regionIntro">Choose where you're shopping from. Prices are shown in that region's currency.</p>
                 <label class="relative mb-2 block">
                   <svg class="pointer-events-none absolute left-0 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" /></svg>
-                  <span class="sr-only">Search regions</span>
-                  <input class="input-line pl-7" type="search" placeholder="Search for a country or currency" [value]="query()" (input)="query.set($any($event.target).value)" />
+                  <span class="sr-only" i18n="@@locale.searchLabel">Search regions</span>
+                  <input class="input-line pl-7" type="search" placeholder="Search for a country or currency" i18n-placeholder="@@locale.searchPlaceholder" [value]="query()" (input)="query.set($any($event.target).value)" />
                 </label>
-                <ul class="border-t border-line" role="radiogroup" aria-label="Region">
+                <ul class="border-t border-line" role="radiogroup" aria-label="Region" i18n-aria-label="@@locale.region">
                   @for (region of regions(); track region.id) {
                     <li>
                       <button
@@ -99,7 +100,7 @@ const SAMPLE_PRICE = 1250;
                           <span class="block text-sm transition-colors group-hover:text-muted" [class.font-medium]="region.id === locale.region().id">{{ region.name }}</span>
                           <span class="mt-0.5 block text-xs text-muted">{{ region.currency }} {{ region.symbol }}</span>
                         </span>
-                        <span class="text-xs text-muted" [attr.aria-label]="'Sample price ' + region.sample">{{ region.sample }}</span>
+                        <span class="text-xs text-muted" [attr.aria-label]="region.sampleLabel">{{ region.sample }}</span>
                         @if (region.id === locale.region().id) {
                           <svg class="h-4 w-4 motion-safe:animate-fade-in" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m5 12 5 5 9-10" /></svg>
                         } @else {
@@ -108,10 +109,10 @@ const SAMPLE_PRICE = 1250;
                       </button>
                     </li>
                   } @empty {
-                    <li class="py-10 text-center text-sm text-muted">No regions match "{{ query() }}".</li>
+                    <li class="py-10 text-center text-sm text-muted" i18n="@@locale.noMatch">No regions match "{{ query() }}".</li>
                   }
                 </ul>
-                <p class="mt-6 bg-surface px-4 py-3 text-xs leading-relaxed text-muted">
+                <p class="mt-6 bg-surface px-4 py-3 text-xs leading-relaxed text-muted" i18n="@@locale.ratesNote">
                   Prices are converted from US dollars at indicative rates and rounded to whole units.
                 </p>
               </div>
@@ -123,7 +124,7 @@ const SAMPLE_PRICE = 1250;
               <p class="text-xs text-muted">
                 <span class="text-ink">{{ locale.region().name }}</span> · {{ locale.region().currency }} · {{ locale.language().nativeName }}
               </p>
-              <button type="button" class="btn btn-primary px-8" (click)="locale.closePicker()">Done</button>
+              <button type="button" class="btn btn-primary px-8" (click)="locale.closePicker()" i18n="@@locale.done">Done</button>
             </div>
           </footer>
         </div>
@@ -137,20 +138,24 @@ export class LocalePickerComponent {
   private readonly dialog = viewChild.required<ElementRef<HTMLDialogElement>>('dialog');
 
   protected readonly tabs: ReadonlyArray<{ readonly id: Tab; readonly label: string }> = [
-    { id: 'language', label: 'Language' },
-    { id: 'region', label: 'Region' }
+    { id: 'language', label: $localize`:@@locale.language:Language` },
+    { id: 'region', label: $localize`:@@locale.region:Region` }
   ];
   protected readonly languages = LANGUAGES;
   protected readonly tab = signal<Tab>('language');
   protected readonly query = signal('');
 
-  // Regions matching the search, each with its symbol and a sample price.
+  private readonly collator = new Intl.Collator(inject(LOCALE_ID));
+
+  // Regions matching the search, in the reader's alphabetical order, each
+  // with its symbol and a sample price.
   protected readonly regions = computed(() => {
     const needle = this.query().trim().toLowerCase();
-    return REGIONS.filter((region) => !needle || `${region.name} ${region.currency}`.toLowerCase().includes(needle)).map((region) => ({
+    return [...REGIONS].sort((a, b) => this.collator.compare(a.name, b.name)).filter((region) => !needle || `${region.name} ${region.currency}`.toLowerCase().includes(needle)).map((region) => ({
       ...region,
       symbol: currencySymbol(region),
-      sample: formatMoney(SAMPLE_PRICE, region)
+      sample: formatMoney(SAMPLE_PRICE, region),
+      sampleLabel: $localize`:@@locale.samplePrice:Sample price ${formatMoney(SAMPLE_PRICE, region)}:INTERPOLATION:`
     }));
   });
 

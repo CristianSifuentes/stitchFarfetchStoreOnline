@@ -37,8 +37,8 @@ export interface BrandTile {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BrandTilesComponent {
-  readonly title = input('Trending brands');
+  readonly title = input($localize`:@@section.trendingBrands:Trending brands`);
   readonly brands = input.required<ReadonlyArray<BrandTile>>();
-  readonly actionLabel = input('All brands');
+  readonly actionLabel = input($localize`:@@section.allBrands:All brands`);
   readonly actionLink = input<string | null>(null);
 }

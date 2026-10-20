@@ -38,7 +38,7 @@ bookmarked and restored with the back button.
 src/app
   core/
     auth/         AuthService (session), AuthDialogService (which screen is open), validation rules
-    locale/       LocaleService (language + region), REGIONS with currency and rate, formatMoney
+    locale/       LocaleService (the build's language + the visitor's region), REGIONS with currency and rate, formatMoney
     theme/        ThemeService (light / dark / system, data-theme on <html>), resolveTheme
     catalog/      CatalogItem model, DEPARTMENTS / CATEGORIES taxonomy, size runs
     bag/          BagService (lines with size and quantity, per account), pure bag.model (totals, delivery)
@@ -173,6 +173,12 @@ can't drift. `rounded-full` remains for functional circles only (the wishlist bu
 - **A category:** add it to `ProductCategory` and `CATEGORIES`. Tiles and filters only appear where products
   exist.
 - **A product:** add it to `catalog.json`. It appears in its department, listings, search and recommendations.
+- **Any UI text:** mark it for translation, always with a custom ID: `i18n="@@area.key"` in templates (plus
+  `i18n-<attr>` for static attributes and inputs), ``$localize`:@@area.key:Text` `` in TypeScript. Titles built from
+  parts are one message with named placeholders, never concatenation. Counts use an ICU plural, or `itemCount()` /
+  `pieceCount()` in attributes and inside `@for`. Interpolated ARIA labels are `$localize` in TypeScript bound with
+  `[attr.aria-label]`. Then `npm run extract-i18n` and add the `<target>` to every `src/locale/messages.<lang>.xlf`:
+  the build fails on a missing translation.
 
 ## Tests
 

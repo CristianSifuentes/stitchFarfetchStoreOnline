@@ -33,6 +33,6 @@ export interface EditTile {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditTilesComponent {
-  readonly title = input('Trending now');
+  readonly title = input($localize`:@@section.trendingNow:Trending now`);
   readonly tiles = input.required<ReadonlyArray<EditTile>>();
 }

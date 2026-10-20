@@ -19,10 +19,10 @@ import { SocialSignInComponent } from './social-sign-in.component';
   imports: [TextFieldComponent, SocialSignInComponent],
   template: `
     <form class="grid gap-6" novalidate (submit)="submit($event)">
-      <app-text-field label="Name" autocomplete="name" [autofocus]="true" [(value)]="name" [error]="nameProblem()" />
-      <app-text-field label="Email address" type="email" autocomplete="email" [(value)]="email" [error]="emailProblem()" />
+      <app-text-field label="Name" i18n-label="@@auth.field.name" autocomplete="name" [autofocus]="true" [(value)]="name" [error]="nameProblem()" />
+      <app-text-field label="Email address" i18n-label="@@auth.field.email" type="email" autocomplete="email" [(value)]="email" [error]="emailProblem()" />
       <div>
-        <app-text-field label="Password" type="password" autocomplete="new-password" [revealable]="true" [(value)]="password" [error]="passwordProblem()" />
+        <app-text-field label="Password" i18n-label="@@auth.field.password" type="password" autocomplete="new-password" [revealable]="true" [(value)]="password" [error]="passwordProblem()" />
         <div class="mt-4 flex items-center gap-3" aria-hidden="true">
           <div class="grid flex-1 grid-cols-4 gap-1">
             @for (step of steps; track step) {
@@ -31,7 +31,7 @@ import { SocialSignInComponent } from './social-sign-in.component';
           </div>
           <span class="label-caps w-14 text-right">{{ strengthLabel() }}</span>
         </div>
-        <ul class="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-xs" aria-label="Password requirements">
+        <ul class="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-xs" aria-label="Password requirements" i18n-aria-label="@@auth.passwordRequirements">
           @for (check of checks(); track check.id) {
             <li class="flex items-center gap-1.5 transition-colors" [class.text-ink]="check.met" [class.text-muted]="!check.met">
               <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -41,7 +41,7 @@ import { SocialSignInComponent } from './social-sign-in.component';
                   <circle cx="12" cy="12" r="3" fill="currentColor" stroke="none" />
                 }
               </svg>
-              {{ check.label }}<span class="sr-only">{{ check.met ? ': done' : ': missing' }}</span>
+              {{ check.label }}<span class="sr-only">: @if (check.met) {<ng-container i18n="@@auth.check.done">done</ng-container>} @else {<ng-container i18n="@@auth.check.missing">missing</ng-container>}</span>
             </li>
           }
         </ul>
@@ -49,7 +49,7 @@ import { SocialSignInComponent } from './social-sign-in.component';
 
       <label class="flex cursor-pointer items-start gap-3 text-sm">
         <input type="checkbox" class="mt-0.5 h-3.5 w-3.5 accent-black" [checked]="newsletter()" (change)="newsletter.set($any($event.target).checked)" />
-        <span class="text-muted">Sign up for promotions, tailored new arrivals, stock updates and more.</span>
+        <span class="text-muted" i18n="@@auth.newsletterOptIn">Sign up for promotions, tailored new arrivals, stock updates and more.</span>
       </label>
 
       @if (failure()) {
@@ -59,13 +59,13 @@ import { SocialSignInComponent } from './social-sign-in.component';
       <button type="submit" class="btn btn-primary w-full" [disabled]="pending()">
         @if (pending()) {
           <span class="h-3.5 w-3.5 animate-spin rounded-full border border-canvas border-t-transparent" aria-hidden="true"></span>
-          Creating your account
+          <ng-container i18n="@@auth.creatingAccount">Creating your account</ng-container>
         } @else {
-          Register
+          <ng-container i18n="@@auth.register">Register</ng-container>
         }
       </button>
 
-      <p class="text-xs leading-relaxed text-muted">
+      <p class="text-xs leading-relaxed text-muted" i18n="@@auth.terms">
         By registering, you agree to our <span class="text-ink underline underline-offset-2">Terms &amp; Conditions</span>
         and <span class="text-ink underline underline-offset-2">Privacy and Cookie Policy</span>.
       </p>
@@ -76,8 +76,8 @@ import { SocialSignInComponent } from './social-sign-in.component';
     </div>
 
     <p class="mt-8 text-center text-sm text-muted">
-      Already have an account?
-      <button type="button" class="font-semibold text-ink underline underline-offset-4" (click)="dialog.open('sign-in')">Sign in</button>
+      <ng-container i18n="@@auth.haveAccount">Already have an account?</ng-container>&ngsp;
+      <button type="button" class="font-semibold text-ink underline underline-offset-4" (click)="dialog.open('sign-in')" i18n="@@auth.signIn">Sign in</button>
     </p>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -101,10 +101,10 @@ export class RegisterFormComponent {
   protected readonly strength = computed(() => passwordStrength(this.password()));
   protected readonly strengthLabel = computed(() => STRENGTH_LABELS[this.strength()]);
 
-  protected readonly nameProblem = computed(() => (this.submitted() && !this.name().trim() ? 'Enter your name.' : ''));
+  protected readonly nameProblem = computed(() => (this.submitted() && !this.name().trim() ? $localize`:@@auth.error.nameMissing:Enter your name.` : ''));
   protected readonly emailProblem = computed(() => (this.submitted() ? emailError(this.email()) : ''));
   protected readonly passwordProblem = computed(() =>
-    this.submitted() && !isValidPassword(this.password()) ? 'Your password needs at least 8 characters, a letter and a number.' : ''
+    this.submitted() && !isValidPassword(this.password()) ? $localize`:@@auth.error.passwordRules:Your password needs at least 8 characters, a letter and a number.` : ''
   );
 
   protected async submit(event: Event): Promise<void> {

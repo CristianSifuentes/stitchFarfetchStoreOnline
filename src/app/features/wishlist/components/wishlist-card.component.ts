@@ -25,12 +25,12 @@ import { PriceTagComponent } from '../../../shared/ui/price-tag/price-tag.compon
           />
         </a>
         @if (item().soldOut) {
-          <span class="absolute left-3 top-3 bg-canvas px-2 py-1 text-[9px] font-semibold uppercase tracking-[0.12em]">Sold out</span>
+          <span class="absolute left-3 top-3 bg-canvas px-2 py-1 text-[9px] font-semibold uppercase tracking-[0.12em]" i18n="@@product.soldOut">Sold out</span>
         }
         <button
           type="button"
           class="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-canvas/90 transition-colors hover:bg-ink hover:text-canvas"
-          [attr.aria-label]="'Remove ' + item().brand + ' ' + item().title + ' from wishlist'"
+          [attr.aria-label]="removeLabel()"
           (click)="remove.emit()"
         >
           <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg>
@@ -47,7 +47,7 @@ import { PriceTagComponent } from '../../../shared/ui/price-tag/price-tag.compon
         <div class="mt-auto space-y-3 pt-5">
           @if (sizes().length) {
             <label class="block">
-              <span class="sr-only">Select size for {{ item().title }}</span>
+              <span class="sr-only" i18n="@@wishlist.selectSizeFor">Select size for {{ item().title }}</span>
               <select
                 class="select-line w-full border-b py-2"
                 [class.border-line]="!needsSize()"
@@ -55,24 +55,24 @@ import { PriceTagComponent } from '../../../shared/ui/price-tag/price-tag.compon
                 [value]="size() ?? ''"
                 (change)="pick($any($event.target).value)"
               >
-                <option value="">Select size</option>
+                <option value="" i18n="@@product.selectSize">Select size</option>
                 @for (option of sizes(); track option) {
                   <option [value]="option">{{ option }}</option>
                 }
               </select>
             </label>
             @if (needsSize()) {
-              <p class="text-xs text-error" role="alert">Select a size first.</p>
+              <p class="text-xs text-error" role="alert" i18n="@@wishlist.sizeFirst">Select a size first.</p>
             }
           } @else {
-            <p class="label-caps py-2 text-muted">One size</p>
+            <p class="label-caps py-2 text-muted" i18n="@@product.oneSize">One size</p>
           }
           <button type="button" class="btn btn-secondary w-full px-4" (click)="addToBag()">
             @if (added()) {
               <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m5 12 5 5 9-10" /></svg>
-              Added to bag
+              <ng-container i18n="@@product.added">Added to bag</ng-container>
             } @else {
-              Add to bag
+              <ng-container i18n="@@product.addToBag">Add to bag</ng-container>
             }
           </button>
         </div>
@@ -89,6 +89,9 @@ export class WishlistCardComponent {
 
   protected readonly image = computed(() => sizedImage(this.item().image, 600));
   protected readonly sizes = computed(() => sizesFor(this.item()));
+  protected readonly removeLabel = computed(
+    () => $localize`:@@wishlist.removeNamed:Remove ${this.item().brand}:INTERPOLATION: ${this.item().title}:INTERPOLATION_1: from wishlist`
+  );
   protected readonly size = signal<string | null>(null);
   protected readonly needsSize = signal(false);
   protected readonly added = signal(false);

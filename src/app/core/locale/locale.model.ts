@@ -1,5 +1,7 @@
 // The two choices of Farfetch's "Language | Region" selector. A region sets
 // the currency prices are shown in; a language is the one the site is read in.
+// Language ids are the build's locale ids (angular.json "i18n"), so each one
+// is also the URL prefix its pages are served under.
 
 export type LanguageId = 'ru' | 'es-419' | 'de' | 'zh-Hans' | 'fr' | 'en-US';
 
@@ -7,19 +9,19 @@ export interface LanguageInfo {
   readonly id: LanguageId;
   // In the language itself: "Deutsch".
   readonly nativeName: string;
-  // In the UI's language: "German".
+  // In the language being read: "German", "Alemán".
   readonly name: string;
   // For the header button: "DE".
   readonly short: string;
 }
 
 export const LANGUAGES: ReadonlyArray<LanguageInfo> = [
-  { id: 'ru', nativeName: 'Русский', name: 'Russian', short: 'RU' },
-  { id: 'es-419', nativeName: 'Español (latinoamericano)', name: 'Spanish (Latin American)', short: 'ES' },
-  { id: 'de', nativeName: 'Deutsch', name: 'German', short: 'DE' },
-  { id: 'zh-Hans', nativeName: '中文（简体）', name: 'Chinese (Simplified)', short: 'ZH' },
-  { id: 'fr', nativeName: 'Français', name: 'French', short: 'FR' },
-  { id: 'en-US', nativeName: 'English (American)', name: 'English (American)', short: 'EN' }
+  { id: 'ru', nativeName: 'Русский', name: $localize`:@@language.ru:Russian`, short: 'RU' },
+  { id: 'es-419', nativeName: 'Español (latinoamericano)', name: $localize`:@@language.es419:Spanish (Latin American)`, short: 'ES' },
+  { id: 'de', nativeName: 'Deutsch', name: $localize`:@@language.de:German`, short: 'DE' },
+  { id: 'zh-Hans', nativeName: '中文（简体）', name: $localize`:@@language.zhHans:Chinese (Simplified)`, short: 'ZH' },
+  { id: 'fr', nativeName: 'Français', name: $localize`:@@language.fr:French`, short: 'FR' },
+  { id: 'en-US', nativeName: 'English (American)', name: $localize`:@@language.enUS:English (American)`, short: 'EN' }
 ];
 
 export type RegionId = 'US' | 'MX' | 'CA' | 'BR' | 'GB' | 'FR' | 'DE' | 'IT' | 'ES' | 'AE' | 'CN' | 'JP';
@@ -36,20 +38,20 @@ export interface RegionInfo {
   readonly rate: number;
 }
 
-// Alphabetical, as the selector lists them.
+// Names in the language being read; the selector sorts them in it.
 export const REGIONS: ReadonlyArray<RegionInfo> = [
-  { id: 'BR', name: 'Brazil', currency: 'BRL', locale: 'pt-BR', rate: 5.5 },
-  { id: 'CA', name: 'Canada', currency: 'CAD', locale: 'en-CA', rate: 1.38 },
-  { id: 'CN', name: 'China', currency: 'CNY', locale: 'zh-CN', rate: 7.1 },
-  { id: 'FR', name: 'France', currency: 'EUR', locale: 'fr-FR', rate: 0.9 },
-  { id: 'DE', name: 'Germany', currency: 'EUR', locale: 'de-DE', rate: 0.9 },
-  { id: 'IT', name: 'Italy', currency: 'EUR', locale: 'it-IT', rate: 0.9 },
-  { id: 'JP', name: 'Japan', currency: 'JPY', locale: 'ja-JP', rate: 148 },
-  { id: 'MX', name: 'Mexico', currency: 'MXN', locale: 'es-MX', rate: 18.4 },
-  { id: 'ES', name: 'Spain', currency: 'EUR', locale: 'es-ES', rate: 0.9 },
-  { id: 'AE', name: 'United Arab Emirates', currency: 'AED', locale: 'en-AE', rate: 3.67 },
-  { id: 'GB', name: 'United Kingdom', currency: 'GBP', locale: 'en-GB', rate: 0.77 },
-  { id: 'US', name: 'United States', currency: 'USD', locale: 'en-US', rate: 1 }
+  { id: 'BR', name: $localize`:@@region.BR:Brazil`, currency: 'BRL', locale: 'pt-BR', rate: 5.5 },
+  { id: 'CA', name: $localize`:@@region.CA:Canada`, currency: 'CAD', locale: 'en-CA', rate: 1.38 },
+  { id: 'CN', name: $localize`:@@region.CN:China`, currency: 'CNY', locale: 'zh-CN', rate: 7.1 },
+  { id: 'FR', name: $localize`:@@region.FR:France`, currency: 'EUR', locale: 'fr-FR', rate: 0.9 },
+  { id: 'DE', name: $localize`:@@region.DE:Germany`, currency: 'EUR', locale: 'de-DE', rate: 0.9 },
+  { id: 'IT', name: $localize`:@@region.IT:Italy`, currency: 'EUR', locale: 'it-IT', rate: 0.9 },
+  { id: 'JP', name: $localize`:@@region.JP:Japan`, currency: 'JPY', locale: 'ja-JP', rate: 148 },
+  { id: 'MX', name: $localize`:@@region.MX:Mexico`, currency: 'MXN', locale: 'es-MX', rate: 18.4 },
+  { id: 'ES', name: $localize`:@@region.ES:Spain`, currency: 'EUR', locale: 'es-ES', rate: 0.9 },
+  { id: 'AE', name: $localize`:@@region.AE:United Arab Emirates`, currency: 'AED', locale: 'en-AE', rate: 3.67 },
+  { id: 'GB', name: $localize`:@@region.GB:United Kingdom`, currency: 'GBP', locale: 'en-GB', rate: 0.77 },
+  { id: 'US', name: $localize`:@@region.US:United States`, currency: 'USD', locale: 'en-US', rate: 1 }
 ];
 
 export const DEFAULT_LANGUAGE: LanguageId = 'en-US';
@@ -65,6 +67,17 @@ export function regionInfo(id: RegionId): RegionInfo {
 
 export function isLanguage(value: unknown): value is LanguageId {
   return LANGUAGES.some((language) => language.id === value);
+}
+
+// The language a build serves, from its LOCALE_ID.
+export function toLanguage(localeId: string): LanguageId {
+  return isLanguage(localeId) ? localeId : DEFAULT_LANGUAGE;
+}
+
+// Where a language's pages live: English at the root, the others under
+// their id ("/es-419/womenswear").
+export function languagePath(id: LanguageId): string {
+  return id === DEFAULT_LANGUAGE ? '' : `/${id}`;
 }
 
 export function isRegion(value: unknown): value is RegionId {

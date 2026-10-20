@@ -19,20 +19,18 @@ interface BrandEntry {
   imports: [RouterLink, BreadcrumbComponent, BrandTilesComponent],
   template: `
     <div class="page-container">
-      <app-breadcrumb [items]="[{ label: 'Home', link: '/' }, { label: info().label, link: info().path }, { label: 'Brands' }]" />
+      <app-breadcrumb [items]="[{ label: homeLabel, link: '/' }, { label: info().label, link: info().path }, { label: brandsLabel }]" />
 
       <header class="max-w-2xl pb-12">
-        <h1 class="text-headline">{{ info().possessive }} Brands</h1>
-        <p class="mt-4 text-sm leading-relaxed text-muted">
-          {{ brands().length }} designers, from heritage houses to the names defining what comes next.
-        </p>
+        <h1 class="text-headline">{{ title() }}</h1>
+        <p class="mt-4 text-sm leading-relaxed text-muted" i18n="@@brands.intro">{brands().length, plural, one {{{ brands().length }} designer, from heritage houses to the names defining what comes next.} few {{{ brands().length }} designers, from heritage houses to the names defining what comes next.} many {{{ brands().length }} designers, from heritage houses to the names defining what comes next.} other {{{ brands().length }} designers, from heritage houses to the names defining what comes next.}}</p>
       </header>
 
       @if (trending().length) {
         <app-brand-tiles [brands]="trending()" />
       }
 
-      <nav class="sticky top-[7.5rem] z-10 -mx-5 mt-16 border-y border-line bg-canvas px-5 lg:top-[9.25rem] lg:mx-0 lg:px-0" aria-label="Brands A to Z">
+      <nav class="sticky top-[7.5rem] z-10 -mx-5 mt-16 border-y border-line bg-canvas px-5 lg:top-[9.25rem] lg:mx-0 lg:px-0" aria-label="Brands A to Z" i18n-aria-label="@@brands.az">
         <ul class="no-scrollbar flex gap-1 overflow-x-auto py-3 lg:justify-between">
           @for (letter of letters; track letter) {
             <li>
@@ -75,6 +73,9 @@ export class BrandsPageComponent {
 
   protected readonly letters = LETTERS;
   protected readonly info = computed(() => departmentInfo(this.department()));
+  protected readonly title = computed(() => $localize`:@@listing.title.department:${this.info().possessive}:department: ${this.brandsLabel}:subject:`);
+  protected readonly homeLabel = $localize`:@@breadcrumb.home:Home`;
+  protected readonly brandsLabel = $localize`:@@nav.brands:Brands`;
   private readonly items = computed(() => this.catalog.byDepartment(this.department()));
 
   protected readonly brands = computed<BrandEntry[]>(() => {

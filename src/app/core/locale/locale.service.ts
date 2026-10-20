@@ -1,49 +1,50 @@
 import { DOCUMENT } from '@angular/common';
-import { Injectable, computed, inject, signal } from '@angular/core';
+import { Injectable, LOCALE_ID, computed, inject, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import {
-  DEFAULT_LANGUAGE,
   DEFAULT_REGION,
   LanguageId,
   RegionId,
   formatMoney,
-  isLanguage,
   isRegion,
   languageInfo,
-  regionInfo
+  languagePath,
+  regionInfo,
+  toLanguage
 } from './locale.model';
 
 const STORAGE_KEY = 'vestra.locale.v1';
 
-// The visitor's language and region, remembered in this browser. The
-// region converts every price (the price pipe reads it); the language sets
-// <html lang>. The UI copy itself is English for now.
+// The visitor's language and region. The language is the build being
+// served: Angular i18n compiles one per locale, each under its own URL
+// prefix (/es-419/…), with <html lang> set. Choosing another language
+// loads the same page from that build. The region is remembered in this
+// browser and converts every price (the price pipe reads it), whatever
+// the language.
 @Injectable({ providedIn: 'root' })
 export class LocaleService {
   private readonly document = inject(DOCUMENT);
-  private readonly stored = readStored();
+  private readonly router = inject(Router);
+  private readonly languageId = toLanguage(inject(LOCALE_ID));
 
-  private readonly languageId = signal<LanguageId>(this.stored.language);
-  private readonly regionId = signal<RegionId>(this.stored.region);
+  private readonly regionId = signal<RegionId>(readStoredRegion());
   private readonly open = signal(false);
 
-  readonly language = computed(() => languageInfo(this.languageId()));
+  readonly language = signal(languageInfo(this.languageId)).asReadonly();
   readonly region = computed(() => regionInfo(this.regionId()));
   // Whether the Language | Region selector is showing.
   readonly pickerOpen = this.open.asReadonly();
-
-  constructor() {
-    this.document.documentElement.lang = this.languageId();
-  }
 
   // A catalog price (US dollars) in the visitor's currency.
   format(usd: number): string {
     return formatMoney(usd, this.region());
   }
 
+  // The same page in another language: a full load of that build.
   setLanguage(id: LanguageId): void {
-    this.languageId.set(id);
-    this.document.documentElement.lang = id;
-    this.persist();
+    if (id !== this.languageId) {
+      this.document.defaultView?.location.assign(languagePath(id) + this.router.url);
+    }
   }
 
   setRegion(id: RegionId): void {
@@ -62,7 +63,7 @@ export class LocaleService {
   private persist(): void {
     try {
       if (typeof localStorage !== 'undefined') {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify({ language: this.languageId(), region: this.regionId() }));
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({ region: this.regionId() }));
       }
     } catch {
       // Blocked storage: the choice lasts for this visit.
@@ -70,15 +71,12 @@ export class LocaleService {
   }
 }
 
-function readStored(): { language: LanguageId; region: RegionId } {
+function readStoredRegion(): RegionId {
   try {
     const raw = typeof localStorage === 'undefined' ? null : localStorage.getItem(STORAGE_KEY);
-    const parsed = raw ? (JSON.parse(raw) as { language?: unknown; region?: unknown }) : {};
-    return {
-      language: isLanguage(parsed.language) ? parsed.language : DEFAULT_LANGUAGE,
-      region: isRegion(parsed.region) ? parsed.region : DEFAULT_REGION
-    };
+    const parsed = raw ? (JSON.parse(raw) as { region?: unknown }) : {};
+    return isRegion(parsed.region) ? parsed.region : DEFAULT_REGION;
   } catch {
-    return { language: DEFAULT_LANGUAGE, region: DEFAULT_REGION };
+    return DEFAULT_REGION;
   }
 }

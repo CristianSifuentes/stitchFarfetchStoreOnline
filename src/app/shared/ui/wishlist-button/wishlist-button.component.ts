@@ -10,7 +10,7 @@ import { WishlistService } from '../../../core/services/wishlist.service';
       type="button"
       class="flex h-8 w-8 items-center justify-center rounded-full bg-canvas/90 transition-colors hover:bg-canvas"
       [attr.aria-pressed]="saved()"
-      [attr.aria-label]="(saved() ? 'Remove ' : 'Save ') + label() + (saved() ? ' from wishlist' : ' to wishlist')"
+      [attr.aria-label]="saved() ? removeLabel() : saveLabel()"
       (click)="toggle($event)"
     >
       <svg class="h-4 w-4" viewBox="0 0 24 24" [attr.fill]="saved() ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true">
@@ -25,9 +25,11 @@ export class WishlistButtonComponent {
 
   readonly productId = input.required<string>();
   // Accessible name, e.g. "Prada Galleria tote".
-  readonly label = input('this item');
+  readonly label = input($localize`:@@wishlist.thisItem:this item`);
 
   protected readonly saved = computed(() => this.wishlist.has(this.productId()));
+  protected readonly saveLabel = computed(() => $localize`:@@wishlist.save:Save ${this.label()}:item: to wishlist`);
+  protected readonly removeLabel = computed(() => $localize`:@@wishlist.remove:Remove ${this.label()}:item: from wishlist`);
 
   protected toggle(event: Event): void {
     // The button often sits inside a card link.

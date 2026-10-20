@@ -124,6 +124,7 @@ Small touches, everywhere:
 | Layer | Technology | Version | How it's used |
 | ----- | ---------- | ------- | ------------- |
 | Framework | **Angular** | 21.2 | Standalone components, signals, `linkedSignal`, `input()`, control flow, `withComponentInputBinding`, lazy `loadComponent` |
+| i18n | **@angular/localize** | 21.2 | `i18n` / `$localize` with custom IDs, ICU plurals, one build per language (en-US, es-419, de, fr, ru, zh-Hans) |
 | Dialogs | Native `<dialog>` | platform | `showModal()`: top layer, focus trap, Esc, inert page |
 | Change detection | **Zoneless** | built-in | `provideZonelessChangeDetection()`; every component is `OnPush` |
 | Language | **TypeScript** | 5.9 | `strict`, `strictTemplates`, `noImplicitOverride`, `noImplicitReturns`, `noPropertyAccessFromIndexSignature`, `noFallthroughCasesInSwitch` |
@@ -136,7 +137,8 @@ Small touches, everywhere:
 | Unit tests | **Vitest** | 4.0 | Node environment, pure-function specs |
 | Images | **Unsplash (imgix)** | CDN | Resized and focal-point-cropped per context |
 
-**Not used, on purpose:** no UI kit, no component library, no state library (NgRx etc.), no animation package.
+**Not used, on purpose:** no UI kit, no component library, no state library (NgRx etc.), no animation package, no
+runtime translation library (ngx-translate, Transloco): Angular's own i18n compiles each language in.
 Everything is Angular, Tailwind and the web platform.
 
 ---
@@ -302,6 +304,9 @@ vestra/
 │   └── woman_/ (womahome_, woman1–woman8 · woman8/DESIGN.md = "Monochrome Absolute")
 ├── src/
 │   ├── index.html                  CSP meta, theme-init script, Inter font, <app-root>
+│   ├── locale/                     messages.xlf (extracted source) + messages.<lang>.xlf per language
+│   ├── test-setup.ts               Installs $localize for the specs
+├── scripts/dev-i18n.mjs            npm start: every language, watch build + SSR server
 │   ├── main.ts                     Browser bootstrap
 │   ├── main.server.ts              Server bootstrap
 │   ├── server.ts                   Express + AngularNodeAppEngine SSR server
@@ -326,8 +331,8 @@ vestra/
 │       │   │   ├── auth-dialog.service.ts Which dialog screen is open, and the email typed so far
 │       │   │   └── index.ts
 │       │   ├── locale/
-│       │   │   ├── locale.model.ts       LANGUAGES, REGIONS (currency, locale, rate), formatMoney (+ spec)
-│       │   │   ├── locale.service.ts     The visitor's language and region; opens the selector
+│       │   │   ├── locale.model.ts       LANGUAGES, REGIONS (currency, locale, rate), formatMoney, languagePath (+ spec)
+│       │   │   ├── locale.service.ts     The build's language, the visitor's region; opens the selector
 │       │   │   └── index.ts
 │       │   ├── theme/
 │       │   │   ├── theme.model.ts        Theme, ThemePreference, resolveTheme, storage key (+ spec)
@@ -349,6 +354,7 @@ vestra/
 │       ├── shared/
 │       │   ├── ui/                 14 presentational components (see §7)
 │       │   ├── data/payment-methods.ts   Payment marks (Simple Icons, CC0): footer and bag
+│       │   ├── i18n/plurals.ts           itemCount / pieceCount: plurals where an ICU can't go (+ spec)
 │       │   ├── pipes/price.pipe.ts
 │       │   └── utils/price.util.ts (+ spec)
 │       ├── layouts/public-layout/
@@ -559,14 +565,18 @@ and the service, so the UI and the "server" never disagree.
 
 ### `LocaleService`: language and region
 
-Farfetch's *Language | Region* choice, as two signals remembered under `vestra.locale.v1`:
+Farfetch's *Language | Region* choice. The two work differently:
 
 - **Region** (12, from Brazil to the United States) carries a currency, a number locale and an indicative rate
   per US dollar. `format(usd)` converts a catalog price and writes it the local way through `Intl.NumberFormat`:
   `$3,250` (US) · `$59,800` (MXN) · `£2,503` · `2.925 €` (Germany) · `2 925 €` (France) · `￥481,000`. Whole units,
   like every luxury price. Formatters are cached per region.
-- **Language** (Русский, Español (latinoamericano), Deutsch, 中文（简体）, Français, English (American)) sets
-  `<html lang>` and is remembered. The UI copy is English for now; the selector says so.
+  The region is a signal remembered under `vestra.locale.v1` and applies at once, in any language.
+- **Language** (Русский, Español (latinoamericano), Deutsch, 中文（简体）, Français, English (American)) is the
+  **build being served**: `toLanguage(inject(LOCALE_ID))`. Each language is compiled separately (§16) and lives under
+  its own prefix: English at `/`, the others at `/es-419/…`, `/de/…`. `setLanguage(id)` loads the same page from that
+  build (`languagePath(id) + router.url`, so `/womenswear/items?category=bags` → `/es-419/womenswear/items?category=bags`);
+  the region, bag and wishlist stay, since they live in `localStorage`.
 - `pickerOpen()` / `openPicker()` / `closePicker()` drive the selector from the header, the mobile menu and the
   footer.
 
@@ -752,13 +762,14 @@ How it is built:
 - **A drawer from the right** on the native `<dialog>` (`animate-drawer-in`), full screen on phones. Same pattern as
   the sign-in dialog: `LocaleService.pickerOpen()` is the truth and an `afterRenderEffect` calls `showModal()` /
   `close()`; Esc, the ✕, *Done* and a backdrop click all close it. Deferred into its own chunk (~2.5 kB gzipped).
-- **Language tab:** each language in its own script with its English name underneath (`lang` set per row, so
-  screen readers pronounce it right); a check marks the current one.
+- **Language tab:** each language in its own script with its name in the current language underneath (`lang` set
+  per row, so screen readers pronounce it right); a check marks the current one. Choosing one reloads the page in
+  that language; the note under the list says so.
 - **Region tab:** a search box (country or currency: "eur" lists France, Germany, Italy, Spain), then each region
   with its currency code and symbol and a **sample price** in that currency, so you see what you'll get before
   choosing.
-- **Applies at once:** choices take effect on click; the footer of the drawer always shows the current
-  combination.
+- **Region applies at once;** the footer of the drawer always shows the current combination. Regions are sorted
+  with `Intl.Collator` in the reader's language ("Alemania, Brasil, Canadá…" in Spanish).
 - Both lists are `role="radiogroup"` with `role="radio"` / `aria-checked` rows.
 
 ---
@@ -1067,7 +1078,33 @@ to drive a DOM API.
 - **Allowed hosts (SSRF protection):** `security.allowedHosts` in `angular.json` lists the hostnames the server
   will render for (`localhost`, `127.0.0.1`). Add your production domain there before deploying; unknown hosts
   fall back to client-side rendering.
-- **Hydration:** `provideClientHydration()` reuses the server DOM instead of re-rendering it.
+- **Hydration:** `provideClientHydration(withI18nSupport())` reuses the server DOM instead of re-rendering it,
+  translated blocks included (without `withI18nSupport` every component with `i18n` would be skipped and re-rendered).
+- **Internationalization (`@angular/localize`):**
+  - `angular.json` → `i18n.sourceLocale` is `en-US` with `subPath: ""` (English stays at `/`), and `locales` lists
+    `es-419`, `de`, `fr`, `ru` and `zh-Hans`, each with `src/locale/messages.<lang>.xlf`. Production sets
+    `localize: true`, so `ng build` compiles six apps: `dist/vestra/browser/{,es-419/,de/,…}` and a server bundle per
+    language. `AngularNodeAppEngine` picks the one matching the URL prefix; each gets its `<base href>`,
+    `<html lang>` and `$localize.locale`.
+  - `i18nMissingTranslation: "error"`: a message without a translation fails the build.
+  - **Marking text:** templates use `i18n="@@id"` (and `i18n-placeholder`, `i18n-aria-label`, `i18n-title`… on
+    static attributes and component inputs); TypeScript uses ``$localize`:@@id:Text` ``, with named placeholders
+    (``${name}:department:``) so translators can reorder words. Every message has a **custom ID** grouped by area
+    (`auth.*`, `bag.*`, `listing.*`…), so translations survive copy edits.
+  - **Plurals:** ICU expressions (`{count, plural, one {…} few {…} many {…} other {…}}`) in templates, with Russian's
+    `few`/`many` forms. Two places use `itemCount()` / `pieceCount()` (`Intl.PluralRules` + one message per category)
+    instead: bound attributes (an ICU can't go in an attribute) and counts inside `@for` (an ICU in a repeated
+    template breaks i18n hydration).
+  - **Interpolated ARIA labels** are built in TypeScript with `$localize` and bound with `[attr.aria-label]`:
+    Angular applies interpolated i18n attributes as DOM properties, which leaves no `aria-label` attribute.
+  - **Composite titles** ("Women's Bags", "Gifts for her") are whole messages with placeholders, never
+    concatenations, so Spanish says *Bolsas para mujer* and Chinese *女士包袋*.
+  - **Not translated:** product names and descriptions from `catalog.json`, designer names and sizes, like Farfetch.
+  - **Workflow:** `npm run extract-i18n` writes `src/locale/messages.xlf`; copy each new `<trans-unit>` into every
+    `messages.<lang>.xlf` and add its `<target>`. `npm start` runs every language (`scripts/dev-i18n.mjs`), since
+    `ng serve` can only serve one: `ng serve --configuration=es-419` (or `de`, `fr`, `ru`, `zh-Hans`) for one
+    language with hot reload, `npm run start:en` for English.
+  - The translations were written for this project and should be reviewed by native speakers before real use.
 - **SSR-safe code:** browser-only APIs are guarded (`typeof localStorage`), and DOM measurement in the carousel
   runs in `afterNextRender`.
 - **Headers:** `X-Content-Type-Options: nosniff` and `X-Frame-Options: DENY` on every response.
@@ -1084,7 +1121,8 @@ to drive a DOM API.
 
 ## 17. Testing
 
-Tests run with **Vitest** in a Node environment (`npm test`): **49 tests across 12 files**, all green.
+Tests run with **Vitest** in a Node environment (`npm test`): **54 tests across 14 files**, all green. `src/test-setup.ts` installs `$localize` (the source text) first, since
+models and services carry translatable strings.
 
 | Spec | What it proves |
 | ---- | -------------- |
@@ -1097,7 +1135,9 @@ Tests run with **Vitest** in a Node environment (`npm test`): **49 tests across 
 | `bag.model.spec.ts` (6) | Same piece and size raises the quantity (capped); changing size merges lines; quantity clamped; guest bag merged into the account; sale prices charged, sold-out set apart, missing sizes counted; free standard delivery from $200, never on express |
 | `recently-viewed.service.spec.ts` (1) | Newest first, no duplicates, capped at 12, kept across reloads |
 | `wishlist.service.spec.ts` (4) | Most recent first; the guest list merged into the account on sign-in, cleared, and lists kept apart per account; Undo restores the original position; `mergeWishlists` order |
-| `locale.model.spec.ts` (4) | US dollars untouched; conversion and local formats (MXN, GBP, EUR in Germany, JPY); regions alphabetical with their symbols; guards for untrusted values |
+| `locale.model.spec.ts` (5) | US dollars untouched; conversion and local formats (MXN, GBP, EUR in Germany, JPY); every region with its symbol; guards for untrusted values and `toLanguage`; `languagePath` (English at the root) |
+| `theme.model.spec.ts` (3) | The system theme until the visitor chooses; an explicit choice wins; only `light` and `dark` are themes |
+| `plurals.spec.ts` (1) | `itemCount` / `pieceCount` pick the singular and plural |
 | `catalog.model.spec.ts` (2) | `effectivePrice` and `discountPercent` |
 | `price.util.spec.ts` (2) | `$2,950` formatting and rounding |
 
@@ -1118,10 +1158,10 @@ need clicks (the sign-in dialog) are driven through the Chrome DevTools Protocol
 
 | File | Notable settings |
 | ---- | ---------------- |
-| `angular.json` | `@angular/build:application`; `outputPath: dist/vestra`; `browser: src/main.ts`, `server: src/main.server.ts`, `ssr.entry: src/server.ts`, `outputMode: server`; `security.allowedHosts`; production `optimization.styles.inlineCritical: false` (CSP, §16); no polyfills (zoneless, no `zone.js` installed); styles `src/styles.css`; dev server defaults to `development` |
+| `angular.json` | `@angular/build:application`; `outputPath: dist/vestra`; `browser: src/main.ts`, `server: src/main.server.ts`, `ssr.entry: src/server.ts`, `outputMode: server`; `security.allowedHosts`; production `optimization.styles.inlineCritical: false` (CSP, §16) and `localize: true`; `i18n` (source `en-US` at the root, five locales with their `.xlf`), `i18nMissingTranslation: error`, a build and serve configuration per locale; polyfills: only `@angular/localize/init` (zoneless, no `zone.js` installed); styles `src/styles.css`; dev server defaults to `development` |
 | `tsconfig.json` | `ES2022`, `moduleResolution: bundler`, `strict`, `noImplicitOverride`, `noPropertyAccessFromIndexSignature`, `noImplicitReturns`, `noFallthroughCasesInSwitch`; Angular `strictTemplates` |
 | `postcss.config.json` | `@tailwindcss/postcss` |
-| `vitest.config.ts` | `environment: 'node'`, `include: src/**/*.spec.ts`, `vite-tsconfig-paths` |
+| `vitest.config.ts` | `environment: 'node'`, `setupFiles: src/test-setup.ts` ($localize), `include: src/**/*.spec.ts`, `vite-tsconfig-paths` |
 | `src/environments/*` | `apiUrl: '/assets/data'` (the catalog's base URL) |
 | `package.json` | Scripts `start`, `build`, `build:ssr`, `serve:ssr`, `test`, `test:watch` |
 
@@ -1212,6 +1252,7 @@ Work happens on feature branches merged with `--no-ff` into `develop`, then fast
 | **Shopping bag** | `features/improvement10` | Farfetch's basket at `/bag`: `BagService` (lines with size and quantity, per account) and pure `bag.model.ts`; summary with delivery options; simulated checkout and order confirmation; recently viewed |
 | **Vestra** | `features/improvement11` | The project, package, build output and repository are renamed **vestra** |
 | **Dark theme** | `features/improvement12` | `ThemeService` and `theme-init.js`; dark values for the color tokens; theme switch in the header, mobile menu and footer; photography keeps white/black; critical-CSS inlining off so the full stylesheet loads under the CSP |
+| **Languages** | `features/improvement13` | Angular i18n (`@angular/localize`): every message marked with a custom ID, ICU plurals, six builds (English at `/`, Spanish, German, French, Russian, Simplified Chinese under their prefix); the language picker loads the same page in another language; region names sorted per language; i18n hydration |
 
 ---
 
@@ -1230,7 +1271,7 @@ Work happens on feature branches merged with `--no-ff` into `develop`, then fast
 | **`localStorage` wishlist** | Works without an account | Per device and browser |
 | **Simulated auth behind `AuthResult`** | The whole sign-in experience works with no backend, and the UI is already shaped for one | Not real security: accounts are per browser, hashing is demo-grade |
 | **Native `<dialog>` instead of a custom overlay** | Focus trap, Esc, inert page and top layer for free, correct for screen readers | Styling `::backdrop` and entry animations needs care |
-| **Region converts prices, language doesn't translate (yet)** | The currency change is real and visible everywhere at almost no cost | Choosing a language only sets `<html lang>` until the copy is translated |
+| **Region converts prices at once; language is a build** | Currency is a signal, so it changes everywhere instantly; each language is compiled ahead of time with Angular i18n, fully server-rendered under its own URL (good for search engines) with no runtime translation cost | Changing language reloads the page; six builds instead of one; new copy must be added to six `.xlf` files |
 | **Simulated checkout** | The whole bag journey can be tried end to end, including sign-in at checkout | No address, payment or order history yet |
 | **Fixed, indicative exchange rates** | Deterministic prices and tests, no API key | Rates drift from reality; a real store fetches them |
 | **Dialog behind `@defer`** | ~8 kB gzipped stays out of the initial bundle | The first open waits for the chunk if it wasn't prefetched yet |
@@ -1245,13 +1286,16 @@ Work happens on feature branches merged with `--no-ff` into `develop`, then fast
 git clone https://github.com/CristianSifuentes/vestra.git
 cd vestra
 npm install
-npm start            # → http://localhost:4200
+npm start            # → http://localhost:4200, every language (/es-419/, /de/, /fr/, /ru/, /zh-Hans/)
 ```
 
 | Script | Command | Purpose |
 | ------ | ------- | ------- |
-| `npm start` | `ng serve` | Dev server with live reload |
-| `npm run build` | `ng build` | Production build → `dist/vestra/{browser,server}` |
+| `npm start` | `node scripts/dev-i18n.mjs` | The store in **every language** on port 4200: builds all locales in watch mode and runs the SSR server, restarted after each rebuild (refresh the browser to see changes) |
+| `npm run start:en` | `ng serve` | Faster dev server with hot reload, **English only**: the language picker leads to a 404 there |
+| `npm run build` | `ng build` | Production build, one app per language → `dist/vestra/{browser,server}` (English at the root, the rest under `es-419/`, `de/`, `fr/`, `ru/`, `zh-Hans/`) |
+| `npm run extract-i18n` | `ng extract-i18n --output-path src/locale` | Writes every marked message to `src/locale/messages.xlf` |
+| — | `ng serve --configuration=es-419` | Dev server in one language (`de`, `fr`, `ru`, `zh-Hans` too) |
 | `npm test` | `vitest run` | Unit tests, single run |
 | `npm run test:watch` | `vitest` | Unit tests in watch mode |
 | `npm run build:ssr` | `ng build` | Same build (the SSR bundle is always produced) |

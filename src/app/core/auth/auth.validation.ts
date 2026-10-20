@@ -12,9 +12,9 @@ export function isEmail(value: string): boolean {
 // The message to show under an email field; empty when it's fine.
 export function emailError(value: string): string {
   if (!value.trim()) {
-    return 'Enter your email address.';
+    return $localize`:@@auth.error.emailMissing:Enter your email address.`;
   }
-  return isEmail(value) ? '' : 'Enter a valid email address, like name@example.com.';
+  return isEmail(value) ? '' : $localize`:@@auth.error.emailInvalid:Enter a valid email address, like name@example.com.`;
 }
 
 export interface PasswordCheck {
@@ -24,9 +24,9 @@ export interface PasswordCheck {
 }
 
 const PASSWORD_RULES: ReadonlyArray<{ readonly id: PasswordCheck['id']; readonly label: string; readonly test: (value: string) => boolean }> = [
-  { id: 'length', label: 'At least 8 characters', test: (value) => value.length >= 8 },
-  { id: 'letter', label: 'A letter', test: (value) => /[a-z]/i.test(value) },
-  { id: 'number', label: 'A number', test: (value) => /\d/.test(value) }
+  { id: 'length', label: $localize`:@@auth.check.length:At least 8 characters`, test: (value) => value.length >= 8 },
+  { id: 'letter', label: $localize`:@@auth.check.letter:A letter`, test: (value) => /[a-z]/i.test(value) },
+  { id: 'number', label: $localize`:@@auth.check.number:A number`, test: (value) => /\d/.test(value) }
 ];
 
 export function passwordChecks(value: string): PasswordCheck[] {
@@ -39,7 +39,13 @@ export function isValidPassword(value: string): boolean {
 
 export type PasswordStrength = 0 | 1 | 2 | 3 | 4;
 
-export const STRENGTH_LABELS: Record<PasswordStrength, string> = { 0: '', 1: 'Weak', 2: 'Fair', 3: 'Good', 4: 'Strong' };
+export const STRENGTH_LABELS: Record<PasswordStrength, string> = {
+  0: '',
+  1: $localize`:@@auth.strength.weak:Weak`,
+  2: $localize`:@@auth.strength.fair:Fair`,
+  3: $localize`:@@auth.strength.good:Good`,
+  4: $localize`:@@auth.strength.strong:Strong`
+};
 
 // One point per rule met; a valid password earns the fourth with length
 // (12+) or with mixed case and a symbol.

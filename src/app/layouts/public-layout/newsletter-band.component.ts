@@ -10,18 +10,18 @@ type Channel = 'email' | 'sms';
     <section class="border-t border-line bg-canvas" aria-labelledby="newsletter-heading">
       <div class="page-container grid gap-10 py-16 lg:grid-cols-2 lg:items-end lg:gap-16">
         <div>
-          <h2 id="newsletter-heading" class="text-headline">Never miss a thing</h2>
-          <p class="mt-4 max-w-md text-sm leading-relaxed text-muted">
+          <h2 id="newsletter-heading" class="text-headline" i18n="@@newsletter.title">Never miss a thing</h2>
+          <p class="mt-4 max-w-md text-sm leading-relaxed text-muted" i18n="@@newsletter.text">
             Sign up for promotions, tailored new arrivals, stock updates and more, straight to your inbox.
           </p>
         </div>
 
         @if (subscribed()) {
-          <p class="text-sm" role="status">Thank you. You're on the list.</p>
+          <p class="text-sm" role="status" i18n="@@newsletter.thanks">Thank you. You're on the list.</p>
         } @else {
           <form class="space-y-5" (submit)="subscribe($event)">
             <fieldset class="flex items-center gap-6">
-              <legend class="label-caps mb-3 text-muted">Get updates by</legend>
+              <legend class="label-caps mb-3 text-muted" i18n="@@newsletter.channel">Get updates by</legend>
               @for (option of channels; track option.id) {
                 <label class="flex cursor-pointer items-center gap-2 text-sm">
                   <input type="radio" name="channel" class="h-3.5 w-3.5 accent-black" [value]="option.id" [checked]="channel() === option.id" (change)="channel.set(option.id)" />
@@ -33,14 +33,14 @@ type Channel = 'email' | 'sms';
               <input
                 class="input-line flex-1"
                 [type]="channel() === 'email' ? 'email' : 'tel'"
-                [placeholder]="channel() === 'email' ? 'Email address' : 'Mobile number'"
-                [attr.aria-label]="channel() === 'email' ? 'Email address' : 'Mobile number'"
+                [placeholder]="contactLabel()"
+                [attr.aria-label]="contactLabel()"
                 [value]="contact()"
                 (input)="contact.set($any($event.target).value)"
               />
-              <button type="submit" class="btn btn-primary" [disabled]="!valid()">Subscribe</button>
+              <button type="submit" class="btn btn-primary" [disabled]="!valid()" i18n="@@newsletter.subscribe">Subscribe</button>
             </div>
-            <p class="text-xs leading-relaxed text-muted">
+            <p class="text-xs leading-relaxed text-muted" i18n="@@newsletter.consent">
               By signing up, you agree to receive marketing communications and confirm you have read our Privacy Policy. You can unsubscribe at any time.
             </p>
           </form>
@@ -52,13 +52,16 @@ type Channel = 'email' | 'sms';
 })
 export class NewsletterBandComponent {
   protected readonly channels: ReadonlyArray<{ id: Channel; label: string }> = [
-    { id: 'email', label: 'Email' },
+    { id: 'email', label: $localize`:@@newsletter.email:Email` },
     { id: 'sms', label: 'SMS' }
   ];
 
   protected readonly channel = signal<Channel>('email');
   protected readonly contact = signal('');
   protected readonly subscribed = signal(false);
+  protected readonly contactLabel = computed(() =>
+    this.channel() === 'email' ? $localize`:@@newsletter.emailAddress:Email address` : $localize`:@@newsletter.mobile:Mobile number`
+  );
 
   protected readonly valid = computed(() =>
     this.channel() === 'email'

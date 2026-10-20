@@ -10,11 +10,11 @@ import { SocialSignInComponent } from './social-sign-in.component';
   imports: [TextFieldComponent, SocialSignInComponent],
   template: `
     <form class="grid gap-6" novalidate (submit)="submit($event)">
-      <app-text-field label="Email address" type="email" autocomplete="email" [autofocus]="true" [(value)]="email" [error]="emailProblem()" />
+      <app-text-field label="Email address" i18n-label="@@auth.field.email" type="email" autocomplete="email" [autofocus]="true" [(value)]="email" [error]="emailProblem()" />
       <div>
-        <app-text-field label="Password" type="password" autocomplete="current-password" [revealable]="true" [(value)]="password" [error]="passwordProblem()" />
+        <app-text-field label="Password" i18n-label="@@auth.field.password" type="password" autocomplete="current-password" [revealable]="true" [(value)]="password" [error]="passwordProblem()" />
         <button type="button" class="mt-3 text-xs text-muted underline underline-offset-4 transition-colors hover:text-ink" (click)="dialog.open('forgot')">
-          Forgot your password?
+          <ng-container i18n="@@auth.title.forgot">Forgot your password?</ng-container>
         </button>
       </div>
 
@@ -26,17 +26,17 @@ import { SocialSignInComponent } from './social-sign-in.component';
         <button type="submit" class="btn btn-primary w-full" [disabled]="pending()">
           @if (pending()) {
             <span class="h-3.5 w-3.5 animate-spin rounded-full border border-canvas border-t-transparent" aria-hidden="true"></span>
-            Signing in
+            <ng-container i18n="@@auth.signingIn">Signing in</ng-container>
           } @else {
-            Sign in
+            <ng-container i18n="@@auth.signIn">Sign in</ng-container>
           }
         </button>
-        <button type="button" class="btn btn-secondary w-full" [disabled]="pending()" (click)="dialog.open('code')">Continue with a one-time code</button>
+        <button type="button" class="btn btn-secondary w-full" [disabled]="pending()" (click)="dialog.open('code')" i18n="@@auth.title.code">Continue with a one-time code</button>
       </div>
 
       <p class="bg-surface px-4 py-3 text-xs leading-relaxed text-muted">
-        Demo account: <span class="text-ink">{{ demo.email }}</span> · <span class="text-ink">{{ demo.password }}</span>
-        <button type="button" class="ml-1 font-semibold text-ink underline underline-offset-4" (click)="useDemo()">Fill in</button>
+        <ng-container i18n="@@auth.demoAccount">Demo account:</ng-container>&ngsp;<span class="text-ink">{{ demo.email }}</span> · <span class="text-ink">{{ demo.password }}</span>
+        <button type="button" class="ml-1 font-semibold text-ink underline underline-offset-4" (click)="useDemo()" i18n="@@auth.fillIn">Fill in</button>
       </p>
     </form>
 
@@ -45,8 +45,8 @@ import { SocialSignInComponent } from './social-sign-in.component';
     </div>
 
     <p class="mt-8 text-center text-sm text-muted">
-      First time on VESTRA?
-      <button type="button" class="font-semibold text-ink underline underline-offset-4" (click)="dialog.open('register')">Register</button>
+      <ng-container i18n="@@auth.firstTime">First time on VESTRA?</ng-container>&ngsp;
+      <button type="button" class="font-semibold text-ink underline underline-offset-4" (click)="dialog.open('register')" i18n="@@auth.register">Register</button>
     </p>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -66,7 +66,7 @@ export class SignInFormComponent {
 
   // Errors appear after the first attempt, then follow the typing.
   protected readonly emailProblem = computed(() => (this.submitted() ? emailError(this.email()) : ''));
-  protected readonly passwordProblem = computed(() => (this.submitted() && !this.password() ? 'Enter your password.' : ''));
+  protected readonly passwordProblem = computed(() => (this.submitted() && !this.password() ? $localize`:@@auth.error.passwordMissing:Enter your password.` : ''));
 
   protected useDemo(): void {
     this.email.set(DEMO_ACCOUNT.email);

@@ -32,6 +32,6 @@ export class EditorialStoryComponent {
   readonly alt = input.required<string>();
   readonly link = input.required<string>();
   readonly queryParams = input<Params | null>(null);
-  readonly actionLabel = input('Explore more');
+  readonly actionLabel = input($localize`:@@common.exploreMore:Explore more`);
   readonly imageSide = input<'left' | 'right'>('left');
 }

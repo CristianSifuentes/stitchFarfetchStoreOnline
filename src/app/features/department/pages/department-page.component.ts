@@ -23,6 +23,7 @@ import { PageHeroComponent } from '../../../shared/ui/page-hero/page-hero.compon
 import { ProductCarouselComponent } from '../../../shared/ui/product-carousel/product-carousel.component';
 import { designersIn, isListingSort, queryCatalog } from '../../listing/listing.query';
 import { DEPARTMENT_CONTENT } from '../data/department-content';
+import { itemCount, pieceCount } from '../../../shared/i18n/plurals';
 
 const NEW_IN_COUNT = 12;
 
@@ -34,7 +35,11 @@ const CATEGORY_COLUMNS: Record<number, string> = {
   5: 'md:grid-cols-3 lg:grid-cols-5'
 };
 
-const GIFT_RECIPIENT: Record<Department, string> = { womenswear: 'her', menswear: 'him', kids: 'kids' };
+const GIFTS_FOR: Record<Department, string> = {
+  womenswear: $localize`:@@directory.giftsForHer:Gifts for her`,
+  menswear: $localize`:@@directory.giftsForHim:Gifts for him`,
+  kids: $localize`:@@directory.giftsForKids:Gifts for kids`
+};
 
 // A department's hub (Women, Men, Kids), in the order of Farfetch's:
 // seasonal campaign → New in daily → Trending now → an editorial story with
@@ -56,7 +61,7 @@ const GIFT_RECIPIENT: Record<Department, string> = { womenswear: 'her', menswear
   ],
   template: `
     <div class="page-container">
-      <app-breadcrumb [items]="[{ label: 'Home', link: '/' }, { label: info().label }]" />
+      <app-breadcrumb [items]="[{ label: homeLabel, link: '/' }, { label: info().label }]" />
 
       <app-page-hero
         [image]="content().campaign.image"
@@ -64,15 +69,17 @@ const GIFT_RECIPIENT: Record<Department, string> = { womenswear: 'her', menswear
         [eyebrow]="content().campaign.eyebrow"
         [title]="content().campaign.title"
         [text]="content().campaign.text"
-        [primary]="{ label: 'Explore more', link: listingPath(), queryParams: { edit: content().campaign.edit } }"
-        [secondary]="{ label: 'Shop New In', link: listingPath(), queryParams: { sort: 'newest' } }"
+        [primary]="{ label: exploreMoreLabel, link: listingPath(), queryParams: { edit: content().campaign.edit } }"
+        [secondary]="{ label: shopNewInLabel, link: listingPath(), queryParams: { sort: 'newest' } }"
         [stats]="stats()"
       />
 
       <div class="section-y">
         <app-product-carousel
           eyebrow="Just landed"
+          i18n-eyebrow="@@section.justLanded"
           title="New in daily from the best brands"
+          i18n-title="@@dept.newInDaily"
           [items]="newIn()"
           [actionLink]="listingPath()"
           [actionQuery]="{ sort: 'newest' }"
@@ -90,7 +97,7 @@ const GIFT_RECIPIENT: Record<Department, string> = { womenswear: 'her', menswear
           [alt]="content().editorial.alt"
           [link]="listingPath()"
           [queryParams]="{ edit: content().editorial.edit }"
-          [actionLabel]="'Shop ' + editLabel()"
+          [actionLabel]="shopEditLabel()"
         >
           @if (editorialItems().length) {
             <app-product-carousel
@@ -105,7 +112,7 @@ const GIFT_RECIPIENT: Record<Department, string> = { womenswear: 'her', menswear
 
       @if (ageTiles().length) {
         <section class="pb-16 md:pb-24" aria-labelledby="ages-heading">
-          <h2 id="ages-heading" class="text-headline mb-8">Shop by age</h2>
+          <h2 id="ages-heading" class="text-headline mb-8" i18n="@@dept.shopByAge">Shop by age</h2>
           <ul class="grid gap-4 sm:grid-cols-3 md:gap-6">
             @for (tile of ageTiles(); track tile.id) {
               <li>
@@ -115,7 +122,7 @@ const GIFT_RECIPIENT: Record<Department, string> = { womenswear: 'her', menswear
                   <span class="absolute inset-x-0 bottom-0 p-8 text-white">
                     <span class="label-caps block opacity-80">{{ tile.range }}</span>
                     <span class="text-title mt-1 block">{{ tile.label }}</span>
-                    <span class="mt-1 block text-xs opacity-80">{{ tile.count }} {{ tile.count === 1 ? 'piece' : 'pieces' }}</span>
+                    <span class="mt-1 block text-xs opacity-80">{{ pieceCount(tile.count) }}</span>
                   </span>
                 </a>
               </li>
@@ -125,7 +132,7 @@ const GIFT_RECIPIENT: Record<Department, string> = { womenswear: 'her', menswear
       }
 
       <section aria-labelledby="categories-heading">
-        <h2 id="categories-heading" class="text-headline mb-8">Shop by category</h2>
+        <h2 id="categories-heading" class="text-headline mb-8" i18n="@@dept.shopByCategory">Shop by category</h2>
         <ul class="grid grid-cols-2 gap-4 md:gap-6" [class]="categoryColumns()">
           @for (tile of categoryTiles(); track tile.id) {
             <li>
@@ -134,7 +141,7 @@ const GIFT_RECIPIENT: Record<Department, string> = { womenswear: 'her', menswear
                   <img [src]="tile.image" [alt]="tile.label" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
                 </div>
                 <p class="label-caps mt-4">{{ tile.label }}</p>
-                <p class="mt-1 text-xs text-muted">{{ tile.count }} {{ tile.count === 1 ? 'item' : 'items' }}</p>
+                <p class="mt-1 text-xs text-muted">{{ itemCount(tile.count) }}</p>
               </a>
             </li>
           }
@@ -145,7 +152,7 @@ const GIFT_RECIPIENT: Record<Department, string> = { womenswear: 'her', menswear
         <app-brand-tiles [brands]="brands()" [actionLink]="info().path + '/brands'" />
       </div>
 
-      <app-link-directory [columns]="directory()" [label]="'More to explore in ' + info().label" />
+      <app-link-directory [columns]="directory()" [label]="moreToExploreLabel()" />
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -161,6 +168,15 @@ export class DepartmentPageComponent {
   protected readonly content = computed(() => DEPARTMENT_CONTENT[this.department()]);
   protected readonly listingPath = computed(() => `${this.info().path}/items`);
   protected readonly editLabel = computed(() => editInfo(this.content().editorial.edit).label);
+  protected readonly shopEditLabel = computed(() => $localize`:@@dept.shopEdit:Shop ${this.editLabel()}:edit:`);
+  protected readonly moreToExploreLabel = computed(() => $localize`:@@dept.moreToExploreIn:More to explore in ${this.info().label}:department:`);
+  // Counts inside @for use the plural helpers: an ICU in a repeated
+  // template breaks i18n hydration.
+  protected readonly itemCount = itemCount;
+  protected readonly pieceCount = pieceCount;
+  protected readonly homeLabel = $localize`:@@breadcrumb.home:Home`;
+  protected readonly exploreMoreLabel = $localize`:@@common.exploreMore:Explore more`;
+  protected readonly shopNewInLabel = $localize`:@@dept.shopNewIn:Shop New In`;
 
   private readonly items = computed(() => this.catalog.byDepartment(this.department()).sort(byNewest));
 
@@ -175,9 +191,9 @@ export class DepartmentPageComponent {
       return [];
     }
     return [
-      { value: String(designersIn(items).length), label: 'Designers' },
-      { value: this.locale.format(Math.min(...items.map((item) => item.price))), label: 'Prices from' },
-      { value: String(items.length), label: 'Pieces' }
+      { value: String(designersIn(items).length), label: $localize`:@@dept.stat.designers:Designers` },
+      { value: this.locale.format(Math.min(...items.map((item) => item.price))), label: $localize`:@@dept.stat.pricesFrom:Prices from` },
+      { value: String(items.length), label: $localize`:@@dept.stat.pieces:Pieces` }
     ];
   });
 
@@ -244,30 +260,30 @@ export class DepartmentPageComponent {
     const items = this.listingPath();
     return [
       {
-        title: 'Gifts',
+        title: $localize`:@@nav.gifts:Gifts`,
         links: [
-          { label: `Gifts for ${GIFT_RECIPIENT[this.department()]}`, link: items, queryParams: { edit: 'gifts' } },
-          { label: 'Jewelry & watches', link: items, queryParams: { category: 'jewelry' } },
-          { label: 'Accessories', link: items, queryParams: { category: 'accessories' } },
-          { label: 'Gifts by price', link: items, queryParams: { edit: 'gifts', sort: 'price-asc' } }
+          { label: GIFTS_FOR[this.department()], link: items, queryParams: { edit: 'gifts' } },
+          { label: $localize`:@@directory.jewelryWatches:Jewelry & watches`, link: items, queryParams: { category: 'jewelry' } },
+          { label: $localize`:@@category.accessories:Accessories`, link: items, queryParams: { category: 'accessories' } },
+          { label: $localize`:@@directory.giftsByPrice:Gifts by price`, link: items, queryParams: { edit: 'gifts', sort: 'price-asc' } }
         ]
       },
       {
-        title: 'Party Season',
+        title: $localize`:@@directory.partySeason:Party Season`,
         links: [
-          { label: 'Party looks', link: items, queryParams: { edit: 'party' } },
-          { label: 'Evening shoes', link: items, queryParams: { edit: 'party', category: 'shoes' } },
-          { label: 'Brands of the moment', link: `${this.info().path}/brands` },
-          { label: 'New In', link: items, queryParams: { sort: 'newest' } }
+          { label: $localize`:@@directory.partyLooks:Party looks`, link: items, queryParams: { edit: 'party' } },
+          { label: $localize`:@@directory.eveningShoes:Evening shoes`, link: items, queryParams: { edit: 'party', category: 'shoes' } },
+          { label: $localize`:@@directory.brandsOfTheMoment:Brands of the moment`, link: `${this.info().path}/brands` },
+          { label: $localize`:@@nav.newIn:New In`, link: items, queryParams: { sort: 'newest' } }
         ]
       },
       {
-        title: 'Holiday Styles',
+        title: $localize`:@@directory.holidayStyles:Holiday Styles`,
         links: [
-          { label: 'The Winter Edit', link: items, queryParams: { edit: 'winter' } },
-          { label: 'Modern Heritage', link: items, queryParams: { edit: 'heritage' } },
-          { label: 'Knitwear', link: items, queryParams: { q: 'knit' } },
-          { label: 'Sale', link: items, queryParams: { sale: 'true' } }
+          { label: $localize`:@@edit.winter:The Winter Edit`, link: items, queryParams: { edit: 'winter' } },
+          { label: $localize`:@@edit.heritage:Modern Heritage`, link: items, queryParams: { edit: 'heritage' } },
+          { label: $localize`:@@directory.knitwear:Knitwear`, link: items, queryParams: { q: 'knit' } },
+          { label: $localize`:@@nav.sale:Sale`, link: items, queryParams: { sale: 'true' } }
         ]
       }
     ];

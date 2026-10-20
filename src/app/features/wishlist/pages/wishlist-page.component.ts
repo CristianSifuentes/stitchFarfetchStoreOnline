@@ -11,10 +11,10 @@ import { WishlistCardComponent } from '../components/wishlist-card.component';
 type WishlistFilter = 'all' | 'available' | 'sale' | 'sold-out';
 
 const FILTERS: ReadonlyArray<{ readonly id: WishlistFilter; readonly label: string; readonly test: (item: CatalogItem) => boolean }> = [
-  { id: 'all', label: 'All', test: () => true },
-  { id: 'available', label: 'Available', test: (item) => !item.soldOut },
-  { id: 'sale', label: 'On sale', test: (item) => !item.soldOut && item.salePrice !== undefined },
-  { id: 'sold-out', label: 'Sold out', test: (item) => !!item.soldOut }
+  { id: 'all', label: $localize`:@@listing.all:All`, test: () => true },
+  { id: 'available', label: $localize`:@@wishlist.filter.available:Available`, test: (item) => !item.soldOut },
+  { id: 'sale', label: $localize`:@@wishlist.filter.sale:On sale`, test: (item) => !item.soldOut && item.salePrice !== undefined },
+  { id: 'sold-out', label: $localize`:@@product.soldOut:Sold out`, test: (item) => !!item.soldOut }
 ];
 
 const UNDO_MS = 6000;
@@ -28,7 +28,7 @@ const RECOMMENDED_COUNT = 12;
   imports: [RouterLink, BreadcrumbComponent, WishlistCardComponent, ProductCarouselComponent],
   template: `
     <div class="page-container">
-      <app-breadcrumb [items]="[{ label: 'Home', link: '/' }, { label: 'Wishlist' }]" />
+      <app-breadcrumb [items]="[{ label: homeLabel, link: '/' }, { label: wishlistLabel }]" />
 
       <header class="flex flex-wrap items-end justify-between gap-6 pb-10">
         <div>
@@ -38,12 +38,12 @@ const RECOMMENDED_COUNT = 12;
               <span class="border border-ink px-2 py-0.5 text-[9px] text-ink">{{ tier }}</span>
             </p>
           }
-          <h1 class="text-headline mt-3">Wishlist</h1>
-          <p class="mt-2 text-sm text-muted" aria-live="polite">{{ saved().length }} {{ saved().length === 1 ? 'item' : 'items' }}</p>
+          <h1 class="text-headline mt-3" i18n="@@nav.wishlist">Wishlist</h1>
+          <p class="mt-2 text-sm text-muted" aria-live="polite" i18n="@@wishlist.count">{saved().length, plural, one {{{ saved().length }} item} few {{{ saved().length }} items} many {{{ saved().length }} items} other {{{ saved().length }} items}}</p>
         </div>
 
         @if (saved().length) {
-          <div class="flex flex-wrap gap-x-6 gap-y-2" role="group" aria-label="Show">
+          <div class="flex flex-wrap gap-x-6 gap-y-2" role="group" aria-label="Show" i18n-aria-label="@@wishlist.show">
             @for (option of filters(); track option.id) {
               <button
                 type="button"
@@ -62,22 +62,22 @@ const RECOMMENDED_COUNT = 12;
       </header>
 
       @if (!auth.signedIn()) {
-        <section class="mb-10 flex flex-col gap-5 border border-line p-6 sm:flex-row sm:items-center sm:justify-between md:p-8" aria-label="Sign in">
+        <section class="mb-10 flex flex-col gap-5 border border-line p-6 sm:flex-row sm:items-center sm:justify-between md:p-8" aria-label="Sign in" i18n-aria-label="@@auth.signIn">
           <div>
-            <p class="text-title">Keep your wishlist on every device</p>
-            <p class="mt-2 text-sm text-muted">Sign in or create an account and the pieces you save here come with you.</p>
+            <p class="text-title" i18n="@@wishlist.keep.title">Keep your wishlist on every device</p>
+            <p class="mt-2 text-sm text-muted" i18n="@@wishlist.keep.text">Sign in or create an account and the pieces you save here come with you.</p>
           </div>
           <div class="flex shrink-0 flex-wrap gap-3">
-            <button type="button" class="btn btn-primary" (click)="authDialog.open('sign-in')">Sign in</button>
-            <button type="button" class="btn btn-secondary" (click)="authDialog.open('register')">Register</button>
+            <button type="button" class="btn btn-primary" (click)="authDialog.open('sign-in')" i18n="@@auth.signIn">Sign in</button>
+            <button type="button" class="btn btn-secondary" (click)="authDialog.open('register')" i18n="@@auth.register">Register</button>
           </div>
         </section>
       }
 
       @if (removed(); as last) {
         <div class="mb-8 flex items-center justify-between gap-4 bg-ink px-5 py-4 text-sm text-canvas motion-safe:animate-fade-in" role="status">
-          <span>Removed <span class="font-medium">{{ last.item.brand }}</span> {{ last.item.title }}</span>
-          <button type="button" class="label-caps underline underline-offset-4" (click)="undo()">Undo</button>
+          <span i18n="@@wishlist.removed">Removed <span class="font-medium">{{ last.item.brand }}</span> {{ last.item.title }}</span>
+          <button type="button" class="label-caps underline underline-offset-4" (click)="undo()" i18n="@@common.undo">Undo</button>
         </div>
       }
 
@@ -94,17 +94,17 @@ const RECOMMENDED_COUNT = 12;
           }
         </div>
       } @else if (saved().length) {
-        <p class="py-16 text-center text-sm text-muted">Nothing here right now. <button type="button" class="text-ink underline underline-offset-4" (click)="filter.set('all')">Show all</button></p>
+        <p class="py-16 text-center text-sm text-muted"><ng-container i18n="@@wishlist.nothing">Nothing here right now.</ng-container>&ngsp;<button type="button" class="text-ink underline underline-offset-4" (click)="filter.set('all')" i18n="@@wishlist.showAll">Show all</button></p>
       } @else {
         <section class="flex flex-col items-center py-20 text-center" aria-labelledby="empty-heading">
           <svg class="h-10 w-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linejoin="round" aria-hidden="true">
             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
           </svg>
-          <h2 id="empty-heading" class="text-headline mt-8">Your wishlist is empty</h2>
-          <p class="mt-3 max-w-sm text-sm leading-relaxed text-muted">Tap the heart on any piece to save it here, and come back to it whenever you like.</p>
+          <h2 id="empty-heading" class="text-headline mt-8" i18n="@@wishlist.empty.title">Your wishlist is empty</h2>
+          <p class="mt-3 max-w-sm text-sm leading-relaxed text-muted" i18n="@@wishlist.empty.text">Tap the heart on any piece to save it here, and come back to it whenever you like.</p>
           <div class="mt-10 flex flex-wrap justify-center gap-3">
             @for (department of departments; track department.id) {
-              <a class="btn btn-secondary" [routerLink]="department.path">Shop {{ department.label }}</a>
+              <a class="btn btn-secondary" [routerLink]="department.path" i18n="@@bag.shopDepartment">Shop {{ department.label }}</a>
             }
           </div>
         </section>
@@ -113,8 +113,9 @@ const RECOMMENDED_COUNT = 12;
       @if (recommended().length) {
         <div class="section-y">
           <app-product-carousel
-            [eyebrow]="saved().length ? 'Based on your wishlist' : 'Just landed'"
+            [eyebrow]="saved().length ? basedOnWishlist : justLanded"
             title="You may also like"
+            i18n-title="@@product.mayAlsoLike"
             [items]="recommended()"
             actionLink="/search"
             [actionQuery]="{ sort: 'newest' }"
@@ -132,6 +133,10 @@ export class WishlistPageComponent {
   private readonly wishlist = inject(WishlistService);
 
   protected readonly tier = ACCESS_TIER;
+  protected readonly homeLabel = $localize`:@@breadcrumb.home:Home`;
+  protected readonly wishlistLabel = $localize`:@@nav.wishlist:Wishlist`;
+  protected readonly basedOnWishlist = $localize`:@@wishlist.basedOn:Based on your wishlist`;
+  protected readonly justLanded = $localize`:@@section.justLanded:Just landed`;
   protected readonly departments = DEPARTMENTS;
   protected readonly skeletons = Array.from({ length: 4 }, (_, i) => i);
   protected readonly filter = signal<WishlistFilter>('all');

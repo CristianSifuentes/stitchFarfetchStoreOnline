@@ -20,10 +20,10 @@ import { ProductCardComponent } from '../product-card/product-card.component';
         </div>
         <div class="flex shrink-0 items-center gap-6">
           <div class="hidden gap-2 md:flex">
-            <button type="button" class="flex h-10 w-10 items-center justify-center border border-line transition-colors hover:border-ink disabled:opacity-30" aria-label="Previous products" [disabled]="!canPrev()" (click)="scroll(-1)">
+            <button type="button" class="flex h-10 w-10 items-center justify-center border border-line transition-colors hover:border-ink disabled:opacity-30" aria-label="Previous products" i18n-aria-label="@@carousel.previous" [disabled]="!canPrev()" (click)="scroll(-1)">
               <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m15 6-6 6 6 6" /></svg>
             </button>
-            <button type="button" class="flex h-10 w-10 items-center justify-center border border-line transition-colors hover:border-ink disabled:opacity-30" aria-label="Next products" [disabled]="!canNext()" (click)="scroll(1)">
+            <button type="button" class="flex h-10 w-10 items-center justify-center border border-line transition-colors hover:border-ink disabled:opacity-30" aria-label="Next products" i18n-aria-label="@@carousel.next" [disabled]="!canNext()" (click)="scroll(1)">
               <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="m9 6 6 6-6 6" /></svg>
             </button>
           </div>
@@ -52,7 +52,7 @@ export class ProductCarouselComponent {
   readonly title = input.required<string>();
   readonly items = input.required<ReadonlyArray<CatalogItem>>();
   readonly eyebrow = input('');
-  readonly actionLabel = input('Explore more');
+  readonly actionLabel = input($localize`:@@common.exploreMore:Explore more`);
   readonly actionLink = input<string | null>(null);
   readonly actionQuery = input<Params | null>(null);
 

@@ -4,7 +4,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 @Component({
   selector: 'app-brand-strip',
   template: `
-    <section class="border-y border-line py-10" aria-label="Featured designers">
+    <section class="border-y border-line py-10" aria-label="Featured designers" i18n-aria-label="@@section.featuredDesigners">
       <ul class="grid grid-cols-3 items-center justify-items-center gap-6 md:grid-cols-6">
         @for (brand of brands(); track brand) {
           <li class="label-caps tracking-[0.25em] text-muted">{{ brand }}</li>

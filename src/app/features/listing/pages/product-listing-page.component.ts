@@ -23,6 +23,10 @@ import { LISTING_SORTS, ListingSort, designersIn, isListingSort, queryCatalog } 
 
 const PAGE_SIZE = 8;
 
+const HOME = $localize`:@@breadcrumb.home:Home`;
+const SALE = $localize`:@@nav.sale:Sale`;
+const NEW_IN = $localize`:@@nav.newIn:New In`;
+
 // The product listing (Farfetch "items.aspx"): one page for every
 // department, category, designer and search. All state lives in the URL
 // (?category=bags&designer=Prada&sort=price-asc&q=…), so any view can be
@@ -39,13 +43,13 @@ const PAGE_SIZE = 8;
         <p class="mt-4 text-sm leading-relaxed text-muted">{{ description() }}</p>
       </header>
 
-      <section class="flex flex-wrap items-center justify-between gap-x-8 gap-y-4 border-y border-line py-4" aria-label="Filters">
+      <section class="flex flex-wrap items-center justify-between gap-x-8 gap-y-4 border-y border-line py-4" aria-label="Filters" i18n-aria-label="@@listing.filters">
         <div class="flex flex-wrap items-center gap-x-8 gap-y-3">
           @if (ageOptions().length) {
             <label class="flex items-center gap-2">
-              <span class="label-caps text-muted">Age</span>
+              <span class="label-caps text-muted" i18n="@@listing.age">Age</span>
               <select class="select-line" [value]="age() ?? ''" (change)="update({ age: $any($event.target).value || null })">
-                <option value="">All</option>
+                <option value="" i18n="@@listing.all">All</option>
                 @for (option of ageOptions(); track option.id) {
                   <option [value]="option.id">{{ option.label }} ({{ option.range }})</option>
                 }
@@ -53,18 +57,18 @@ const PAGE_SIZE = 8;
             </label>
           }
           <label class="flex items-center gap-2">
-            <span class="label-caps text-muted">Category</span>
+            <span class="label-caps text-muted" i18n="@@listing.category">Category</span>
             <select class="select-line" [value]="category() ?? ''" (change)="update({ category: $any($event.target).value || null })">
-              <option value="">All</option>
+              <option value="" i18n="@@listing.all">All</option>
               @for (option of categoryOptions(); track option.id) {
                 <option [value]="option.id">{{ option.label }}</option>
               }
             </select>
           </label>
           <label class="flex items-center gap-2">
-            <span class="label-caps text-muted">Designer</span>
+            <span class="label-caps text-muted" i18n="@@listing.designer">Designer</span>
             <select class="select-line" [value]="designer() ?? ''" (change)="update({ designer: $any($event.target).value || null })">
-              <option value="">All</option>
+              <option value="" i18n="@@listing.all">All</option>
               @for (name of designerOptions(); track name) {
                 <option [value]="name">{{ name }}</option>
               }
@@ -72,14 +76,14 @@ const PAGE_SIZE = 8;
           </label>
           <label class="flex cursor-pointer items-center gap-2">
             <input type="checkbox" class="h-3.5 w-3.5 accent-black" [checked]="sale()" (change)="update({ sale: $any($event.target).checked ? 'true' : null })" />
-            <span class="label-caps" [class.text-error]="sale()">Sale only</span>
+            <span class="label-caps" [class.text-error]="sale()" i18n="@@listing.saleOnly">Sale only</span>
           </label>
           @if (hasFilters()) {
-            <button type="button" class="link-cta" (click)="clearAll()">Clear all</button>
+            <button type="button" class="link-cta" (click)="clearAll()" i18n="@@listing.clearAll">Clear all</button>
           }
         </div>
         <label class="flex items-center gap-2">
-          <span class="label-caps text-muted">Sort by</span>
+          <span class="label-caps text-muted" i18n="@@listing.sortBy">Sort by</span>
           <select class="select-line" [value]="sort()" (change)="update({ sort: $any($event.target).value })">
             @for (option of sorts; track option.id) {
               <option [value]="option.id">{{ option.label }}</option>
@@ -88,7 +92,7 @@ const PAGE_SIZE = 8;
         </label>
       </section>
 
-      <p class="py-6 text-xs text-muted" aria-live="polite">{{ results().length }} {{ results().length === 1 ? 'item' : 'items' }}</p>
+      <p class="py-6 text-xs text-muted" aria-live="polite" i18n="@@listing.count">{results().length, plural, one {{{ results().length }} item} few {{{ results().length }} items} many {{{ results().length }} items} other {{{ results().length }} items}}</p>
 
       @if (catalog.loading()) {
         <div class="product-grid" aria-hidden="true">
@@ -105,20 +109,20 @@ const PAGE_SIZE = 8;
 
         @if (results().length > pageSize) {
           <div class="mx-auto mt-16 flex max-w-xs flex-col items-center gap-4 text-center">
-            <p class="text-xs text-muted">Viewing {{ visible().length }} of {{ results().length }} items</p>
+            <p class="text-xs text-muted" i18n="@@listing.viewing">Viewing {{ visible().length }} of {{ results().length }} items</p>
             <div class="h-px w-full bg-line" aria-hidden="true">
               <div class="h-px bg-ink transition-[width] duration-500" [style.width.%]="(visible().length / results().length) * 100"></div>
             </div>
             @if (visible().length < results().length) {
-              <button type="button" class="btn btn-primary mt-2" (click)="limit.set(limit() + pageSize)">Load more</button>
+              <button type="button" class="btn btn-primary mt-2" (click)="limit.set(limit() + pageSize)" i18n="@@listing.loadMore">Load more</button>
             }
           </div>
         }
       } @else {
         <div class="py-24 text-center">
-          <p class="text-headline">No items match your selection</p>
-          <p class="mt-3 text-sm text-muted">Try another category or designer, or clear your filters.</p>
-          <button type="button" class="btn btn-secondary mt-8" (click)="clearAll()">Clear all filters</button>
+          <p class="text-headline" i18n="@@listing.empty.title">No items match your selection</p>
+          <p class="mt-3 text-sm text-muted" i18n="@@listing.empty.text">Try another category or designer, or clear your filters.</p>
+          <button type="button" class="btn btn-secondary mt-8" (click)="clearAll()" i18n="@@listing.empty.clear">Clear all filters</button>
         </div>
       }
     </div>
@@ -215,22 +219,26 @@ export class ProductListingPageComponent {
     const designer = this.designer();
     const edit = this.edit();
     if (!department) {
-      return this.search() ? `Results for “${this.search()}”` : 'All products';
+      return this.search() ? $localize`:@@listing.title.results:Results for “${this.search()}:query:”` : $localize`:@@listing.title.all:All products`;
     }
     const possessive = departmentInfo(department).possessive;
+    // Whole messages with placeholders, so each language orders the words.
+    const forDepartment = (subject: string) => $localize`:@@listing.title.department:${possessive}:department: ${subject}:subject:`;
     const age = this.age();
     // The most specific selection names the page: an edit, then sale, then
     // an age group ("Baby Clothing", "Teens (13–16 years)"), then a
     // category, then New In.
     let subject: string;
     if (edit || this.sale()) {
-      const base = edit ? `${possessive} ${editInfo(edit).label}` : `${possessive} Sale`;
-      subject = category ? `${base}: ${categoryLabel(category)}` : base;
+      const base = forDepartment(edit ? editInfo(edit).label : SALE);
+      subject = category ? $localize`:@@listing.title.section:${base}:section:: ${categoryLabel(category)}:category:` : base;
     } else if (age) {
       const info = ageGroupInfo(age);
-      subject = category ? `${info.label} ${categoryLabel(category)}` : `${info.label} (${info.range})`;
+      subject = category
+        ? $localize`:@@listing.title.ageCategory:${info.label}:age: ${categoryLabel(category)}:category:`
+        : $localize`:@@listing.title.ageRange:${info.label}:age: (${info.range}:range:)`;
     } else {
-      subject = `${possessive} ${category ? categoryLabel(category) : 'New In'}`;
+      subject = forDepartment(category ? categoryLabel(category) : NEW_IN);
     }
     return designer ? `${designer} · ${subject}` : subject;
   });
@@ -238,7 +246,7 @@ export class ProductListingPageComponent {
   protected readonly description = computed(() => {
     const department = this.department();
     if (!department) {
-      return 'Every piece across womenswear, menswear and kidswear, from the world’s leading luxury houses.';
+      return $localize`:@@listing.description.all:Every piece across womenswear, menswear and kidswear, from the world’s leading luxury houses.`;
     }
     const category = this.category();
     const edit = this.edit();
@@ -246,7 +254,7 @@ export class ProductListingPageComponent {
       return editInfo(edit).description;
     }
     if (this.sale()) {
-      return 'Up to 50% off a selection of pieces from the season’s collections, while stocks last.';
+      return $localize`:@@listing.description.sale:Up to 50% off a selection of pieces from the season’s collections, while stocks last.`;
     }
     if (category) {
       return CATEGORY_DESCRIPTIONS[category];
@@ -259,11 +267,11 @@ export class ProductListingPageComponent {
     const department = this.department();
     const category = this.category();
     if (!department) {
-      return [{ label: 'Home', link: '/' }, { label: 'Search' }];
+      return [{ label: HOME, link: '/' }, { label: $localize`:@@breadcrumb.search:Search` }];
     }
     const info = departmentInfo(department);
     const crumbs: Crumb[] = [
-      { label: 'Home', link: '/' },
+      { label: HOME, link: '/' },
       { label: info.label, link: info.path }
     ];
     const edit = this.edit();
@@ -273,7 +281,7 @@ export class ProductListingPageComponent {
     const section = edit
       ? { label: editInfo(edit).label, queryParams: { edit } }
       : this.sale()
-        ? { label: 'Sale', queryParams: { sale: 'true' } }
+        ? { label: SALE, queryParams: { sale: 'true' } }
         : age
           ? { label: ageGroupInfo(age).label, queryParams: { age } }
           : null;
@@ -281,7 +289,7 @@ export class ProductListingPageComponent {
       crumbs.push(category ? { ...section, link: `${info.path}/items` } : { label: section.label });
     }
     if (category || !section) {
-      crumbs.push({ label: category ? categoryLabel(category) : 'New In' });
+      crumbs.push({ label: category ? categoryLabel(category) : NEW_IN });
     }
     return crumbs;
   });
@@ -296,18 +304,16 @@ export class ProductListingPageComponent {
 }
 
 const DESCRIPTIONS: Record<Department, string> = {
-  womenswear:
-    'Explore the season’s most coveted womenswear: architectural tailoring, fluid silks and statement accessories from the world’s leading houses.',
-  menswear:
-    'From sharp tailoring to technical outerwear and statement sneakers, discover the season’s defining menswear from established and emerging designers.',
-  kids: 'Premium essentials for babies, kids and teens: weather-ready outerwear, playful dresses and signature sneakers from the most-loved houses.'
+  womenswear: $localize`:@@listing.description.women:Explore the season’s most coveted womenswear: architectural tailoring, fluid silks and statement accessories from the world’s leading houses.`,
+  menswear: $localize`:@@listing.description.men:From sharp tailoring to technical outerwear and statement sneakers, discover the season’s defining menswear from established and emerging designers.`,
+  kids: $localize`:@@listing.description.kids:Premium essentials for babies, kids and teens: weather-ready outerwear, playful dresses and signature sneakers from the most-loved houses.`
 };
 
 // What each category holds, the same in every department.
 const CATEGORY_DESCRIPTIONS: Record<ProductCategory, string> = {
-  clothing: 'Tailoring, knitwear, outerwear and dresses: the season’s defining pieces, cut by the houses that set the pace.',
-  shoes: 'From hand-finished leather classics to statement heels and the sneakers of the moment.',
-  bags: 'Totes, shoulder bags and backpacks in the finest leathers, built to be carried for years.',
-  accessories: 'Sunglasses, watches, belts and small leather goods: the details that finish a look.',
-  jewelry: 'Fine and fashion jewelry, from everyday bands to pieces made to be noticed.'
+  clothing: $localize`:@@category.clothing.description:Tailoring, knitwear, outerwear and dresses: the season’s defining pieces, cut by the houses that set the pace.`,
+  shoes: $localize`:@@category.shoes.description:From hand-finished leather classics to statement heels and the sneakers of the moment.`,
+  bags: $localize`:@@category.bags.description:Totes, shoulder bags and backpacks in the finest leathers, built to be carried for years.`,
+  accessories: $localize`:@@category.accessories.description:Sunglasses, watches, belts and small leather goods: the details that finish a look.`,
+  jewelry: $localize`:@@category.jewelry.description:Fine and fashion jewelry, from everyday bands to pieces made to be noticed.`
 };
