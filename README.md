@@ -8,7 +8,7 @@
 
 *VESTRA, from the Latin* vestis *(garment): a minimal name for a minimal, monochrome store, modelled on Farfetch.*
 
-*Three departments (Women, Men, Kids), 82 products from 65 designers, curated edits, sale prices, age groups for kidswear, a shared wishlist, a bag and a sign-in dialog. Every page follows Farfetch's own structure and one strict design system, "Monochrome Absolute".*
+*Three departments (Women, Men, Kids), 82 products from 65 designers, curated edits, sale prices, age groups for kidswear, a shared wishlist, a bag, a sign-in dialog, prices in 12 currencies, **six languages** and a **dark theme**. Every page follows Farfetch's own structure and one strict design system, "Monochrome Absolute".*
 
 [![Angular](https://img.shields.io/badge/Angular-21.2-DD0031?logo=angular&logoColor=white)](https://angular.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
@@ -16,7 +16,11 @@
 [![RxJS](https://img.shields.io/badge/RxJS-7.8-B7178C?logo=reactivex&logoColor=white)](https://rxjs.dev/)
 [![Vitest](https://img.shields.io/badge/Tests-Vitest%204-6E9F18?logo=vitest&logoColor=white)](https://vitest.dev/)
 [![SSR](https://img.shields.io/badge/SSR-Express%20%2B%20Angular%20SSR-000000?logo=express&logoColor=white)](https://angular.dev/guide/ssr)
+[![i18n](https://img.shields.io/badge/i18n-6%20languages-000000?logo=googletranslate&logoColor=white)](#16-ssr-hydration--security)
+[![Dark theme](https://img.shields.io/badge/Theme-light%20%2B%20dark-000000)](#12-the-design-system)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue)](LICENSE)
+
+<img src="docs/screenshots/home.jpg" alt="VESTRA's home page: the promo bar, the header with departments, the wordmark and icons, and the three department photos under 'Choose your world'" width="860" />
 
 </div>
 
@@ -64,7 +68,8 @@
 A study of how a real luxury marketplace is put together, rebuilt in modern Angular. The reference is
 [farfetch.com](https://www.farfetch.com/): its department hubs (`/shopping/women/items.aspx`), its listing pages,
 its product pages and its navigation. The visual language comes from the Stitch prototypes in `prototypes/`,
-in particular `prototypes/woman_/woman8` and its `DESIGN.md`, **"Monochrome Absolute"**.
+in particular `prototypes/woman_/woman8` and its `DESIGN.md`, **"Monochrome Absolute"** (the first study,
+[`prototypes/woman_/woman1/code.html`](prototypes/woman_/woman1/code.html), shows where it started).
 
 Three ideas run through every file:
 
@@ -89,7 +94,8 @@ Three ideas run through every file:
 | `/search?q=` | **Search** | The same listing across all departments. Search is accent-insensitive (`chloe` finds *Chloé*). |
 | `/product/:id` | **Product** | Gallery (full view + two detail crops), size picker with the right size run, add to bag, wishlist, details, size & fit, shipping, and *You may also like*. |
 | `/anything-else` | **404** | A way back to the store. |
-| *any page* → globe icon | **Language & region** | Farfetch's selector as a drawer: pick a language and a region; prices switch to the region's currency (MXN, EUR, GBP, JPY…) everywhere, at once. |
+| *any page* → globe icon | **Language & region** | Farfetch's selector as a drawer. **Region:** prices switch to its currency (MXN, EUR, GBP, JPY…) everywhere, at once. **Language:** the same page reloads in English, Spanish, German, French, Russian or Simplified Chinese (`/es-419/…`, `/de/…`). |
+| *any page* → moon / sun icon | **Dark theme** | Light or dark, following the system until you choose; remembered across visits, with no flash of the wrong theme on load. |
 | *any page* → account icon | **Sign in dialog** | Farfetch's pop-up: sign in, register, continue with a one-time code, reset a password, or continue with Google, Apple or Facebook. |
 
 **The header changes with the department you're in:**
@@ -116,6 +122,49 @@ Small touches, everywhere:
   from $200, and a (simulated) order placed with an order number. It follows the session like the wishlist.
 - **Your currency:** the globe in the header (`US · EN`) and the footer open *Language & region*; choose Mexico and every price reads `$9,568` in pesos, choose Germany and it reads `468 €`.
 - **An account:** the header's person icon opens the sign-in dialog; once signed in it becomes your initial, with a menu to sign out. The session survives a reload.
+- **Your language:** every word of the interface, page titles and accessible labels included, in six languages;
+  product names, descriptions and designers stay as the catalog has them, like Farfetch.
+- **Your theme:** the moon in the header (also in the mobile menu and the footer) swaps ink and canvas; photos keep
+  their white type.
+
+**Screens:**
+
+<table>
+  <tr>
+    <td width="50%"><img src="docs/screenshots/department.jpg" alt="The Women hub: campaign hero with stats over a photo of a pleated gown" /></td>
+    <td width="50%"><img src="docs/screenshots/listing.jpg" alt="Kids listing filtered by Baby (0–36 months), with filters and product cards" /></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Department hub</b> · <code>/womenswear</code></td>
+    <td align="center"><b>Listing</b> · <code>/kids/items?age=baby</code></td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/product.jpg" alt="Product page of a Bonpoint teddy knit romper: gallery, baby size run 3M–24M and accordions" /></td>
+    <td><img src="docs/screenshots/bag.jpg" alt="Shopping bag with two pieces and the summary with Standard / Express delivery" /></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Product</b> · <code>/product/kj-4</code></td>
+    <td align="center"><b>Shopping bag</b> · <code>/bag</code></td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/spanish.jpg" alt="The bags listing in Latin American Spanish with prices in Mexican pesos: 'Bolsas para mujer'" /></td>
+    <td><img src="docs/screenshots/dark.jpg" alt="The Men hub in the dark theme" /></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Spanish + Mexico</b> · <code>/es-419/womenswear/items?category=bags</code></td>
+    <td align="center"><b>Dark theme</b> · <code>/menswear</code></td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/sign-in.jpg" alt="The sign-in dialog: editorial photo on the left, sign in and register tabs on the right" /></td>
+    <td><img src="docs/screenshots/language-region.jpg" alt="The Language & region drawer listing the six languages" /></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Sign in</b> · the person icon</td>
+    <td align="center"><b>Language &amp; region</b> · the globe</td>
+  </tr>
+</table>
+
+<p align="center"><img src="docs/screenshots/mobile.jpg" alt="The Kids hub on a 390px phone" width="260" /><br /><b>Mobile</b> · 390 px</p>
 
 ---
 
@@ -187,7 +236,7 @@ flowchart TD
     Outlet -->|loadComponent| Wish["features/wishlist"]
     Outlet -->|"loadComponent (last)"| NotFound["features/not-found"]
 
-    Shared["shared/ui · pipes · utils<br/>13 components · price pipe"]
+    Shared["shared/ui · pipes · utils · i18n<br/>14 components · price pipe · plurals"]
     Core["core/catalog · core/services · core/auth · core/locale · core/theme<br/>model · taxonomy · sizing · images · designers<br/>CatalogStore · WishlistService · BagService · RecentlyViewed<br/>AuthService · AuthDialogService · LocaleService · ThemeService"]
 
     Home --> Shared
@@ -207,12 +256,14 @@ All services are `providedIn: 'root'`: tree-shakable singletons that need no reg
 ### 4.3 Route table
 
 ```ts
-// src/app/app.routes.ts
+// src/app/app.routes.ts (simplified: every page also has a translated title)
 function departmentRoutes(path: string, id: Department): Routes {
   return [
     { path,                  loadComponent: department, data: { department: id }, title: titleFor(id) },
-    { path: `${path}/items`, loadComponent: listing,    data: { department: id }, title: `${titleFor(id)} · Shop all` },
-    { path: `${path}/brands`,loadComponent: brands,     data: { department: id }, title: `${titleFor(id)} · Brands` }
+    { path: `${path}/items`, loadComponent: listing,    data: { department: id },
+      title: $localize`:@@title.departmentItems:${titleFor(id)}:department: · Shop all` },
+    { path: `${path}/brands`,loadComponent: brands,     data: { department: id },
+      title: $localize`:@@title.departmentBrands:${titleFor(id)}:department: · Brands` }
   ];
 }
 
@@ -226,6 +277,8 @@ export const routes: Routes = [
       ...departmentRoutes('menswear', 'menswear'),
       ...departmentRoutes('kids', 'kids'),
       { path: 'search',      loadComponent: listing, data: { department: null } },
+      { path: 'bag',         loadComponent: bag },
+      { path: 'wishlist',    loadComponent: wishlist },
       { path: 'product/:id', loadComponent: product },
       { path: '**',          loadComponent: notFound }      // ← always last
     ]
@@ -279,14 +332,18 @@ flowchart LR
 
 ### 4.5 Bootstrapping, step by step
 
-1. `main.ts` calls `bootstrapApplication(AppComponent, appConfig)`.
-2. `appConfig` provides zoneless change detection, the router, `HttpClient` with the Fetch backend, client
-   hydration and a `GlobalErrorHandler`.
-3. The root route renders `PublicLayoutComponent`: header, `<main>`, service links, newsletter band and footer.
-4. The first component that injects `CatalogStore` triggers the single `GET /assets/data/catalog.json`. Until it
+1. Before any script, `src/assets/theme-init.js` (loaded in `<head>`) reads the saved theme, or the system's, and
+   sets `data-theme` on `<html>`, so a dark visitor never sees the light page flash.
+2. `main.ts` calls `bootstrapApplication(AppComponent, appConfig)`. Each language is its own build: the server
+   picks it from the URL prefix (`/` English, `/es-419/`, `/de/`…), with its `<base href>`, `<html lang>` and
+   `LOCALE_ID`; the translations are already compiled in.
+3. `appConfig` provides zoneless change detection, the router, `HttpClient` with the Fetch backend, client
+   hydration with i18n support (`withI18nSupport()`) and a `GlobalErrorHandler`.
+4. The root route renders `PublicLayoutComponent`: header, `<main>`, service links, newsletter band and footer.
+5. The first component that injects `CatalogStore` triggers the single `GET /assets/data/catalog.json`. Until it
    resolves, `loading()` is `true` and pages show skeletons.
-5. The matching page chunk loads lazily, receives its route data as inputs and derives its view with `computed()`.
-6. On the server, `main.server.ts` bootstraps the same app with `provideServerRendering(withRoutes(serverRoutes))`
+6. The matching page chunk loads lazily, receives its route data as inputs and derives its view with `computed()`.
+7. On the server, `main.server.ts` bootstraps the same app with `provideServerRendering(withRoutes(serverRoutes))`
    merged in; `server.ts` hands each request to `AngularNodeAppEngine`, which renders it and returns the HTML.
    In the browser, hydration takes over the server DOM.
 
@@ -306,19 +363,19 @@ vestra/
 │   ├── index.html                  CSP meta, theme-init script, Inter font, <app-root>
 │   ├── locale/                     messages.xlf (extracted source) + messages.<lang>.xlf per language
 │   ├── test-setup.ts               Installs $localize for the specs
-├── scripts/dev-i18n.mjs            npm start: every language, watch build + SSR server
 │   ├── main.ts                     Browser bootstrap
 │   ├── main.server.ts              Server bootstrap
 │   ├── server.ts                   Express + AngularNodeAppEngine SSR server
 │   ├── styles.css                  Tailwind v4: @theme tokens + @utility classes
 │   ├── environments/               apiUrl ('/assets/data')
 │   ├── assets/data/catalog.json    The catalog: 82 products
+│   ├── assets/theme-init.js        Sets data-theme before the first paint (allowed by the CSP)
 │   └── app/
 │       ├── app.component.ts        <router-outlet />
 │       ├── app.config.ts           Zoneless, router, HttpClient, hydration, ErrorHandler
 │       ├── app.config.server.ts    + provideServerRendering(withRoutes(serverRoutes))
 │       ├── app.routes.server.ts    Server render mode per route (all: RenderMode.Server)
-│       ├── app.routes.ts           departmentRoutes() + search, product, 404
+│       ├── app.routes.ts           departmentRoutes() + search, bag, wishlist, product, 404 (translated titles)
 │       ├── core/
 │       │   ├── bag/
 │       │   │   ├── bag.model.ts          BagLine, add/size/quantity/merge, summarizeBag, delivery (+ spec)
@@ -390,6 +447,8 @@ vestra/
 │           │   ├── components/wishlist-card.component.ts   Saved piece: remove, size, Add to bag
 │           │   └── pages/wishlist-page.component.ts
 │           └── not-found/pages/not-found-page.component.ts
+├── docs/screenshots/               The images in this README
+├── scripts/dev-i18n.mjs            npm start: every language, watch build + SSR server
 ├── angular.json · tsconfig*.json · vitest.config.ts · postcss.config.json
 └── LICENSE                         Apache 2.0
 ```
@@ -627,7 +686,9 @@ Every component is standalone, `OnPush`, and takes signal `input()`s. Rule: **on
 
 Plus:
 
-- **`price` pipe** → `formatPrice()`: `$2,950`, always whole dollars.
+- **`price` pipe** → `LocaleService.format()`: the catalog's US-dollar price in the visitor's currency, whole units
+  (`$2,950`, `$54,280` in Mexico, `2.655 €`). Impure, so it follows the region signal.
+- **`formatPrice()`** (`shared/utils/price.util.ts`): plain US dollars, for code that runs outside a view.
 - **`shared/ui/index.ts`**: a barrel for the kit.
 
 ---
@@ -644,6 +705,9 @@ Plus:
 <app-site-footer />        <!-- Farfetch's footer: link columns, social, payments, legal -->
 @defer (when authDialog.view(); prefetch on idle) {
   <app-auth-dialog />      <!-- sign in / register, in its own chunk -->
+}
+@defer (when locale.pickerOpen(); prefetch on idle) {
+  <app-locale-picker />    <!-- Language & region drawer, in its own chunk -->
 }
 ```
 
@@ -1042,9 +1106,14 @@ piece of the app.
 | DOM that must follow state | `AuthDialog` | `afterRenderEffect` → `showModal()` / `close()` |
 | Local UI state | header menus, newsletter form, code countdown | `signal` |
 
-There is no `effect()` that writes state and no manual subscription: zoneless change detection is driven
-entirely by signals and template events. The one effect, `afterRenderEffect` in the dialog, only *reads* state
-to drive a DOM API.
+No effect writes application state, and there is no manual subscription: zoneless change detection is driven
+entirely by signals and template events. The four effects only push state *out* to something that isn't a signal:
+
+| Effect | Where | What it does |
+| ------ | ----- | ------------ |
+| `afterRenderEffect` | `AuthDialog`, `LocalePicker` | Calls `showModal()` / `close()` so the `<dialog>` follows the service |
+| `effect` | `ThemeService` | Writes `data-theme` on `<html>` (browser only) |
+| `effect` + `untracked` | `ProductPage` | Records the product in *Recently viewed* without re-running when that list changes |
 
 ---
 
@@ -1055,7 +1124,12 @@ to drive a DOM API.
 - `aria-current="page"` on the active department and the last breadcrumb.
 - `aria-pressed` on hearts, sizes and gallery thumbnails; `aria-expanded` on the mobile menu.
 - `aria-live` on the result count and the bag badge.
-- Every icon-only button has an `aria-label` ("Wishlist, 3 items"); decorative SVGs are `aria-hidden`.
+- Every icon-only button has an `aria-label` ("Wishlist, 3 items"); decorative SVGs are `aria-hidden`. Labels are
+  translated like the rest of the copy, with the right plural ("Корзина, 3 товара").
+- The theme button is a toggle with `aria-pressed`; the dark theme sets `color-scheme: dark`, so native controls and
+  scrollbars follow it.
+- **Language:** each build sets `<html lang>`; in the language list every name carries its own `lang`, so screen
+  readers pronounce "Deutsch" or "中文（简体）" correctly.
 - Real `<select>`, `<input type="checkbox">` and `<details>` elements: keyboard support for free.
 - Visible focus ring on every interactive element; quick add appears on `:focus-visible` too.
 - **Sign-in dialog:** native modal semantics (`aria-labelledby` its heading, focus trap, Esc), tabs with
@@ -1149,8 +1223,9 @@ rendering anything, run in ~100ms, and pages stay thin.
 tests the real `WishlistService`, including its `linkedSignal`, with no TestBed. `vi.stubGlobal('localStorage', new MemoryStorage())` gives each test a clean
 storage; a subclass (`InstantAuthService`, `latencyMs = 0`) removes the simulated network delay without fake timers.
 
-**Visual QA:** layout changes are verified with headless Chrome screenshots at 1440px and 390–600px; flows that
-need clicks (the sign-in dialog) are driven through the Chrome DevTools Protocol.
+**Visual QA:** layout changes are verified with headless Chrome screenshots at 1440px and 390–600px, in light and
+dark; flows that need clicks (the sign-in dialog, the language switch, the theme) are driven with Playwright
+against the production SSR build. The images in this README come from that build.
 
 ---
 
@@ -1163,7 +1238,10 @@ need clicks (the sign-in dialog) are driven through the Chrome DevTools Protocol
 | `postcss.config.json` | `@tailwindcss/postcss` |
 | `vitest.config.ts` | `environment: 'node'`, `setupFiles: src/test-setup.ts` ($localize), `include: src/**/*.spec.ts`, `vite-tsconfig-paths` |
 | `src/environments/*` | `apiUrl: '/assets/data'` (the catalog's base URL) |
-| `package.json` | Scripts `start`, `build`, `build:ssr`, `serve:ssr`, `test`, `test:watch` |
+| `src/index.html` | The Content-Security-Policy meta, `assets/theme-init.js` in `<head>`, Inter from Google Fonts |
+| `src/locale/*.xlf` | The extracted messages and one translation file per language |
+| `scripts/dev-i18n.mjs` | `npm start`: all locales in watch mode + the SSR server, restarted after each rebuild |
+| `package.json` | Scripts `start`, `start:en`, `build`, `extract-i18n`, `build:ssr`, `serve:ssr`, `test`, `test:watch`; `@angular/localize` |
 
 ---
 
@@ -1199,6 +1277,12 @@ need clicks (the sign-in dialog) are driven through the Chrome DevTools Protocol
 | `@if`, `@for … track`, `@else if`, `@empty` | listing, home |
 | Impure pipe reading a signal | `price.pipe.ts` |
 | Custom `ErrorHandler` | `global-error-handler.service.ts` |
+| `effect` writing to the DOM, `isPlatformBrowser` | `theme.service.ts` |
+| `$localize` with custom IDs and named placeholders | `taxonomy.ts`, `product-listing-page.component.ts` (titles) |
+| `i18n`, `i18n-<attr>` on elements and component inputs | every template, e.g. `home-page.component.ts` |
+| ICU plural / select | `product-listing-page.component.ts` (`listing.count`), `auth-dialog.component.ts` (provider) |
+| `LOCALE_ID`, one build per locale | `locale.service.ts`, `angular.json` (`i18n`, `localize`) |
+| i18n hydration (`withI18nSupport`) | `app.config.ts` |
 
 ### TypeScript
 
@@ -1226,7 +1310,11 @@ need clicks (the sign-in dialog) are driven through the Chrome DevTools Protocol
 | `:has()` (`html:has(dialog[open])`) | `styles.css` |
 | Web Crypto (`crypto.subtle.digest`, `getRandomValues`) | `auth.service.ts` |
 | `Intl.NumberFormat` (currencies, `formatToParts`) | `locale.model.ts` |
-| `DOCUMENT` (setting `<html lang>`) | `locale.service.ts` |
+| `DOCUMENT` (loading the same page in another language) | `locale.service.ts` |
+| `Intl.PluralRules` | `shared/i18n/plurals.ts` |
+| `Intl.Collator` (sorting names per language) | `locale-picker.component.ts` |
+| `matchMedia('(prefers-color-scheme: dark)')` | `theme.service.ts`, `assets/theme-init.js` |
+| Tailwind `@custom-variant dark`, `color-scheme` | `styles.css` |
 | SVG stroke drawing (`pathLength`) | the welcome check |
 | `peer-[…]` floating labels | `text-field.component.ts` |
 
@@ -1245,6 +1333,7 @@ Work happens on feature branches merged with `--no-ff` into `develop`, then fast
 | **Farfetch hub** | `features/improvement2` | Edits and sale prices; page hero, carousels, trending tiles, editorial story, brand tiles, link directory; service links and newsletter band; the A–Z brands page |
 | **Kids by age** | `features/improvement3` | `AgeGroup`, Kids nav (Baby / Kids / Teens), `?age=` filter, age-based sizes, PDP breadcrumb, *Shop by age* |
 | **Documentation & SSR** | `features/improvement4` | This README; working SSR with `AngularNodeAppEngine`, server routes and allowed hosts; `zone.js` removed |
+| **References** | `features/improvement5` | The README's further reading and references |
 | **Sign in** | `features/improvement6` | Farfetch's sign-in pop-up: `AuthService`, `AuthDialogService`, `TextField`, the dialog with sign in, register, one-time code, forgot password and social providers; header account menu; motion tokens |
 | **Footer & name** | `features/improvement7` | Farfetch's full footer (customer service, about, discounts & membership, content, follow us, payment methods with monochrome marks, legal line); the store becomes **VESTRA** |
 | **Language & region** | `features/improvement8` | Farfetch's *Language \| Region* selector as a drawer; `LocaleService`; prices converted and formatted per region through the `price` pipe; globe in the header, mobile menu and footer |
@@ -1253,6 +1342,7 @@ Work happens on feature branches merged with `--no-ff` into `develop`, then fast
 | **Vestra** | `features/improvement11` | The project, package, build output and repository are renamed **vestra** |
 | **Dark theme** | `features/improvement12` | `ThemeService` and `theme-init.js`; dark values for the color tokens; theme switch in the header, mobile menu and footer; photography keeps white/black; critical-CSS inlining off so the full stylesheet loads under the CSP |
 | **Languages** | `features/improvement13` | Angular i18n (`@angular/localize`): every message marked with a custom ID, ICU plurals, six builds (English at `/`, Spanish, German, French, Russian, Simplified Chinese under their prefix); the language picker loads the same page in another language; region names sorted per language; i18n hydration |
+| **Docs review** | `features/improvement14` | README and `ARCHITECTURE.md` checked against the code: screenshots, translated titles, effects, i18n and theme concepts, an up-to-date roadmap |
 
 ---
 
@@ -1317,6 +1407,10 @@ npm start            # → http://localhost:4200, every language (/es-419/, /de/
 11. Click the globe (`US · EN`) → *Region* → *Mexico*: every price turns into pesos; try *Germany* for euros.
 12. Add a piece from its product page (with a size) and one from a card (without), open the bag, choose the
     missing size, switch to Express, and press *Continue* to place the order.
+13. Click the globe → *Language* → *Español (latinoamericano)*: the same page reloads under `/es-419/`, with your
+    region, bag and wishlist untouched. Try *Русский* to see Russian plurals ("3 товара", "5 товаров").
+14. Click the moon next to the globe: the store turns dark; reload, it stays dark. Clear `vestra.theme.v1` in
+    DevTools and the store follows the system theme again.
 
 ---
 
@@ -1362,10 +1456,12 @@ Header links, filters, titles and tiles pick it up; tiles only appear where prod
 - [ ] Real stock per size, and "notify me" for sold-out pieces.
 - [ ] A real checkout: address, payment and order history behind the simulated *Continue*.
 - [ ] A mini-bag drawer when adding from a card.
-- [ ] Wishlist page listing saved pieces.
-- [ ] Component tests for the listing and product pages; E2E (Playwright) for filters and the Kids nav.
+- [ ] Component tests for the listing and product pages; E2E (Playwright) for filters, the Kids nav, the language switch and the theme.
 - [ ] A real API behind `CatalogStore` with server-side filtering and pagination.
-- [ ] Translate the UI into the six languages of the selector (Angular i18n or a signal-based dictionary); the language choice is already stored.
+- [ ] Native-speaker review of the five translations, and a merge script for new `.xlf` messages (today they are copied by hand).
+- [ ] Redirect `/` to the visitor's language (`Accept-Language`) on the first visit, and remember the choice.
+- [ ] A "System" option in the theme switch (today, once you choose light or dark, the system is no longer followed).
+- [ ] A `favicon.ico` (the browser asks for it on every page and gets a 404).
 - [ ] Live exchange rates, and charging in the chosen currency.
 - [ ] Image `srcset` / `NgOptimizedImage` for responsive photo sizes.
 
@@ -1390,7 +1486,8 @@ Header links, filters, titles and tiles pick it up; tiles only appear where prod
 - Product photography: [Unsplash](https://unsplash.com/) photographers, served through imgix.
 - Font: [Inter](https://rsms.me/inter/) via Google Fonts.
 - Payment and social marks: [Simple Icons](https://simpleicons.org/) (CC0); brand names and logos belong to their owners.
-- Visual prototypes: generated with Stitch (`prototypes/`).
+- Visual prototypes: generated with Stitch (`prototypes/`); the first study is
+  [`prototypes/woman_/woman1/code.html`](prototypes/woman_/woman1/code.html).
 
 **Disclaimer:** VESTRA is a fictional store: an educational architecture project inspired by Farfetch's marketplace
 domain and UI patterns. FARFETCH and the designer names are trademarks of their respective owners; this project is
@@ -1403,8 +1500,4 @@ not affiliated with or endorsed by them. See the original site at <https://www.f
 - https://medium.com/@sanikapatil0213/folder-structures-that-scale-angular-architecture-for-big-teams-decb717e1f94
 - https://medium.com/@flaviusson/angular-20-to-21-transition-guide-breaking-changes-best-practices-and-migration-paths-2026-9a66338ac33e
 - https://khizaruddins.medium.com/modern-angular-enterprise-architecture-2026-beff3d0b928f
-
-### References
-
-[prototypes/woman_/woman1/code.html](prototypes/woman_/woman1/code.html)
-https://www.youtube.com/watch?v=aSdAZHansJU
+- Video: https://www.youtube.com/watch?v=aSdAZHansJU
