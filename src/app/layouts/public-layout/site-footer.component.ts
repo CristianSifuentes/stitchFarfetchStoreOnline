@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { LocaleService } from '../../core/locale';
-import { PAYMENT_METHODS } from './payment-methods';
+import { PAYMENT_METHODS } from '../../shared/data/payment-methods';
 
 interface FooterColumn {
   readonly title: string;

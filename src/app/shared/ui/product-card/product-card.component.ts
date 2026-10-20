@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, inject, input } from '@an
 import { RouterLink } from '@angular/router';
 import { CatalogItem } from '../../../core/catalog/catalog.model';
 import { sizedImage } from '../../../core/catalog/images';
-import { CartService } from '../../../core/services/cart.service';
+import { BagService } from '../../../core/bag/bag.service';
 import { PriceTagComponent } from '../price-tag/price-tag.component';
 import { WishlistButtonComponent } from '../wishlist-button/wishlist-button.component';
 
@@ -41,7 +41,7 @@ import { WishlistButtonComponent } from '../wishlist-button/wishlist-button.comp
           type="button"
           class="quick-add link-cta mt-3"
           [attr.aria-label]="'Add ' + item().brand + ' ' + item().title + ' to bag'"
-          (click)="cart.add(item().id)"
+          (click)="bag.add(item().id)"
         >
           Add to bag
         </button>
@@ -51,7 +51,7 @@ import { WishlistButtonComponent } from '../wishlist-button/wishlist-button.comp
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductCardComponent {
-  protected readonly cart = inject(CartService);
+  protected readonly bag = inject(BagService);
 
   readonly item = input.required<CatalogItem>();
   // Above-the-fold cards load immediately.

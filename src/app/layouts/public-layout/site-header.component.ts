@@ -5,7 +5,7 @@ import { filter, map } from 'rxjs';
 import { ACCESS_TIER, AuthDialogService, AuthService } from '../../core/auth';
 import { LocaleService } from '../../core/locale';
 import { AGE_GROUPS, CATEGORIES, DEPARTMENTS, Department, isDepartment } from '../../core/catalog';
-import { CartService } from '../../core/services/cart.service';
+import { BagService } from '../../core/bag/bag.service';
 import { CatalogStore } from '../../core/services/catalog.store';
 import { WishlistService } from '../../core/services/wishlist.service';
 
@@ -71,7 +71,7 @@ interface NavLink {
           <a routerLink="/search" class="md:hidden" aria-label="Search">
             <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" /></svg>
           </a>
-          <a routerLink="/wishlist" routerLinkActive="text-muted" class="relative transition-colors hover:text-muted" [attr.aria-label]="'Wishlist, ' + wishlist.count() + ' items'">
+          <a routerLink="/wishlist" routerLinkActive="text-muted" class="relative transition-colors hover:text-muted" [attr.aria-label]="'Wishlist, ' + wishlist.count() + (wishlist.count() === 1 ? ' item' : ' items')">
             <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true">
               <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
             </svg>
@@ -79,14 +79,14 @@ interface NavLink {
               <span class="absolute -right-2 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-ink px-1 text-[9px] font-semibold text-canvas" aria-hidden="true">{{ wishlist.count() }}</span>
             }
           </a>
-          <button type="button" class="relative" [attr.aria-label]="'Shopping bag, ' + cart.total() + ' items'">
+          <a routerLink="/bag" routerLinkActive="text-muted" class="relative transition-colors hover:text-muted" [attr.aria-label]="'Shopping bag, ' + bag.count() + (bag.count() === 1 ? ' item' : ' items')">
             <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true">
               <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" /><path d="M3 6h18M16 10a4 4 0 0 1-8 0" />
             </svg>
-            @if (cart.total()) {
-              <span class="absolute -right-2 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-ink px-1 text-[9px] font-semibold text-canvas" aria-live="polite">{{ cart.total() }}</span>
+            @if (bag.count()) {
+              <span class="absolute -right-2 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-ink px-1 text-[9px] font-semibold text-canvas" aria-live="polite">{{ bag.count() }}</span>
             }
-          </button>
+          </a>
           <div #accountMenu class="relative hidden md:block">
             @if (auth.account(); as account) {
               <button
@@ -110,10 +110,10 @@ interface NavLink {
                     Wishlist
                     <span class="text-xs text-muted">{{ wishlist.count() }} {{ wishlist.count() === 1 ? 'item' : 'items' }}</span>
                   </a>
-                  <p class="mt-3 flex items-center justify-between text-sm">
+                  <a routerLink="/bag" role="menuitem" class="mt-3 flex items-center justify-between text-sm transition-colors hover:text-muted" (click)="accountOpen.set(false)">
                     Shopping bag
-                    <span class="text-xs text-muted">{{ cart.total() }} {{ cart.total() === 1 ? 'item' : 'items' }}</span>
-                  </p>
+                    <span class="text-xs text-muted">{{ bag.count() }} {{ bag.count() === 1 ? 'item' : 'items' }}</span>
+                  </a>
                   <button type="button" role="menuitem" class="btn btn-secondary mt-5 w-full" (click)="signOut()">Sign out</button>
                 </div>
               }
@@ -182,7 +182,7 @@ interface NavLink {
 export class SiteHeaderComponent {
   private readonly router = inject(Router);
   private readonly catalog = inject(CatalogStore);
-  protected readonly cart = inject(CartService);
+  protected readonly bag = inject(BagService);
   protected readonly wishlist = inject(WishlistService);
   protected readonly auth = inject(AuthService);
   protected readonly authDialog = inject(AuthDialogService);
