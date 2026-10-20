@@ -84,6 +84,7 @@ Three ideas run through every file:
 | `/womenswear`, `/menswear`, `/kids` | **Department hub** | Farfetch's hub, in its order: seasonal campaign, *New in daily*, *Trending now*, an editorial story with its pieces, **Shop by age** (Kids only), *Shop by category*, *Trending brands* and *More to explore*. |
 | `/<department>/items` | **Listing** | Farfetch's `items.aspx`: filter by age (Kids), category, designer and sale; sort by newest or price; load more. Title, description and breadcrumb name exactly what you selected. |
 | `/<department>/brands` | **Brands** | Trending houses as large tiles, then every designer in the department from A to Z with its piece count. |
+| `/bag` | **Shopping bag** | Farfetch's basket: change size and quantity in place, move to wishlist, remove with Undo, unavailable (sold-out) items apart, a summary with Standard / Express delivery and the total in your currency, then **Continue** to a simulated order. Below: free returns, your wishlist, recommendations and recently viewed. |
 | `/wishlist` | **Wishlist** | Everything you saved, most recent first: remove with **Undo**, filter *All · Available · On sale · Sold out*, pick a size and **Add to bag** right from the card, and *You may also like*. Signed in it shows your name and VESTRA Access tier (**Bronze**); signed out, a prompt to sign in and keep it. |
 | `/search?q=` | **Search** | The same listing across all departments. Search is accent-insensitive (`chloe` finds *Chloé*). |
 | `/product/:id` | **Product** | Gallery (full view + two detail crops), size picker with the right size run, add to bag, wishlist, details, size & fit, shipping, and *You may also like*. |
@@ -111,6 +112,8 @@ Small touches, everywhere:
   bags, accessories and jewelry are one size and skip the picker.
 - **Quick add:** "Add to bag" appears on hover on desktop and is always visible on touch screens.
 - **Breadcrumbs everywhere:** `Home / Kids / Baby / Clothing / Teddy knit hooded romper`.
+- **A real bag:** sizes and quantities you can change in place, sold-out pieces set apart, free standard delivery
+  from $200, and a (simulated) order placed with an order number. It follows the session like the wishlist.
 - **Your currency:** the globe in the header (`US · EN`) and the footer open *Language & region*; choose Mexico and every price reads `$9,568` in pesos, choose Germany and it reads `468 €`.
 - **An account:** the header's person icon opens the sign-in dialog; once signed in it becomes your initial, with a menu to sign out. The session survives a reload.
 
@@ -178,10 +181,12 @@ flowchart TD
     Outlet -->|"loadComponent ×3 + /search"| Listing["features/listing"]
     Outlet -->|"loadComponent ×3"| Brands["features/brands"]
     Outlet -->|loadComponent| Product["features/product"]
+    Outlet -->|loadComponent| Bag["features/bag"]
+    Outlet -->|loadComponent| Wish["features/wishlist"]
     Outlet -->|"loadComponent (last)"| NotFound["features/not-found"]
 
     Shared["shared/ui · pipes · utils<br/>13 components · price pipe"]
-    Core["core/catalog · core/services · core/auth · core/locale<br/>model · taxonomy · sizing · images · designers<br/>CatalogStore · WishlistService · CartService<br/>AuthService · AuthDialogService · LocaleService"]
+    Core["core/catalog · core/services · core/auth · core/locale<br/>model · taxonomy · sizing · images · designers<br/>CatalogStore · WishlistService · BagService · RecentlyViewed<br/>AuthService · AuthDialogService · LocaleService"]
 
     Home --> Shared
     Dept --> Shared
@@ -308,6 +313,10 @@ stitchFarfetchStoreOnline/
 │       ├── app.routes.server.ts    Server render mode per route (all: RenderMode.Server)
 │       ├── app.routes.ts           departmentRoutes() + search, product, 404
 │       ├── core/
+│       │   ├── bag/
+│       │   │   ├── bag.model.ts          BagLine, add/size/quantity/merge, summarizeBag, delivery (+ spec)
+│       │   │   ├── bag.service.ts        The shopping bag, one per account
+│       │   │   └── index.ts
 │       │   ├── auth/
 │       │   │   ├── auth.model.ts         Account, AuthProvider, AuthResult, AuthView
 │       │   │   ├── auth.validation.ts    Email and password rules, strength, names (+ spec)
@@ -329,10 +338,11 @@ stitchFarfetchStoreOnline/
 │       │   └── services/
 │       │       ├── catalog.store.ts      CatalogStore, byNewest
 │       │       ├── wishlist.service.ts   Persisted wishlist
-│       │       ├── cart.service.ts       Bag count
+│       │       ├── recently-viewed.service.ts  Product pages you opened (+ spec)
 │       │       └── global-error-handler.service.ts
 │       ├── shared/
 │       │   ├── ui/                 14 presentational components (see §7)
+│       │   ├── data/payment-methods.ts   Payment marks (Simple Icons, CC0): footer and bag
 │       │   ├── pipes/price.pipe.ts
 │       │   └── utils/price.util.ts (+ spec)
 │       ├── layouts/public-layout/
@@ -345,7 +355,6 @@ stitchFarfetchStoreOnline/
 │       │   │   └── social-sign-in.component.ts  Google · Apple · Facebook
 │       │   ├── locale/
 │       │   │   └── locale-picker.component.ts   Language | Region drawer
-│       │   ├── payment-methods.ts              Payment marks (Simple Icons, CC0)
 │       │   ├── public-layout.component.ts
 │       │   ├── site-header.component.ts
 │       │   ├── service-links.component.ts
@@ -361,6 +370,10 @@ stitchFarfetchStoreOnline/
 │           │   └── pages/product-listing-page.component.ts
 │           ├── brands/pages/brands-page.component.ts
 │           ├── product/pages/product-page.component.ts
+│           ├── bag/
+│           │   ├── components/bag-line.component.ts      A piece: size, quantity, move to wishlist, remove
+│           │   ├── components/bag-summary.component.ts   Subtotal, delivery choice, total, Continue
+│           │   └── pages/bag-page.component.ts           The bag, checkout and order confirmation
 │           ├── wishlist/
 │           │   ├── components/wishlist-card.component.ts   Saved piece: remove, size, Add to bag
 │           │   └── pages/wishlist-page.component.ts
@@ -479,9 +492,30 @@ first, then the guest's new ones) and the guest list is cleared, the way Farfetc
 logging in. Storage is read defensively (non-arrays, non-strings and duplicates dropped; invalid JSON yields an
 empty list) and guarded for SSR and private browsing.
 
-### `CartService`
+### `BagService`: the shopping bag
 
-A signal of added ids and a `total` count shown on the bag icon. Intentionally minimal: there is no checkout.
+Lines of `{ id, size, quantity }` (size is `null` after a quick "Add to bag" from a card, and asked for before
+checkout). Like the wishlist it **follows the session** through a `linkedSignal`: `vestra.bag.v1` for guests,
+`vestra.bag.v1:<email>` per account, and the guest's bag joins the account's at sign-in (`mergeBags`).
+
+| Method | Behaviour |
+| ------ | --------- |
+| `add(id, size?, quantity?)` | Same piece in the same size raises the quantity (max 10) |
+| `setSize(index, size)` | Changing to a size already in the bag merges the two lines |
+| `setQuantity(index, n)` | Clamped to 1–10 |
+| `remove(index)` / `restore(line, index)` | Remove, and the page's *Undo* |
+| `clear()` | Empties it |
+| `count` | Pieces counting quantities: the header badge |
+
+The arithmetic lives in **`bag.model.ts`**, pure and tested: `addLine`, `changeSize`, `changeQuantity`, `mergeBags`
+and `summarizeBag(lines, find, sizesFor, delivery)`, which returns the available and unavailable (sold-out)
+entries, the item count, subtotal at the prices actually paid, delivery (Standard $20, free from $200 like the
+promo bar; Express $35), total and how many lines still need a size.
+
+### `RecentlyViewedService`
+
+The last 12 product pages opened, newest first, under `vestra.recent.v1`. The product page records each visit
+in an `effect`, wrapping the write in `untracked()` so reading the list doesn't re-run the effect.
 
 ### `AuthService`: the session
 
@@ -778,7 +812,26 @@ Farfetch's wishlist page.
 | Empty | A heart, "Your wishlist is empty" and *Shop Women / Men / Kids* |
 | You may also like | Newest in-stock pieces from the departments you save from (the store's newest when empty) |
 
-### 9.7 Not found: `**`
+### 9.7 Shopping bag: `/bag`
+
+Farfetch's basket (`/checkout/basket.aspx`), top to bottom:
+
+| Part | Behaviour |
+| ---- | --------- |
+| Returns line | "Free returns for 30 days · We collect from your home" |
+| Header | "Shopping bag", the live item count and *Continue shopping* |
+| Lines (`BagLine`) | Photo, brand, name, **Item ID**, price (sale in red) and "Import duties included"; **Size** and **Quantity** selects that change the bag in place; *Move to wishlist*; ✕ remove. A line total appears when the quantity is above one |
+| Undo | Removing or moving to the wishlist shows a black bar with **Undo** for 6 s (moving is undone on both sides) |
+| Unavailable items (n) | Sold-out pieces in a `<details>`: dimmed, never charged, still movable to the wishlist |
+| Summary (`BagSummary`, sticky) | Subtotal, delivery, a Standard / Express choice, "Add $X more for free standard delivery" with a progress line, **Total** with the currency code (`MXN $…`), "Import duties included", **Continue** and the payment marks |
+| Continue | Flags lines without a size ("Choose a size to continue"); asks guests to sign in (opens the dialog; the bag comes with them); signed in, places a **simulated order** after a short pause |
+| Order placed | A drawn check, the order number (`VS-01234567`), the email, the pieces, totals, the delivery estimate, and "Demo store: no payment was taken". Sold-out lines stay in the bag |
+| Below | "Buy now, decide at your pace" (free returns) with three benefits (returns, Access, fast delivery), **From your wishlist** (5 pieces), **You may also like**, **Recently viewed** |
+| Empty | A bag icon, "Your shopping bag is empty" and *Shop Women / Men / Kids* |
+
+Every amount goes through the `price` pipe, so the bag follows the region chosen in *Language & region*.
+
+### 9.8 Not found: `**`
 
 The last route; a message and a way back.
 
@@ -924,7 +977,8 @@ piece of the app.
 | Kind of state | Where | Tool |
 | ------------- | ----- | ---- |
 | Server data (catalog) | `CatalogStore` | `toSignal(http.get(…))` |
-| App-wide UI state | `WishlistService`, `CartService` | `signal` + `computed` |
+| App-wide UI state | `WishlistService`, `BagService` | `linkedSignal` per account + `computed` |
+| History | `RecentlyViewedService` | `signal`, persisted |
 | Persisted state | `WishlistService` | `localStorage`, validated on read |
 | Navigation state | URL query params | Router + `computed` from `queryParamMap` |
 | Route inputs | `department`, `id` | `input.required()` via `withComponentInputBinding` |
@@ -989,7 +1043,7 @@ to drive a DOM API.
 
 ## 17. Testing
 
-Tests run with **Vitest** in a Node environment (`npm test`): **42 tests across 10 files**, all green.
+Tests run with **Vitest** in a Node environment (`npm test`): **49 tests across 12 files**, all green.
 
 | Spec | What it proves |
 | ---- | -------------- |
@@ -999,6 +1053,8 @@ Tests run with **Vitest** in a Node environment (`npm test`): **42 tests across 
 | `sizing.spec.ts` (3) | Kids sizes follow the age group (3M… for baby clothing, 36 EU… for teen shoes); adult runs unchanged; one-size categories return `[]` |
 | `auth.service.spec.ts` (6) | Demo sign-in; register → sign out → sign in, and the session surviving a new instance (a reload); no plaintext password in storage; duplicates, unknown emails and weak passwords refused; one-time code (wrong code, single use, passwordless account); social sign-in |
 | `auth.validation.spec.ts` (4) | Email messages; password rules and strength from Weak to Strong; names from emails |
+| `bag.model.spec.ts` (6) | Same piece and size raises the quantity (capped); changing size merges lines; quantity clamped; guest bag merged into the account; sale prices charged, sold-out set apart, missing sizes counted; free standard delivery from $200, never on express |
+| `recently-viewed.service.spec.ts` (1) | Newest first, no duplicates, capped at 12, kept across reloads |
 | `wishlist.service.spec.ts` (4) | Most recent first; the guest list merged into the account on sign-in, cleared, and lists kept apart per account; Undo restores the original position; `mergeWishlists` order |
 | `locale.model.spec.ts` (4) | US dollars untouched; conversion and local formats (MXN, GBP, EUR in Germany, JPY); regions alphabetical with their symbols; guards for untrusted values |
 | `catalog.model.spec.ts` (2) | `effectivePrice` and `discountPercent` |
@@ -1052,6 +1108,7 @@ need clicks (the sign-in dialog) are driven through the Chrome DevTools Protocol
 | Content projection | `editorial-story.component.ts` |
 | `model()` two-way binding | `text-field.component.ts`, used as `[(value)]` |
 | `afterRenderEffect` (DOM follows state) | `auth-dialog.component.ts` |
+| `effect` + `untracked` (record without re-running) | `product-page.component.ts` |
 | `@defer (when …; prefetch on idle)` | `public-layout.component.ts` |
 | `@let`, `@switch` | `auth-dialog.component.ts` |
 | `viewChildren` (focus management) | `code-form.component.ts` |
@@ -1111,6 +1168,7 @@ Work happens on feature branches merged with `--no-ff` into `develop`, then fast
 | **Footer & name** | `features/improvement7` | Farfetch's full footer (customer service, about, discounts & membership, content, follow us, payment methods with monochrome marks, legal line); the store becomes **VESTRA** |
 | **Language & region** | `features/improvement8` | Farfetch's *Language \| Region* selector as a drawer; `LocaleService`; prices converted and formatted per region through the `price` pipe; globe in the header, mobile menu and footer |
 | **Wishlist** | `features/improvement9` | Farfetch's `/wishlist`: cards with size and Add to bag, remove with Undo, filters, recommendations; a wishlist per account merged on sign-in; sold-out pieces; Bronze tier in the account menu |
+| **Shopping bag** | `features/improvement10` | Farfetch's basket at `/bag`: `BagService` (lines with size and quantity, per account) and pure `bag.model.ts`; summary with delivery options; simulated checkout and order confirmation; recently viewed |
 
 ---
 
@@ -1130,6 +1188,7 @@ Work happens on feature branches merged with `--no-ff` into `develop`, then fast
 | **Simulated auth behind `AuthResult`** | The whole sign-in experience works with no backend, and the UI is already shaped for one | Not real security: accounts are per browser, hashing is demo-grade |
 | **Native `<dialog>` instead of a custom overlay** | Focus trap, Esc, inert page and top layer for free, correct for screen readers | Styling `::backdrop` and entry animations needs care |
 | **Region converts prices, language doesn't translate (yet)** | The currency change is real and visible everywhere at almost no cost | Choosing a language only sets `<html lang>` until the copy is translated |
+| **Simulated checkout** | The whole bag journey can be tried end to end, including sign-in at checkout | No address, payment or order history yet |
 | **Fixed, indicative exchange rates** | Deterministic prices and tests, no API key | Rates drift from reality; a real store fetches them |
 | **Dialog behind `@defer`** | ~8 kB gzipped stays out of the initial bundle | The first open waits for the chunk if it wasn't prefetched yet |
 
@@ -1169,6 +1228,8 @@ npm start            # → http://localhost:4200
 9. Open it again → *Continue with a one-time code*, and click the code shown to sign in.
 10. Try *Register* and watch the strength meter while typing a password.
 11. Click the globe (`US · EN`) → *Region* → *Mexico*: every price turns into pesos; try *Germany* for euros.
+12. Add a piece from its product page (with a size) and one from a card (without), open the bag, choose the
+    missing size, switch to Express, and press *Continue* to place the order.
 
 ---
 
@@ -1212,7 +1273,8 @@ Header links, filters, titles and tiles pick it up; tiles only appear where prod
 - [ ] A real auth backend behind `AuthService` (sessions in HttpOnly cookies, server-side hashing, emailed codes, OAuth redirects) and an account page.
 - [ ] Sync the wishlist to a server account (it is per account, but only in this browser).
 - [ ] Real stock per size, and "notify me" for sold-out pieces.
-- [ ] Bag drawer and checkout flow (`CartService` currently counts items).
+- [ ] A real checkout: address, payment and order history behind the simulated *Continue*.
+- [ ] A mini-bag drawer when adding from a card.
 - [ ] Wishlist page listing saved pieces.
 - [ ] Component tests for the listing and product pages; E2E (Playwright) for filters and the Kids nav.
 - [ ] A real API behind `CatalogStore` with server-side filtering and pagination.

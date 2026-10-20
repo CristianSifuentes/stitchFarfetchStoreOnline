@@ -20,6 +20,7 @@ The globe (header, mobile menu, footer) opens *Language & region*: the region co
 | `/womenswear`, `/menswear`, `/kids` | `DepartmentPage` | The department hub (Farfetch's order): campaign, New in daily, Trending now, editorial + its pieces, shop by age (kids), categories, trending brands, more to explore. **One template for all three** |
 | `/womenswear/items`, `/menswear/items`, `/kids/items` | `ProductListingPage` | Farfetch's `items.aspx`: filters, sort, grid, load more |
 | `/womenswear/brands`, `/menswear/brands`, `/kids/brands` | `BrandsPage` | Trending brands + every designer A–Z with its piece count |
+| `/bag` | `BagPage` | The shopping bag: lines, summary with delivery, simulated checkout, wishlist, recommendations, recently viewed |
 | `/wishlist` | `WishlistPage` | Saved pieces (per account), remove with Undo, filters, size + Add to bag, recommendations |
 | `/search?q=` | `ProductListingPage` | The same listing across all departments |
 | `/product/:id` | `ProductPage` | One PDP for every department |
@@ -39,7 +40,8 @@ src/app
     auth/         AuthService (session), AuthDialogService (which screen is open), validation rules
     locale/       LocaleService (language + region), REGIONS with currency and rate, formatMoney
     catalog/      CatalogItem model, DEPARTMENTS / CATEGORIES taxonomy, size runs
-    services/     CatalogStore (the only product source), WishlistService, CartService
+    bag/          BagService (lines with size and quantity, per account), pure bag.model (totals, delivery)
+    services/     CatalogStore (the only product source), WishlistService, RecentlyViewedService
   shared/
     ui/           ProductCard, WishlistButton, SectionHeader, Breadcrumb, PageHero, DesignerCard, BrandStrip, TextField, …
     pipes/        price
@@ -49,7 +51,7 @@ src/app
       locale/       LocalePicker (@defer): the Language | Region drawer
       auth/         AuthDialog (@defer) + one component per screen: sign in, register, code, forgot, social
   features/
-    home/ department/ listing/ brands/ product/ wishlist/ not-found/
+    home/ department/ listing/ brands/ product/ bag/ wishlist/ not-found/
 ```
 
 Rules:

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, output, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CatalogItem, sizedImage, sizesFor } from '../../../core/catalog';
-import { CartService } from '../../../core/services/cart.service';
+import { BagService } from '../../../core/bag/bag.service';
 import { PriceTagComponent } from '../../../shared/ui/price-tag/price-tag.component';
 
 // A saved piece, the way Farfetch's wishlist shows it: the photo with a
@@ -82,7 +82,7 @@ import { PriceTagComponent } from '../../../shared/ui/price-tag/price-tag.compon
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WishlistCardComponent {
-  private readonly cart = inject(CartService);
+  private readonly bag = inject(BagService);
 
   readonly item = input.required<CatalogItem>();
   readonly remove = output();
@@ -104,7 +104,7 @@ export class WishlistCardComponent {
       this.needsSize.set(true);
       return;
     }
-    this.cart.add(this.item().id);
+    this.bag.add(this.item().id, this.size());
     this.added.set(true);
   }
 }

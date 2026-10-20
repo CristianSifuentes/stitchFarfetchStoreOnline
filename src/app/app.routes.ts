@@ -37,6 +37,11 @@ export const routes: Routes = [
       ...departmentRoutes('kids', 'kids'),
       { path: 'search', loadComponent: listing, data: { department: null }, title: 'Shop all | VESTRA' },
       {
+        path: 'bag',
+        title: 'Shopping bag | VESTRA',
+        loadComponent: () => import('./features/bag/pages/bag-page.component').then((m) => m.BagPageComponent)
+      },
+      {
         path: 'wishlist',
         title: 'Wishlist | VESTRA',
         loadComponent: () => import('./features/wishlist/pages/wishlist-page.component').then((m) => m.WishlistPageComponent)

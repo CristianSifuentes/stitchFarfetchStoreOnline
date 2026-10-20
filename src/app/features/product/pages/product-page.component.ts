@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input, linkedSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, input, linkedSignal, untracked } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ageGroupInfo, categoryLabel, departmentInfo, galleryFor, sizesFor } from '../../../core/catalog';
-import { CartService } from '../../../core/services/cart.service';
+import { BagService } from '../../../core/bag/bag.service';
+import { RecentlyViewedService } from '../../../core/services/recently-viewed.service';
 import { CatalogStore } from '../../../core/services/catalog.store';
 import { WishlistService } from '../../../core/services/wishlist.service';
 import { PriceTagComponent } from '../../../shared/ui/price-tag/price-tag.component';
@@ -94,6 +95,9 @@ const RELATED_COUNT = 4;
                 <button type="button" class="btn btn-primary w-full" (click)="addToBag()">
                   {{ added() ? 'Added to bag' : 'Add to bag' }}
                 </button>
+                @if (added()) {
+                  <a routerLink="/bag" class="btn btn-secondary w-full motion-safe:animate-fade-in">View bag ({{ bagCount() }})</a>
+                }
               }
               @if (needsSize()) {
                 <p class="text-xs text-error" role="alert">Please select a size.</p>
@@ -161,7 +165,8 @@ const RELATED_COUNT = 4;
 export class ProductPageComponent {
   protected readonly catalog = inject(CatalogStore);
   protected readonly wishlist = inject(WishlistService);
-  private readonly cart = inject(CartService);
+  private readonly bag = inject(BagService);
+  private readonly recentlyViewed = inject(RecentlyViewedService);
 
   // The :id route param (withComponentInputBinding), so moving from one
   // product to a recommended one updates the page.
@@ -185,6 +190,7 @@ export class ProductPageComponent {
   protected readonly needsSize = linkedSignal({ source: this.id, computation: () => false });
 
   protected readonly saved = computed(() => this.wishlist.has(this.id()));
+  protected readonly bagCount = this.bag.count;
   protected readonly departmentPath = computed(() => {
     const item = this.product();
     return item ? departmentInfo(item.department).path : '/';
@@ -244,6 +250,17 @@ export class ProductPageComponent {
     ];
   });
 
+  constructor() {
+    // Every product page you open joins "Recently viewed" (shown in the bag).
+    // untracked: adding reads the list, which must not re-run this effect.
+    effect(() => {
+      const id = this.id();
+      if (this.product()) {
+        untracked(() => this.recentlyViewed.add(id));
+      }
+    });
+  }
+
   protected addToBag(): void {
     const item = this.product();
     if (!item) {
@@ -254,7 +271,7 @@ export class ProductPageComponent {
       return;
     }
     this.needsSize.set(false);
-    this.cart.add(item.id);
+    this.bag.add(item.id, this.selectedSize());
     this.added.set(true);
   }
 }
