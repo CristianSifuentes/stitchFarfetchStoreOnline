@@ -38,6 +38,7 @@
 7. [Shared: The UI Kit](#7-shared-the-ui-kit)
 8. [Layout: The Storefront Shell](#8-layout-the-storefront-shell)
    - [8.1 Sign in & register](#81-sign-in--register)
+   - [8.2 Language & region](#82-language--region)
 9. [Pages: Every Feature in Depth](#9-pages-every-feature-in-depth)
 10. [The Catalog Data](#10-the-catalog-data)
 11. [Product Photography](#11-product-photography)
@@ -86,6 +87,7 @@ Three ideas run through every file:
 | `/search?q=` | **Search** | The same listing across all departments. Search is accent-insensitive (`chloe` finds *Chloé*). |
 | `/product/:id` | **Product** | Gallery (full view + two detail crops), size picker with the right size run, add to bag, wishlist, details, size & fit, shipping, and *You may also like*. |
 | `/anything-else` | **404** | A way back to the store. |
+| *any page* → globe icon | **Language & region** | Farfetch's selector as a drawer: pick a language and a region; prices switch to the region's currency (MXN, EUR, GBP, JPY…) everywhere, at once. |
 | *any page* → account icon | **Sign in dialog** | Farfetch's pop-up: sign in, register, continue with a one-time code, reset a password, or continue with Google, Apple or Facebook. |
 
 **The header changes with the department you're in:**
@@ -105,6 +107,7 @@ Small touches, everywhere:
   bags, accessories and jewelry are one size and skip the picker.
 - **Quick add:** "Add to bag" appears on hover on desktop and is always visible on touch screens.
 - **Breadcrumbs everywhere:** `Home / Kids / Baby / Clothing / Teddy knit hooded romper`.
+- **Your currency:** the globe in the header (`US · EN`) and the footer open *Language & region*; choose Mexico and every price reads `$9,568` in pesos, choose Germany and it reads `468 €`.
 - **An account:** the header's person icon opens the sign-in dialog; once signed in it becomes your initial, with a menu to sign out. The session survives a reload.
 
 ---
@@ -163,7 +166,7 @@ flowchart TD
       Header["SiteHeader"]
       Outlet["&lt;main&gt; router-outlet"]
       Below["ServiceLinks · NewsletterBand · SiteFooter"]
-      Auth["@defer AuthDialog<br/>(own chunk)"]
+      Auth["@defer AuthDialog · LocalePicker<br/>(own chunks)"]
     end
 
     Outlet -->|loadComponent| Home["features/home"]
@@ -174,7 +177,7 @@ flowchart TD
     Outlet -->|"loadComponent (last)"| NotFound["features/not-found"]
 
     Shared["shared/ui · pipes · utils<br/>13 components · price pipe"]
-    Core["core/catalog · core/services · core/auth<br/>model · taxonomy · sizing · images · designers<br/>CatalogStore · WishlistService · CartService<br/>AuthService · AuthDialogService"]
+    Core["core/catalog · core/services · core/auth · core/locale<br/>model · taxonomy · sizing · images · designers<br/>CatalogStore · WishlistService · CartService<br/>AuthService · AuthDialogService · LocaleService"]
 
     Home --> Shared
     Dept --> Shared
@@ -257,6 +260,8 @@ flowchart LR
     Sess[("localStorage<br/>vestra.session.v1 · vestra.accounts.v1")] <--> AS["AuthService"]
     AS --> Hdr2["Header account menu"]
     AS --> Dlg["Sign-in dialog"]
+    Loc[("localStorage<br/>vestra.locale.v1")] <--> LS["LocaleService<br/>region → currency"]
+    LS --> Prices["price pipe · every price"]
 ```
 
 ### 4.5 Bootstrapping, step by step
@@ -305,6 +310,10 @@ stitchFarfetchStoreOnline/
 │       │   │   ├── auth.service.ts       The session: sign in, register, one-time code, social, reset (+ spec)
 │       │   │   ├── auth-dialog.service.ts Which dialog screen is open, and the email typed so far
 │       │   │   └── index.ts
+│       │   ├── locale/
+│       │   │   ├── locale.model.ts       LANGUAGES, REGIONS (currency, locale, rate), formatMoney (+ spec)
+│       │   │   ├── locale.service.ts     The visitor's language and region; opens the selector
+│       │   │   └── index.ts
 │       │   ├── catalog/
 │       │   │   ├── catalog.model.ts      CatalogItem, Department, ProductCategory, ProductEdit, AgeGroup, prices
 │       │   │   ├── taxonomy.ts           DEPARTMENTS, CATEGORIES, EDITS, AGE_GROUPS + lookups/guards
@@ -330,6 +339,9 @@ stitchFarfetchStoreOnline/
 │       │   │   ├── code-form.component.ts       One-time code: 6 boxes, paste, resend
 │       │   │   ├── forgot-form.component.ts
 │       │   │   └── social-sign-in.component.ts  Google · Apple · Facebook
+│       │   ├── locale/
+│       │   │   └── locale-picker.component.ts   Language | Region drawer
+│       │   ├── payment-methods.ts              Payment marks (Simple Icons, CC0)
 │       │   ├── public-layout.component.ts
 │       │   ├── site-header.component.ts
 │       │   ├── service-links.component.ts
@@ -487,6 +499,22 @@ answer was produced and a real API can replace the class without touching the UI
 (0–4: Weak, Fair, Good, Strong), `nameFromEmail` (`alex.morgan@…` → "Alex") and `firstName`. Shared by the forms
 and the service, so the UI and the "server" never disagree.
 
+### `LocaleService`: language and region
+
+Farfetch's *Language | Region* choice, as two signals remembered under `vestra.locale.v1`:
+
+- **Region** (12, from Brazil to the United States) carries a currency, a number locale and an indicative rate
+  per US dollar. `format(usd)` converts a catalog price and writes it the local way through `Intl.NumberFormat`:
+  `$3,250` (US) · `$59,800` (MXN) · `£2,503` · `2.925 €` (Germany) · `2 925 €` (France) · `￥481,000`. Whole units,
+  like every luxury price. Formatters are cached per region.
+- **Language** (Русский, Español (latinoamericano), Deutsch, 中文（简体）, Français, English (American)) sets
+  `<html lang>` and is remembered. The UI copy is English for now; the selector says so.
+- `pickerOpen()` / `openPicker()` / `closePicker()` drive the selector from the header, the mobile menu and the
+  footer.
+
+The `price` pipe is **impure** and reads `LocaleService`: because the region is a signal, every view showing a
+price re-renders the moment it changes, with no event bus and no reload.
+
 ### `GlobalErrorHandler`
 
 Registered as Angular's `ErrorHandler`; the single place to plug in error reporting.
@@ -568,6 +596,9 @@ Farfetch's footer, in its order:
 
 Each column is a `<nav>` labelled with its title. The links are placeholders (`href="#"`) until those pages exist.
 
+- **Language & region:** a globe with `MX · ES` (region code · language) next to the search box; the mobile
+  menu and the footer show the full choice ("Mexico · MXN · Español (latinoamericano)") and open the same drawer.
+
 ### `NewsletterBand`
 
 A channel choice (Email / SMS) and an input validated for the chosen channel, all with signals
@@ -623,6 +654,36 @@ How it is built:
   sit inside the design system.
 - **Motion** (all behind `motion-safe:`): `animate-dialog-in`, `animate-fade-in` between screens,
   `animate-shake` on errors, `animate-draw` for the welcome check, `animate-ken-burns` on the photo.
+
+### 8.2 Language & region
+
+```text
+                               ┌──────────────────────────────────┐
+                               │ LANGUAGE & REGION              ✕ │
+                               │   LANGUAGE   │   REGION          │
+   (the store, dimmed;         │ ────────────                     │
+    prices change behind       │ Русский                          │
+    the drawer as you pick)    │ Russian                          │
+                               │ Español (latinoamericano)      ✓ │
+                               │ Spanish (Latin American)         │
+                               │ Deutsch · 中文（简体） · Français · │
+                               │ English (American)               │
+                               │──────────────────────────────────│
+                               │ Mexico · MXN · Español     DONE  │
+                               └──────────────────────────────────┘
+```
+
+- **A drawer from the right** on the native `<dialog>` (`animate-drawer-in`), full screen on phones. Same pattern as
+  the sign-in dialog: `LocaleService.pickerOpen()` is the truth and an `afterRenderEffect` calls `showModal()` /
+  `close()`; Esc, the ✕, *Done* and a backdrop click all close it. Deferred into its own chunk (~2.5 kB gzipped).
+- **Language tab:** each language in its own script with its English name underneath (`lang` set per row, so
+  screen readers pronounce it right); a check marks the current one.
+- **Region tab:** a search box (country or currency: "eur" lists France, Germany, Italy, Spain), then each region
+  with its currency code and symbol and a **sample price** in that currency, so you see what you'll get before
+  choosing.
+- **Applies at once:** choices take effect on click; the footer of the drawer always shows the current
+  combination.
+- Both lists are `role="radiogroup"` with `role="radio"` / `aria-checked` rows.
 
 ---
 
@@ -782,6 +843,7 @@ The reference is `prototypes/woman_/woman8/DESIGN.md`, **"Monochrome Absolute"**
 | ------- | ------- |
 | `animate-fade-in` | Content swaps (dialog screens, account menu) |
 | `animate-dialog-in` | A dialog rising into place |
+| `animate-drawer-in` | A drawer sliding in from the right |
 | `animate-shake` | A rejected code or password |
 | `animate-draw` | SVG strokes drawn in (`pathLength="1"`, `stroke-dasharray: 1`) |
 | `animate-ken-burns` | A slow zoom on editorial photography |
@@ -836,6 +898,7 @@ piece of the app.
 | Route inputs | `department`, `id` | `input.required()` via `withComponentInputBinding` |
 | Derived views | every page | `computed` |
 | Local state that resets with a source | listing `limit`, PDP size/image/added | `linkedSignal({ source, computation })` |
+| Language & region | `LocaleService` | `signal` + `computed`, persisted; read by the impure `price` pipe |
 | Session | `AuthService` | `signal` + `computed`, persisted in `localStorage` |
 | Which dialog screen is open | `AuthDialogService` | `signal` (null = closed) |
 | Form fields | auth forms, `TextField` | `signal` + `model()` two-way binding |
@@ -894,7 +957,7 @@ to drive a DOM API.
 
 ## 17. Testing
 
-Tests run with **Vitest** in a Node environment (`npm test`): **34 tests across 8 files**, all green.
+Tests run with **Vitest** in a Node environment (`npm test`): **38 tests across 9 files**, all green.
 
 | Spec | What it proves |
 | ---- | -------------- |
@@ -904,6 +967,7 @@ Tests run with **Vitest** in a Node environment (`npm test`): **34 tests across 
 | `sizing.spec.ts` (3) | Kids sizes follow the age group (3M… for baby clothing, 36 EU… for teen shoes); adult runs unchanged; one-size categories return `[]` |
 | `auth.service.spec.ts` (6) | Demo sign-in; register → sign out → sign in, and the session surviving a new instance (a reload); no plaintext password in storage; duplicates, unknown emails and weak passwords refused; one-time code (wrong code, single use, passwordless account); social sign-in |
 | `auth.validation.spec.ts` (4) | Email messages; password rules and strength from Weak to Strong; names from emails |
+| `locale.model.spec.ts` (4) | US dollars untouched; conversion and local formats (MXN, GBP, EUR in Germany, JPY); regions alphabetical with their symbols; guards for untrusted values |
 | `catalog.model.spec.ts` (2) | `effectivePrice` and `discountPercent` |
 | `price.util.spec.ts` (2) | `$2,950` formatting and rounding |
 
@@ -961,7 +1025,7 @@ need clicks (the sign-in dialog) are driven through the Chrome DevTools Protocol
 | `output()` | auth forms (`done`) |
 | Subclassing a service in tests | `auth.service.spec.ts` |
 | `@if`, `@for … track`, `@else if`, `@empty` | listing, home |
-| Pure pipe | `price.pipe.ts` |
+| Impure pipe reading a signal | `price.pipe.ts` |
 | Custom `ErrorHandler` | `global-error-handler.service.ts` |
 
 ### TypeScript
@@ -989,6 +1053,8 @@ need clicks (the sign-in dialog) are driven through the Chrome DevTools Protocol
 | Native `<dialog>`, `showModal()`, `::backdrop` | `auth-dialog.component.ts` |
 | `:has()` (`html:has(dialog[open])`) | `styles.css` |
 | Web Crypto (`crypto.subtle.digest`, `getRandomValues`) | `auth.service.ts` |
+| `Intl.NumberFormat` (currencies, `formatToParts`) | `locale.model.ts` |
+| `DOCUMENT` (setting `<html lang>`) | `locale.service.ts` |
 | SVG stroke drawing (`pathLength`) | the welcome check |
 | `peer-[…]` floating labels | `text-field.component.ts` |
 
@@ -1009,6 +1075,7 @@ Work happens on feature branches merged with `--no-ff` into `develop`, then fast
 | **Documentation & SSR** | `features/improvement4` | This README; working SSR with `AngularNodeAppEngine`, server routes and allowed hosts; `zone.js` removed |
 | **Sign in** | `features/improvement6` | Farfetch's sign-in pop-up: `AuthService`, `AuthDialogService`, `TextField`, the dialog with sign in, register, one-time code, forgot password and social providers; header account menu; motion tokens |
 | **Footer & name** | `features/improvement7` | Farfetch's full footer (customer service, about, discounts & membership, content, follow us, payment methods with monochrome marks, legal line); the store becomes **VESTRA** |
+| **Language & region** | `features/improvement8` | Farfetch's *Language \| Region* selector as a drawer; `LocaleService`; prices converted and formatted per region through the `price` pipe; globe in the header, mobile menu and footer |
 
 ---
 
@@ -1027,6 +1094,8 @@ Work happens on feature branches merged with `--no-ff` into `develop`, then fast
 | **`localStorage` wishlist** | Works without an account | Per device and browser |
 | **Simulated auth behind `AuthResult`** | The whole sign-in experience works with no backend, and the UI is already shaped for one | Not real security: accounts are per browser, hashing is demo-grade |
 | **Native `<dialog>` instead of a custom overlay** | Focus trap, Esc, inert page and top layer for free, correct for screen readers | Styling `::backdrop` and entry animations needs care |
+| **Region converts prices, language doesn't translate (yet)** | The currency change is real and visible everywhere at almost no cost | Choosing a language only sets `<html lang>` until the copy is translated |
+| **Fixed, indicative exchange rates** | Deterministic prices and tests, no API key | Rates drift from reality; a real store fetches them |
 | **Dialog behind `@defer`** | ~8 kB gzipped stays out of the initial bundle | The first open waits for the chunk if it wasn't prefetched yet |
 
 ---
@@ -1063,6 +1132,7 @@ npm start            # → http://localhost:4200
 8. Click the person icon: *Fill in* the demo account and sign in; then sign out from your initial.
 9. Open it again → *Continue with a one-time code*, and click the code shown to sign in.
 10. Try *Register* and watch the strength meter while typing a password.
+11. Click the globe (`US · EN`) → *Region* → *Mexico*: every price turns into pesos; try *Germany* for euros.
 
 ---
 
@@ -1109,7 +1179,8 @@ Header links, filters, titles and tiles pick it up; tiles only appear where prod
 - [ ] Wishlist page listing saved pieces.
 - [ ] Component tests for the listing and product pages; E2E (Playwright) for filters and the Kids nav.
 - [ ] A real API behind `CatalogStore` with server-side filtering and pagination.
-- [ ] i18n (es-MX, like Farfetch's `/mx/` storefront) and currency formatting.
+- [ ] Translate the UI into the six languages of the selector (Angular i18n or a signal-based dictionary); the language choice is already stored.
+- [ ] Live exchange rates, and charging in the chosen currency.
 - [ ] Image `srcset` / `NgOptimizedImage` for responsive photo sizes.
 
 ---

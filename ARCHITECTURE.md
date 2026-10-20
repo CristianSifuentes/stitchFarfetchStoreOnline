@@ -11,6 +11,7 @@ In Kids it is browsed by age instead: Gifts, New In, Brands, Baby (0–36 months
 Teens (13–16 years), Sale.
 Above the footer, on every page: service links (How to shop, FAQs, Need help?) and the newsletter band.
 The header's person icon opens the sign-in dialog (Farfetch's pop-up); signed in, it becomes an account menu.
+The globe (header, mobile menu, footer) opens *Language & region*: the region converts every price to its currency.
 
 
 | Route | Component | What it is |
@@ -35,6 +36,7 @@ bookmarked and restored with the back button.
 src/app
   core/
     auth/         AuthService (session), AuthDialogService (which screen is open), validation rules
+    locale/       LocaleService (language + region), REGIONS with currency and rate, formatMoney
     catalog/      CatalogItem model, DEPARTMENTS / CATEGORIES taxonomy, size runs
     services/     CatalogStore (the only product source), WishlistService, CartService
   shared/
@@ -43,6 +45,7 @@ src/app
     utils/        formatPrice
   layouts/
     public-layout/  SiteHeader, SiteFooter, the shell
+      locale/       LocalePicker (@defer): the Language | Region drawer
       auth/         AuthDialog (@defer) + one component per screen: sign in, register, code, forgot, social
   features/
     home/ department/ listing/ product/ not-found/
@@ -148,8 +151,9 @@ can't drift. `rounded-full` remains for functional circles only (the wishlist bu
 | An editorial story + its products | `<app-editorial-story>` (projects a carousel) |
 | "Trending brands" tiles | `<app-brand-tiles [brands]>` |
 | Closing link lists | `<app-link-directory [columns]>` |
-| A price | `{{ value \| price }}`: `$2,950`, always whole dollars |
+| A price | `{{ value \| price }}`: in the visitor's currency (`$2,950`, `2.655 €`), whole units. Never format money by hand |
 | A form field | `<app-text-field label [(value)] type autocomplete error revealable>` (floating label, Show/Hide) |
+| The language & region selector | `LocaleService.openPicker()` |
 | A sign-in prompt | `AuthDialogService.open('sign-in' \| 'register' \| 'code' \| 'forgot')` |
 
 ## Adding things
@@ -164,4 +168,4 @@ can't drift. `rounded-full` remains for functional circles only (the wishlist bu
 
 `npm test` (Vitest): `formatPrice`, `queryCatalog` / `designersIn` (the listing's filter, search and sort
 logic, including age groups), `sizesFor`, `AuthService` (sign in, register, codes, social, persistence), the
-auth validation rules, `sizedImage` / `galleryFor` and `featureDesigner`.
+auth validation rules, `formatMoney` and the regions, `sizedImage` / `galleryFor` and `featureDesigner`.
