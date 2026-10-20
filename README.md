@@ -2,7 +2,7 @@
 
 # VESTRA
 
-#### Stitch Store Online
+#### Luxury Fashion Store Online
 
 ### A luxury-fashion storefront, hand-built with Angular 21: standalone, zoneless and signal-first
 
@@ -291,7 +291,7 @@ flowchart LR
 ## 5. Project Structure
 
 ```text
-stitchFarfetchStoreOnline/
+vestra/
 ├── ARCHITECTURE.md                 Short rulebook: pages, folders, rules, tokens, components
 ├── README.md                       This document
 ├── prototypes/                     Stitch prototypes used as visual reference
@@ -1017,7 +1017,7 @@ to drive a DOM API.
 ## 16. SSR, Hydration & Security
 
 - **SSR:** `angular.json` declares `server: src/main.server.ts`, `ssr.entry: src/server.ts` and
-  `outputMode: "server"`, so `ng build` emits `dist/stitch-farfetch-store-online/{browser,server}`.
+  `outputMode: "server"`, so `ng build` emits `dist/vestra/{browser,server}`.
   `server.ts` serves the hashed files from `browser/` with `maxAge: 1y` and hands every other request to
   `AngularNodeAppEngine`. `app.routes.server.ts` renders all routes per request (`RenderMode.Server`), since the
   listing depends on query params. `ng serve` uses the same server through the exported `reqHandler`.
@@ -1077,7 +1077,7 @@ need clicks (the sign-in dialog) are driven through the Chrome DevTools Protocol
 
 | File | Notable settings |
 | ---- | ---------------- |
-| `angular.json` | `@angular/build:application`; `outputPath: dist/stitch-farfetch-store-online`; `browser: src/main.ts`, `server: src/main.server.ts`, `ssr.entry: src/server.ts`, `outputMode: server`; `security.allowedHosts`; no polyfills (zoneless, no `zone.js` installed); styles `src/styles.css`; dev server defaults to `development` |
+| `angular.json` | `@angular/build:application`; `outputPath: dist/vestra`; `browser: src/main.ts`, `server: src/main.server.ts`, `ssr.entry: src/server.ts`, `outputMode: server`; `security.allowedHosts`; no polyfills (zoneless, no `zone.js` installed); styles `src/styles.css`; dev server defaults to `development` |
 | `tsconfig.json` | `ES2022`, `moduleResolution: bundler`, `strict`, `noImplicitOverride`, `noPropertyAccessFromIndexSignature`, `noImplicitReturns`, `noFallthroughCasesInSwitch`; Angular `strictTemplates` |
 | `postcss.config.json` | `@tailwindcss/postcss` |
 | `vitest.config.ts` | `environment: 'node'`, `include: src/**/*.spec.ts`, `vite-tsconfig-paths` |
@@ -1199,8 +1199,8 @@ Work happens on feature branches merged with `--no-ff` into `develop`, then fast
 **Prerequisites:** Node.js 20.19+ / 22.12+ (Angular 21's range) and npm.
 
 ```bash
-git clone https://github.com/CristianSifuentes/stitchFarfetchStoreOnline.git
-cd stitchFarfetchStoreOnline
+git clone https://github.com/CristianSifuentes/vestra.git
+cd vestra
 npm install
 npm start            # → http://localhost:4200
 ```
@@ -1208,7 +1208,7 @@ npm start            # → http://localhost:4200
 | Script | Command | Purpose |
 | ------ | ------- | ------- |
 | `npm start` | `ng serve` | Dev server with live reload |
-| `npm run build` | `ng build` | Production build → `dist/stitch-farfetch-store-online/{browser,server}` |
+| `npm run build` | `ng build` | Production build → `dist/vestra/{browser,server}` |
 | `npm test` | `vitest run` | Unit tests, single run |
 | `npm run test:watch` | `vitest` | Unit tests in watch mode |
 | `npm run build:ssr` | `ng build` | Same build (the SSR bundle is always produced) |
@@ -1319,5 +1319,5 @@ not affiliated with or endorsed by them. See the original site at <https://www.f
 
 ### References
 
-file:///Users/cristian/Documents/workspace/angular/stitchFarfetchStoreOnline/prototypes/woman_/woman1/code.html
+[prototypes/woman_/woman1/code.html](prototypes/woman_/woman1/code.html)
 https://www.youtube.com/watch?v=aSdAZHansJU
