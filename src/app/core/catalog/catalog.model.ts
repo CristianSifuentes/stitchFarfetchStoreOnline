@@ -5,6 +5,8 @@ export type ProductCategory = 'clothing' | 'shoes' | 'bags' | 'accessories' | 'j
 // Curated edits that cut across categories (Farfetch's "Gifts", "Party
 // looks", seasonal campaigns): a product can belong to several.
 export type ProductEdit = 'gifts' | 'party' | 'winter' | 'heritage';
+// Kidswear is shopped by age first (Farfetch: Baby, Kids, Teens).
+export type AgeGroup = 'baby' | 'kids' | 'teens';
 
 export interface CatalogItem {
   id: string;
@@ -20,6 +22,8 @@ export interface CatalogItem {
   // A short merchandising label shown on the card, e.g. "New Season".
   badge?: string;
   edits: ProductEdit[];
+  // Kids only.
+  ageGroup?: AgeGroup;
   // Present when the piece is on sale; price stays the original.
   salePrice?: number;
 }

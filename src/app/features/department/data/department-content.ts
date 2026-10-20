@@ -90,7 +90,7 @@ export const DEPARTMENT_CONTENT: Record<Department, DepartmentContent> = {
     },
     trends: [
       { label: 'Gifts for Kids', queryParams: { edit: 'gifts' } },
-      { label: 'Little Jewels', queryParams: { category: 'jewelry' } },
+      { label: 'Baby Essentials', queryParams: { age: 'baby' } },
       { label: 'Sneaker Season', queryParams: { category: 'shoes' } },
       { label: 'Moncler Enfant', queryParams: { designer: 'Moncler Enfant' } }
     ],

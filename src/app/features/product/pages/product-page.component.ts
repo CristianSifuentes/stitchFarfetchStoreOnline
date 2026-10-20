@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, linkedSignal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { categoryLabel, departmentInfo, galleryFor, sizesFor } from '../../../core/catalog';
+import { ageGroupInfo, categoryLabel, departmentInfo, galleryFor, sizesFor } from '../../../core/catalog';
 import { CartService } from '../../../core/services/cart.service';
 import { CatalogStore } from '../../../core/services/catalog.store';
 import { WishlistService } from '../../../core/services/wishlist.service';
@@ -191,7 +191,15 @@ export class ProductPageComponent {
     return [
       { label: 'Home', link: '/' },
       { label: department.label, link: department.path },
-      { label: categoryLabel(item.category), link: `${department.path}/items`, queryParams: { category: item.category } },
+      // Kidswear sits under its age group: Home / Kids / Baby / Clothing.
+      ...(item.ageGroup
+        ? [{ label: ageGroupInfo(item.ageGroup).label, link: `${department.path}/items`, queryParams: { age: item.ageGroup } }]
+        : []),
+      {
+        label: categoryLabel(item.category),
+        link: `${department.path}/items`,
+        queryParams: item.ageGroup ? { age: item.ageGroup, category: item.category } : { category: item.category }
+      },
       { label: item.title }
     ];
   });

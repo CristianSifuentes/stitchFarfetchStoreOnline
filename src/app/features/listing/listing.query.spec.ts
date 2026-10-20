@@ -23,7 +23,7 @@ const items = [
   item({ id: 'd', brand: 'Chloé', title: 'Cotton dress', department: 'kids', price: 295, addedAt: '2024-01-15' })
 ];
 
-const base = { department: null, category: null, designer: null, edit: null, sale: false, search: '', sort: 'newest' } as const;
+const base = { department: null, category: null, designer: null, edit: null, age: null, sale: false, search: '', sort: 'newest' } as const;
 
 describe('queryCatalog', () => {
   it('returns everything, newest first, without filters', () => {
@@ -71,6 +71,19 @@ describe('queryCatalog: edits and sale', () => {
 
   it('sorts by the price actually paid', () => {
     expect(queryCatalog(pool, { ...base, sort: 'price-asc' }).map((i) => i.id)).toEqual(['gift', 'plain', 'party']);
+  });
+});
+
+describe('queryCatalog: age groups', () => {
+  const pool = [
+    item({ id: 'bodysuit', department: 'kids', ageGroup: 'baby' }),
+    item({ id: 'sneakers', department: 'kids', ageGroup: 'teens' }),
+    item({ id: 'dress', department: 'womenswear' })
+  ];
+
+  it('narrows kidswear to one age group', () => {
+    expect(queryCatalog(pool, { ...base, age: 'baby' }).map((i) => i.id)).toEqual(['bodysuit']);
+    expect(queryCatalog(pool, { ...base, age: 'teens' }).map((i) => i.id)).toEqual(['sneakers']);
   });
 });
 

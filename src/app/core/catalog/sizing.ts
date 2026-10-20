@@ -1,4 +1,4 @@
-import { CatalogItem } from './catalog.model';
+import { AgeGroup, CatalogItem } from './catalog.model';
 
 // Size runs per department and category. Bags, accessories and jewelry are
 // one size, so the product page skips the size picker for them.
@@ -14,12 +14,27 @@ const SHOES: Record<CatalogItem['department'], readonly string[]> = {
   kids: ['28 EU', '30 EU', '32 EU', '34 EU']
 };
 
-export function sizesFor(item: Pick<CatalogItem, 'department' | 'category'>): readonly string[] {
+// Kidswear is sized by age group, so a bodysuit and a teen's T-shirt never
+// share a size run.
+const KIDS_CLOTHING: Record<AgeGroup, readonly string[]> = {
+  baby: ['3M', '6M', '12M', '18M', '24M'],
+  kids: ['4Y', '6Y', '8Y', '10Y', '12Y'],
+  teens: ['13Y', '14Y', '15Y', '16Y']
+};
+
+const KIDS_SHOES: Record<AgeGroup, readonly string[]> = {
+  baby: ['17 EU', '18 EU', '19 EU', '20 EU', '21 EU'],
+  kids: ['28 EU', '30 EU', '32 EU', '34 EU'],
+  teens: ['36 EU', '37 EU', '38 EU', '39 EU', '40 EU']
+};
+
+export function sizesFor(item: Pick<CatalogItem, 'department' | 'category' | 'ageGroup'>): readonly string[] {
+  const age = item.department === 'kids' ? item.ageGroup : undefined;
   switch (item.category) {
     case 'clothing':
-      return CLOTHING[item.department];
+      return age ? KIDS_CLOTHING[age] : CLOTHING[item.department];
     case 'shoes':
-      return SHOES[item.department];
+      return age ? KIDS_SHOES[age] : SHOES[item.department];
     default:
       return [];
   }

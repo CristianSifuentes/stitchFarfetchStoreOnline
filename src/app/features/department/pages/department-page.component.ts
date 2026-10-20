@@ -1,6 +1,17 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { CATEGORIES, Department, ProductCategory, departmentInfo, editInfo, featureDesigner, isCategory, isEdit } from '../../../core/catalog';
+import {
+  AGE_GROUPS,
+  CATEGORIES,
+  Department,
+  ProductCategory,
+  departmentInfo,
+  editInfo,
+  featureDesigner,
+  isAgeGroup,
+  isCategory,
+  isEdit
+} from '../../../core/catalog';
 import { CatalogStore, byNewest } from '../../../core/services/catalog.store';
 import { BrandTile, BrandTilesComponent } from '../../../shared/ui/brand-tiles/brand-tiles.component';
 import { BreadcrumbComponent } from '../../../shared/ui/breadcrumb/breadcrumb.component';
@@ -26,7 +37,8 @@ const GIFT_RECIPIENT: Record<Department, string> = { womenswear: 'her', menswear
 
 // A department's hub (Women, Men, Kids), in the order of Farfetch's:
 // seasonal campaign → New in daily → Trending now → an editorial story with
-// its pieces → shop by category → trending brands → more to explore.
+// its pieces → shop by age (kids) → shop by category → trending brands →
+// more to explore.
 // One template for all three; words and photography come from
 // DEPARTMENT_CONTENT, products, counts and tile images from the catalog.
 @Component({
@@ -89,6 +101,27 @@ const GIFT_RECIPIENT: Record<Department, string> = { womenswear: 'her', menswear
           }
         </app-editorial-story>
       </div>
+
+      @if (ageTiles().length) {
+        <section class="pb-16 md:pb-24" aria-labelledby="ages-heading">
+          <h2 id="ages-heading" class="text-headline mb-8">Shop by age</h2>
+          <ul class="grid gap-4 sm:grid-cols-3 md:gap-6">
+            @for (tile of ageTiles(); track tile.id) {
+              <li>
+                <a class="group relative block aspect-[3/4] overflow-hidden bg-ink" [routerLink]="listingPath()" [queryParams]="{ age: tile.id }">
+                  <img [src]="tile.image" [alt]="tile.label" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+                  <span class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" aria-hidden="true"></span>
+                  <span class="absolute inset-x-0 bottom-0 p-8 text-canvas">
+                    <span class="label-caps block opacity-80">{{ tile.range }}</span>
+                    <span class="text-title mt-1 block">{{ tile.label }}</span>
+                    <span class="mt-1 block text-xs opacity-80">{{ tile.count }} {{ tile.count === 1 ? 'piece' : 'pieces' }}</span>
+                  </span>
+                </a>
+              </li>
+            }
+          </ul>
+        </section>
+      }
 
       <section aria-labelledby="categories-heading">
         <h2 id="categories-heading" class="text-headline mb-8">Shop by category</h2>
@@ -158,6 +191,7 @@ export class DepartmentPageComponent {
         category,
         designer: typeof params['designer'] === 'string' ? params['designer'] : null,
         edit: isEdit(params['edit']) ? params['edit'] : null,
+        age: isAgeGroup(params['age']) ? params['age'] : null,
         sale: false,
         search: '',
         sort: isListingSort(params['sort']) ? params['sort'] : 'newest'
@@ -168,6 +202,18 @@ export class DepartmentPageComponent {
       }
       used.add(pick.image);
       return [{ label: trend.label, image: pick.image, link: this.listingPath(), queryParams: params }];
+    });
+  });
+
+  // Kidswear's first way in (Farfetch: Baby, Kids, Teens): one tile per age
+  // group, pictured by its newest piece not already shown in Trending now.
+  // Empty for departments without ages.
+  protected readonly ageTiles = computed(() => {
+    const used = new Set(this.trends().map((trend) => trend.image));
+    return AGE_GROUPS.flatMap((group) => {
+      const pieces = this.items().filter((item) => item.ageGroup === group.id);
+      const pick = pieces.find((item) => !used.has(item.image)) ?? pieces[0];
+      return pick ? [{ ...group, count: pieces.length, image: pick.image }] : [];
     });
   });
 

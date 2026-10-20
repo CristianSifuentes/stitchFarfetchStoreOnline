@@ -345,7 +345,8 @@
     "edits": [
       "heritage",
       "winter"
-    ]
+    ],
+    "ageGroup": "kids"
   },
   {
     "id": "kj-2",
@@ -360,7 +361,8 @@
     "badge": "New Season",
     "edits": [
       "winter"
-    ]
+    ],
+    "ageGroup": "baby"
   },
   {
     "id": "kj-3",
@@ -374,7 +376,8 @@
     "addedAt": "2024-02-14",
     "edits": [
       "gifts"
-    ]
+    ],
+    "ageGroup": "kids"
   },
   {
     "id": "kj-4",
@@ -388,7 +391,8 @@
     "addedAt": "2024-02-13",
     "edits": [
       "winter"
-    ]
+    ],
+    "ageGroup": "baby"
   },
   {
     "id": "kj-5",
@@ -403,7 +407,8 @@
     "edits": [
       "winter"
     ],
-    "salePrice": 145
+    "salePrice": 145,
+    "ageGroup": "kids"
   },
   {
     "id": "kj-6",
@@ -417,7 +422,8 @@
     "addedAt": "2024-02-11",
     "edits": [
       "heritage"
-    ]
+    ],
+    "ageGroup": "baby"
   },
   {
     "id": "kj-7",
@@ -431,7 +437,8 @@
     "addedAt": "2024-02-10",
     "edits": [
       "winter"
-    ]
+    ],
+    "ageGroup": "kids"
   },
   {
     "id": "kj-8",
@@ -445,7 +452,8 @@
     "addedAt": "2024-02-09",
     "edits": [
       "party"
-    ]
+    ],
+    "ageGroup": "kids"
   },
   {
     "id": "kj-9",
@@ -458,7 +466,8 @@
     "description": "Colour-blocked chunky sneakers with layered panels and contrast laces.",
     "addedAt": "2024-02-08",
     "edits": [],
-    "salePrice": 225
+    "salePrice": 225,
+    "ageGroup": "teens"
   },
   {
     "id": "kj-10",
@@ -473,7 +482,8 @@
     "edits": [
       "heritage",
       "party"
-    ]
+    ],
+    "ageGroup": "kids"
   },
   {
     "id": "kj-11",
@@ -488,7 +498,8 @@
     "badge": "New Season",
     "edits": [
       "gifts"
-    ]
+    ],
+    "ageGroup": "kids"
   },
   {
     "id": "kj-12",
@@ -503,7 +514,8 @@
     "edits": [
       "gifts"
     ],
-    "salePrice": 85
+    "salePrice": 85,
+    "ageGroup": "teens"
   },
   {
     "id": "kj-13",
@@ -517,7 +529,8 @@
     "addedAt": "2024-02-13",
     "edits": [
       "gifts"
-    ]
+    ],
+    "ageGroup": "kids"
   },
   {
     "id": "kj-14",
@@ -532,7 +545,8 @@
     "edits": [
       "gifts",
       "party"
-    ]
+    ],
+    "ageGroup": "kids"
   },
   {
     "id": "kj-15",
@@ -547,7 +561,8 @@
     "edits": [
       "gifts",
       "party"
-    ]
+    ],
+    "ageGroup": "kids"
   },
   {
     "id": "kj-16",
@@ -561,7 +576,8 @@
     "addedAt": "2024-02-10",
     "edits": [
       "gifts"
-    ]
+    ],
+    "ageGroup": "teens"
   },
   {
     "id": "kj-17",
@@ -575,7 +591,8 @@
     "addedAt": "2024-02-09",
     "edits": [
       "gifts"
-    ]
+    ],
+    "ageGroup": "teens"
   },
   {
     "id": "ww-13",
@@ -1071,7 +1088,8 @@
     "edits": [
       "party"
     ],
-    "salePrice": 170
+    "salePrice": 170,
+    "ageGroup": "kids"
   },
   {
     "id": "kj-19",
@@ -1083,7 +1101,8 @@
     "category": "clothing",
     "description": "Washed denim dungarees with adjustable straps and a bib pocket.",
     "addedAt": "2024-02-26",
-    "edits": []
+    "edits": [],
+    "ageGroup": "kids"
   },
   {
     "id": "kj-20",
@@ -1096,7 +1115,8 @@
     "description": "Soft cotton T-shirt with a playful front graphic.",
     "addedAt": "2024-02-19",
     "edits": [],
-    "salePrice": 70
+    "salePrice": 70,
+    "ageGroup": "teens"
   },
   {
     "id": "kj-21",
@@ -1108,7 +1128,8 @@
     "category": "clothing",
     "description": "Short-sleeve organic cotton bodysuit with easy snap fastenings.",
     "addedAt": "2024-02-08",
-    "edits": []
+    "edits": [],
+    "ageGroup": "baby"
   },
   {
     "id": "kj-22",
@@ -1122,7 +1143,8 @@
     "addedAt": "2024-01-30",
     "edits": [
       "party"
-    ]
+    ],
+    "ageGroup": "teens"
   },
   {
     "id": "kj-23",
@@ -1136,7 +1158,8 @@
     "addedAt": "2024-01-22",
     "edits": [
       "gifts"
-    ]
+    ],
+    "ageGroup": "teens"
   },
   {
     "id": "kj-24",
@@ -1150,6 +1173,7 @@
     "addedAt": "2024-03-29",
     "edits": [
       "gifts"
-    ]
+    ],
+    "ageGroup": "baby"
   }
 ]

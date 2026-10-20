@@ -1,7 +1,21 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, linkedSignal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CATEGORIES, Department, ProductCategory, ProductEdit, categoryLabel, departmentInfo, editInfo, isCategory, isEdit } from '../../../core/catalog';
+import {
+  AGE_GROUPS,
+  AgeGroup,
+  CATEGORIES,
+  Department,
+  ProductCategory,
+  ProductEdit,
+  ageGroupInfo,
+  categoryLabel,
+  departmentInfo,
+  editInfo,
+  isAgeGroup,
+  isCategory,
+  isEdit
+} from '../../../core/catalog';
 import { CatalogStore } from '../../../core/services/catalog.store';
 import { BreadcrumbComponent, Crumb } from '../../../shared/ui/breadcrumb/breadcrumb.component';
 import { ProductCardComponent } from '../../../shared/ui/product-card/product-card.component';
@@ -27,6 +41,17 @@ const PAGE_SIZE = 8;
 
       <section class="flex flex-wrap items-center justify-between gap-x-8 gap-y-4 border-y border-line py-4" aria-label="Filters">
         <div class="flex flex-wrap items-center gap-x-8 gap-y-3">
+          @if (ageOptions().length) {
+            <label class="flex items-center gap-2">
+              <span class="label-caps text-muted">Age</span>
+              <select class="select-line" [value]="age() ?? ''" (change)="update({ age: $any($event.target).value || null })">
+                <option value="">All</option>
+                @for (option of ageOptions(); track option.id) {
+                  <option [value]="option.id">{{ option.label }} ({{ option.range }})</option>
+                }
+              </select>
+            </label>
+          }
           <label class="flex items-center gap-2">
             <span class="label-caps text-muted">Category</span>
             <select class="select-line" [value]="category() ?? ''" (change)="update({ category: $any($event.target).value || null })">
@@ -124,6 +149,10 @@ export class ProductListingPageComponent {
     return isEdit(value) ? value : null;
   });
   protected readonly sale = computed(() => this.params().get('sale') === 'true');
+  protected readonly age = computed<AgeGroup | null>(() => {
+    const value = this.params().get('age');
+    return isAgeGroup(value) ? value : null;
+  });
   protected readonly search = computed(() => this.params().get('q') ?? '');
   protected readonly sort = computed<ListingSort>(() => {
     const value = this.params().get('sort');
@@ -137,6 +166,7 @@ export class ProductListingPageComponent {
       category: null,
       designer: null,
       edit: this.edit(),
+      age: this.age(),
       sale: this.sale(),
       search: this.search(),
       sort: 'newest'
@@ -149,6 +179,7 @@ export class ProductListingPageComponent {
       category: this.category(),
       designer: this.designer(),
       edit: null,
+      age: null,
       sale: false,
       search: '',
       sort: this.sort()
@@ -163,12 +194,19 @@ export class ProductListingPageComponent {
     const present = new Set(this.pool().map((item) => item.category));
     return CATEGORIES.filter((category) => present.has(category.id));
   });
+  // Only departments whose pieces carry an age group (Kids) offer the filter.
+  protected readonly ageOptions = computed(() => {
+    const department = this.department();
+    const inDepartment = department ? this.catalog.byDepartment(department) : [];
+    const present = new Set(inDepartment.map((item) => item.ageGroup));
+    return AGE_GROUPS.filter((group) => present.has(group.id));
+  });
   protected readonly designerOptions = computed(() =>
     designersIn(this.category() ? this.pool().filter((item) => item.category === this.category()) : this.pool())
   );
 
   protected readonly hasFilters = computed(
-    () => !!this.category() || !!this.designer() || !!this.search() || !!this.edit() || this.sale()
+    () => !!this.category() || !!this.designer() || !!this.search() || !!this.edit() || this.sale() || !!this.age()
   );
 
   protected readonly title = computed(() => {
@@ -180,14 +218,20 @@ export class ProductListingPageComponent {
       return this.search() ? `Results for “${this.search()}”` : 'All products';
     }
     const possessive = departmentInfo(department).possessive;
+    const age = this.age();
     // The most specific selection names the page: an edit, then sale, then
-    // a category, then New In.
-    const base = edit
-      ? `${possessive} ${editInfo(edit).label}`
-      : this.sale()
-        ? `${possessive} Sale`
-        : `${possessive} ${category ? categoryLabel(category) : 'New In'}`;
-    const subject = edit || this.sale() ? (category ? `${base}: ${categoryLabel(category)}` : base) : base;
+    // an age group ("Baby Clothing", "Teens (13–16 years)"), then a
+    // category, then New In.
+    let subject: string;
+    if (edit || this.sale()) {
+      const base = edit ? `${possessive} ${editInfo(edit).label}` : `${possessive} Sale`;
+      subject = category ? `${base}: ${categoryLabel(category)}` : base;
+    } else if (age) {
+      const info = ageGroupInfo(age);
+      subject = category ? `${info.label} ${categoryLabel(category)}` : `${info.label} (${info.range})`;
+    } else {
+      subject = `${possessive} ${category ? categoryLabel(category) : 'New In'}`;
+    }
     return designer ? `${designer} · ${subject}` : subject;
   });
 
@@ -204,7 +248,11 @@ export class ProductListingPageComponent {
     if (this.sale()) {
       return 'Up to 50% off a selection of pieces from the season’s collections, while stocks last.';
     }
-    return category ? CATEGORY_DESCRIPTIONS[category] : DESCRIPTIONS[department];
+    if (category) {
+      return CATEGORY_DESCRIPTIONS[category];
+    }
+    const age = this.age();
+    return age ? ageGroupInfo(age).description : DESCRIPTIONS[department];
   });
 
   protected readonly breadcrumb = computed<Crumb[]>(() => {
@@ -219,9 +267,18 @@ export class ProductListingPageComponent {
       { label: info.label, link: info.path }
     ];
     const edit = this.edit();
-    const section = edit ? editInfo(edit).label : this.sale() ? 'Sale' : null;
+    const age = this.age();
+    // Edit, sale or age group: the section the page lives in, linked when
+    // a category narrows it further.
+    const section = edit
+      ? { label: editInfo(edit).label, queryParams: { edit } }
+      : this.sale()
+        ? { label: 'Sale', queryParams: { sale: 'true' } }
+        : age
+          ? { label: ageGroupInfo(age).label, queryParams: { age } }
+          : null;
     if (section) {
-      crumbs.push(category ? { label: section, link: `${info.path}/items`, queryParams: edit ? { edit } : { sale: 'true' } } : { label: section });
+      crumbs.push(category ? { ...section, link: `${info.path}/items` } : { label: section.label });
     }
     if (category || !section) {
       crumbs.push({ label: category ? categoryLabel(category) : 'New In' });
@@ -230,7 +287,7 @@ export class ProductListingPageComponent {
   });
 
   protected clearAll(): void {
-    this.update({ category: null, designer: null, q: null, edit: null, sale: null });
+    this.update({ category: null, designer: null, q: null, edit: null, sale: null, age: null });
   }
 
   protected update(params: Record<string, string | null>): void {
