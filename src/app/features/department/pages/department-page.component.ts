@@ -109,10 +109,10 @@ const GIFT_RECIPIENT: Record<Department, string> = { womenswear: 'her', menswear
           <ul class="grid gap-4 sm:grid-cols-3 md:gap-6">
             @for (tile of ageTiles(); track tile.id) {
               <li>
-                <a class="group relative block aspect-[3/4] overflow-hidden bg-ink" [routerLink]="listingPath()" [queryParams]="{ age: tile.id }">
+                <a class="group relative block aspect-[3/4] overflow-hidden bg-black" [routerLink]="listingPath()" [queryParams]="{ age: tile.id }">
                   <img [src]="tile.image" [alt]="tile.label" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
                   <span class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" aria-hidden="true"></span>
-                  <span class="absolute inset-x-0 bottom-0 p-8 text-canvas">
+                  <span class="absolute inset-x-0 bottom-0 p-8 text-white">
                     <span class="label-caps block opacity-80">{{ tile.range }}</span>
                     <span class="text-title mt-1 block">{{ tile.label }}</span>
                     <span class="mt-1 block text-xs opacity-80">{{ tile.count }} {{ tile.count === 1 ? 'piece' : 'pieces' }}</span>

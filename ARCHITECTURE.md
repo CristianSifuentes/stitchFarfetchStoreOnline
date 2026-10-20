@@ -39,6 +39,7 @@ src/app
   core/
     auth/         AuthService (session), AuthDialogService (which screen is open), validation rules
     locale/       LocaleService (language + region), REGIONS with currency and rate, formatMoney
+    theme/        ThemeService (light / dark / system, data-theme on <html>), resolveTheme
     catalog/      CatalogItem model, DEPARTMENTS / CATEGORIES taxonomy, size runs
     bag/          BagService (lines with size and quantity, per account), pure bag.model (totals, delivery)
     services/     CatalogStore (the only product source), WishlistService, RecentlyViewedService
@@ -115,6 +116,11 @@ Tokens and utilities live in `src/styles.css` (Tailwind v4 `@theme` + `@utility`
 | `error` | `#ba1a1a` | `text-error` |
 | Font | Inter | `font-sans` (default) |
 
+**Dark theme:** the same tokens are redefined under `:root[data-theme="dark"]` (`ink` white, `canvas` black,
+`surface` `#121212`, `line` `#2b2b2b`, `muted` `#9b9b9b`, `error` `#ff8a80`). Use tokens and both themes work; don't
+add `dark:` variants per component. Text and buttons on top of photos use `white` / `black` (`text-white`,
+`btn-light`), which don't swap.
+
 **The radius and shadow scales are removed.** `rounded-lg` or `shadow-md` don't exist, so the sharp, flat look
 can't drift. `rounded-full` remains for functional circles only (the wishlist button, count badges).
 
@@ -157,6 +163,7 @@ can't drift. `rounded-full` remains for functional circles only (the wishlist bu
 | A price | `{{ value \| price }}`: in the visitor's currency (`$2,950`, `2.655 €`), whole units. Never format money by hand |
 | A form field | `<app-text-field label [(value)] type autocomplete error revealable>` (floating label, Show/Hide) |
 | The language & region selector | `LocaleService.openPicker()` |
+| Light / dark | `ThemeService.toggle()`, `theme()`, `dark()` |
 | A sign-in prompt | `AuthDialogService.open('sign-in' \| 'register' \| 'code' \| 'forgot')` |
 
 ## Adding things

@@ -71,7 +71,7 @@ const TITLES: Record<AuthView, string> = {
     >
       @if (state.view(); as view) {
         <div class="grid h-full lg:grid-cols-[5fr_6fr]">
-          <aside class="relative hidden overflow-hidden bg-ink text-canvas lg:block" aria-hidden="true">
+          <aside class="relative hidden overflow-hidden bg-black text-white lg:block" aria-hidden="true">
             <img [src]="image" alt="" class="absolute inset-0 h-full w-full object-cover motion-safe:animate-ken-burns" />
             <span class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/20"></span>
             <div class="relative flex h-full flex-col justify-between p-10">
